@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import { clearAuthStatus, updateAuthStatus } from './stores/auth';
-import SignUp from './routes/SignUp';
+import SignIn from './routes/SignIn';
 import { AppUser } from './utils/interfaces';
 
 const App: React.FC = () => {
@@ -36,7 +36,7 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            <SignUp />
+            <SignIn />
         </div>
     );
 };
