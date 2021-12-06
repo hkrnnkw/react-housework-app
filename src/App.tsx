@@ -13,8 +13,8 @@ import { setSignInStatus } from './stores/auth';
 import paths from './utils/paths';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import StyledPaper from './components/StyledPaper';
-import StyledAppBar from './components/StyledAppBar';
+import StyledPaper from './components/atoms/StyledPaper';
+import StyledAppBar from './components/atoms/StyledAppBar';
 
 const App: React.FC = () => {
     const dispatch = useDispatch();

@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import SignIn from './SignIn';
+import SignIn from '../components/SignIn';
 import { RootState } from '../stores';
-import StyledPaper from '../components/StyledPaper';
+import StyledPaper from '../components/atoms/StyledPaper';
+import Calendar from '../components/Calendar';
 
 const Home: React.FC = () => {
     const { signedIn } = useSelector((rootState: RootState) => rootState.auth);
@@ -10,7 +11,7 @@ const Home: React.FC = () => {
 
     return (
         <StyledPaper>
-            <></>
+            <Calendar />
         </StyledPaper>
     );
 };
