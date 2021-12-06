@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth';
 import { Button, TextField } from '@mui/material';
 import { updateAuthStatus } from '../stores/auth';
-import { AppUser } from '../utils/interfaces';
+import { AppUser } from '../utils/types';
 
 const SignUp: React.FC = () => {
     const dispatch = useDispatch();

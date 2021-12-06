@@ -1,18 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppUser } from '../utils/interfaces';
+import { AppUser, SignedIn } from '../utils/types';
 
-interface AuthState {
-    user: AppUser | null;
-}
+type AuthState = SignedIn & AppUser;
 
 const initialState: AuthState = {
-    user: null,
+    signedIn: false,
+    uid: '',
+    displayName: '',
+    email: '',
+    photoURL: null,
+    refreshToken: '',
+    emailVerified: false,
 };
 
 const slice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        setSignInStatus: (
+            state: AuthState,
+            action: PayloadAction<boolean>
+        ) => ({
+            ...state,
+            signedIn: action.payload,
+        }),
         updateAuthStatus: (
             state: AuthState,
             action: PayloadAction<AppUser>
@@ -29,4 +40,5 @@ const slice = createSlice({
 
 export default slice;
 
-export const { updateAuthStatus, clearAuthStatus } = slice.actions;
+export const { setSignInStatus, updateAuthStatus, clearAuthStatus } =
+    slice.actions;
