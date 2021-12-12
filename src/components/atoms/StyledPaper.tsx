@@ -2,7 +2,8 @@ import { Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-    height: '100vh',
+    height: 'calc(100vh - 60px)',
+    marginTop: '60px',
     overflowY: 'hidden',
     borderRadius: 0,
     boxShadow: 'none',

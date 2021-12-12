@@ -9,24 +9,41 @@ import {
 import { onAuthStateChanged } from 'firebase/auth';
 import { Link, Toolbar } from '@mui/material';
 import { auth } from './firebase';
-import { setSignInStatus } from './stores/auth';
+import { updateAuthStatus } from './stores/auth';
 import paths from './utils/paths';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import StyledPaper from './components/atoms/StyledPaper';
 import StyledAppBar from './components/atoms/StyledAppBar';
+import { AppUser } from './utils/types';
 
 const App: React.FC = () => {
     const dispatch = useDispatch();
 
     // Firebase Authチェック（ログイン状態が変更されるたびに発火する）
     onAuthStateChanged(auth, (firebaseUser) => {
-        dispatch(setSignInStatus(firebaseUser !== null));
+        if (!firebaseUser) return;
+        const {
+            uid,
+            displayName,
+            email,
+            photoURL,
+            refreshToken,
+            emailVerified,
+        } = firebaseUser;
+        const user: AppUser = {
+            uid,
+            displayName: displayName ?? '',
+            email: email ?? '',
+            photoURL,
+            refreshToken,
+            emailVerified,
+        };
+        dispatch(updateAuthStatus(user));
     });
 
     return (
         <BrowserRouter>
-            <StyledPaper>
+            <div>
                 <StyledAppBar position="fixed">
                     <Toolbar>
                         <div id="title">
@@ -44,7 +61,7 @@ const App: React.FC = () => {
                     <Route path={paths.home} element={<Home />} />
                     <Route element={<NotFound />} />
                 </Routes>
-            </StyledPaper>
+            </div>
         </BrowserRouter>
     );
 };
