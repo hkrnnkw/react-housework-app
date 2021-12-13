@@ -7,17 +7,12 @@ export type AppUser = {
     emailVerified: boolean;
 };
 
-type Routine = {
-    times: number;
-    unit: 'Daily' | 'Weekly' | 'Monthly' | 'Yearly';
-};
-
 type EveryXDays = {
     times: number;
     days: number;
 };
 
-type Fixed =
+type SpecificDayOfWeek =
     | 'Monday'
     | 'Tuesday'
     | 'Wednesday'
@@ -25,6 +20,11 @@ type Fixed =
     | 'Friday'
     | 'Saturday'
     | 'Sunday';
+
+type SpecificDate = {
+    month: number;
+    day: number;
+};
 
 type Task = {
     houseworkId: string;
@@ -91,7 +91,12 @@ export type Housework = {
     [id: string]: {
         id: string;
         points: 1 | 2 | 3 | 4 | 5;
-        frequency: Routine | EveryXDays | Fixed[] | 'Temporary' | null;
+        frequency:
+            | EveryXDays
+            | SpecificDayOfWeek[]
+            | SpecificDate[]
+            | 'Temporary'
+            | null;
         categoryId: string;
         description: string;
         memberId?: string;

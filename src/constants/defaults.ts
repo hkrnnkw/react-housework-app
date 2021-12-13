@@ -68,8 +68,8 @@ export const defaultHousework: Housework = {
         id: hw003,
         points: 1,
         frequency: {
-            times: 2,
-            unit: 'Monthly',
+            times: 1,
+            days: 14,
         },
         categoryId: c000,
         description: '植物への水やり',
@@ -79,7 +79,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c000,
         description: '除／加湿器のタンク替え',
@@ -159,10 +159,12 @@ export const defaultHousework: Housework = {
     [`${c001}-${hw005}`]: {
         id: hw005,
         points: 3,
-        frequency: {
-            times: 4,
-            unit: 'Yearly',
-        },
+        frequency: [
+            {
+                month: 1,
+                day: 3,
+            },
+        ],
         categoryId: c001,
         description: '洗濯機のフィルタのホコリを取る',
     },
@@ -186,7 +188,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Weekly',
+            days: 7,
         },
         categoryId: c002,
         description: '鏡を拭く',
@@ -195,8 +197,8 @@ export const defaultHousework: Housework = {
         id: hw001,
         points: 1,
         frequency: {
-            times: 2,
-            unit: 'Weekly',
+            times: 1,
+            days: 7,
         },
         categoryId: c002,
         description: 'タオルを替える',
@@ -205,8 +207,8 @@ export const defaultHousework: Housework = {
         id: hw002,
         points: 3,
         frequency: {
-            times: 2,
-            unit: 'Monthly',
+            times: 1,
+            days: 14,
         },
         categoryId: c002,
         description: '洗面台の掃除',
@@ -255,7 +257,7 @@ export const defaultHousework: Housework = {
         points: 4,
         frequency: {
             times: 1,
-            unit: 'Monthly',
+            days: 30,
         },
         categoryId: c003,
         description: '排水溝のパーツを洗う',
@@ -287,7 +289,7 @@ export const defaultHousework: Housework = {
         points: 5,
         frequency: {
             times: 1,
-            unit: 'Weekly',
+            days: 7,
         },
         categoryId: c004,
         description: 'トイレを拭く',
@@ -305,20 +307,14 @@ export const defaultHousework: Housework = {
     [`${c004}-${hw002}`]: {
         id: hw002,
         points: 1,
-        frequency: {
-            times: 1,
-            unit: 'Weekly',
-        },
+        frequency: 'Temporary',
         categoryId: c004,
         description: 'トイレットペーパーの交換',
     },
     [`${c004}-${hw003}`]: {
         id: hw003,
         points: 1,
-        frequency: {
-            times: 2,
-            unit: 'Monthly',
-        },
+        frequency: 'Temporary',
         categoryId: c004,
         description: 'トイレスタンプする',
     },
@@ -326,8 +322,8 @@ export const defaultHousework: Housework = {
         id: hw004,
         points: 1,
         frequency: {
-            times: 2,
-            unit: 'Weekly',
+            times: 1,
+            days: 7,
         },
         categoryId: c004,
         description: 'タオルを替える',
@@ -338,7 +334,7 @@ export const defaultHousework: Housework = {
         points: 3,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c005,
         description: '洗い物',
@@ -355,7 +351,7 @@ export const defaultHousework: Housework = {
         points: 2,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c005,
         description: 'シンクの水気を拭く',
@@ -365,7 +361,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c005,
         description: '食器をしまう',
@@ -382,7 +378,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Weekly',
+            days: 7,
         },
         categoryId: c005,
         description: 'キッチン壁の掃除',
@@ -392,7 +388,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c005,
         description: 'フライパン・調理器具などをしまう',
@@ -402,7 +398,7 @@ export const defaultHousework: Housework = {
         points: 2,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c005,
         description: 'IHの拭き掃除',
@@ -412,7 +408,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Monthly',
+            days: 30,
         },
         categoryId: c005,
         description: '炊飯器の洗浄・掃除',
@@ -421,8 +417,8 @@ export const defaultHousework: Housework = {
         id: hw009,
         points: 1,
         frequency: {
-            times: 2,
-            unit: 'Monthly',
+            times: 1,
+            days: 14,
         },
         categoryId: c005,
         description: '電子レンジの洗浄・掃除',
@@ -432,7 +428,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c005,
         description: 'コーヒーメーカーの掃除',
@@ -447,10 +443,16 @@ export const defaultHousework: Housework = {
     [`${c005}-${hw012}`]: {
         id: hw012,
         points: 2,
-        frequency: {
-            times: 2,
-            unit: 'Yearly',
-        },
+        frequency: [
+            {
+                month: 5,
+                day: 1,
+            },
+            {
+                month: 11,
+                day: 1,
+            },
+        ],
         categoryId: c005,
         description: 'レンジフードのフィルタを交換する',
     },
@@ -459,7 +461,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Weekly',
+            days: 7,
         },
         categoryId: c005,
         description: 'トレイ、牛乳パックをリサイクル',
@@ -468,30 +470,21 @@ export const defaultHousework: Housework = {
     [`${c006}-${hw000}`]: {
         id: hw000,
         points: 3,
-        frequency: {
-            times: 2,
-            unit: 'Weekly',
-        },
+        frequency: ['Saturday'],
         categoryId: c006,
         description: '買い出し',
     },
     [`${c006}-${hw001}`]: {
         id: hw001,
         points: 1,
-        frequency: {
-            times: 2,
-            unit: 'Weekly',
-        },
+        frequency: ['Saturday'],
         categoryId: c006,
         description: '買い物した荷物を運ぶ',
     },
     [`${c006}-${hw002}`]: {
         id: hw002,
         points: 1,
-        frequency: {
-            times: 2,
-            unit: 'Weekly',
-        },
+        frequency: ['Saturday'],
         categoryId: c006,
         description: '買い物した荷物を冷蔵庫へ入れる',
     },
@@ -500,7 +493,7 @@ export const defaultHousework: Housework = {
         points: 3,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c006,
         description: '料理する',
@@ -510,7 +503,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c006,
         description: '配膳する',
@@ -520,7 +513,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c006,
         description: 'テーブルを拭く',
@@ -528,10 +521,24 @@ export const defaultHousework: Housework = {
     [`${c006}-${hw006}`]: {
         id: hw006,
         points: 3,
-        frequency: {
-            times: 4,
-            unit: 'Yearly',
-        },
+        frequency: [
+            {
+                month: 1,
+                day: 31,
+            },
+            {
+                month: 4,
+                day: 30,
+            },
+            {
+                month: 7,
+                day: 31,
+            },
+            {
+                month: 10,
+                day: 31,
+            },
+        ],
         categoryId: c006,
         description: '浄水器のフィルター交換',
     },
@@ -540,7 +547,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Monthly',
+            days: 30,
         },
         categoryId: c006,
         description: '食器用洗剤の補充',
@@ -556,8 +563,8 @@ export const defaultHousework: Housework = {
         id: hw009,
         points: 1,
         frequency: {
-            times: 2,
-            unit: 'Weekly',
+            times: 1,
+            days: 14,
         },
         categoryId: c006,
         description: 'ランチョンマットを洗う',
@@ -597,8 +604,8 @@ export const defaultHousework: Housework = {
         id: hw003,
         points: 1,
         frequency: {
-            times: 2,
-            unit: 'Monthly',
+            times: 1,
+            days: 14,
         },
         categoryId: c007,
         description: 'カーペットの洗濯・乾燥',
@@ -608,7 +615,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Weekly',
+            days: 7,
         },
         categoryId: c007,
         description: 'ホコリ落とし',
@@ -631,10 +638,16 @@ export const defaultHousework: Housework = {
     [`${c008}-${hw002}`]: {
         id: hw002,
         points: 5,
-        frequency: {
-            times: 2,
-            unit: 'Yearly',
-        },
+        frequency: [
+            {
+                month: 2,
+                day: 1,
+            },
+            {
+                month: 8,
+                day: 1,
+            },
+        ],
         categoryId: c008,
         description: '防虫剤の交換',
     },
@@ -644,7 +657,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 3,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c009,
         description: 'えさやり',
@@ -654,7 +667,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 3,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c009,
         description: 'えさ皿を洗う',
@@ -684,7 +697,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c009,
         description: 'ブラッシング',
@@ -694,7 +707,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Daily',
+            days: 1,
         },
         categoryId: c009,
         description: 'うんち取る',
@@ -704,7 +717,7 @@ export const defaultHousework: Housework = {
         points: 1,
         frequency: {
             times: 1,
-            unit: 'Weekly',
+            days: 7,
         },
         categoryId: c009,
         description: '猫砂の補充',
@@ -730,8 +743,8 @@ export const defaultHousework: Housework = {
         id: hw009,
         points: 2,
         frequency: {
-            times: 2,
-            unit: 'Monthly',
+            times: 1,
+            days: 14,
         },
         categoryId: c009,
         description: '手の爪切り',
@@ -741,7 +754,7 @@ export const defaultHousework: Housework = {
         points: 2,
         frequency: {
             times: 1,
-            unit: 'Monthly',
+            days: 30,
         },
         categoryId: c009,
         description: '足の爪切り',
@@ -751,7 +764,7 @@ export const defaultHousework: Housework = {
         points: 4,
         frequency: {
             times: 1,
-            unit: 'Monthly',
+            days: 30,
         },
         categoryId: c009,
         description: 'トイレを洗う',
