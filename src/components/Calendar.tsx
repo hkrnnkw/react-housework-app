@@ -11,6 +11,7 @@ import {
 import { updateHousesStatus, updateMembersStatus } from '../stores/houses';
 import { House, Member } from '../utils/types';
 import { RootState } from '../stores';
+import StyledPaper from './atoms/StyledPaper';
 
 type Props = {
     uid: string;
@@ -51,12 +52,14 @@ const Calendar: React.FC<Props> = ({ uid }): JSX.Element => {
     }, [dispatch, uid]);
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <CalendarPicker
-                date={date}
-                onChange={(newDate) => setDate(newDate)}
-            />
-        </LocalizationProvider>
+        <StyledPaper>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <CalendarPicker
+                    date={date}
+                    onChange={(newDate) => setDate(newDate)}
+                />
+            </LocalizationProvider>
+        </StyledPaper>
     );
 };
 
