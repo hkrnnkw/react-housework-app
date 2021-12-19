@@ -3,11 +3,13 @@ import { House, Member } from '../utils/types';
 
 type HousesState = {
     houses: House[];
+    houseOnDisplay: House | null;
     members: Member[];
 };
 
 const initialState: HousesState = {
     houses: [],
+    houseOnDisplay: null,
     members: [],
 };
 
@@ -23,6 +25,13 @@ const slice = createSlice({
                 state.houses.push(house);
             });
         },
+        updateHouseOnDisplay: (
+            state: HousesState,
+            action: PayloadAction<House>
+        ) => ({
+            ...state,
+            houseOnDisplay: action.payload,
+        }),
         updateMembersStatus: (
             state: HousesState,
             action: PayloadAction<Member[]>
@@ -36,4 +45,5 @@ const slice = createSlice({
 
 export default slice;
 
-export const { updateHousesStatus, updateMembersStatus } = slice.actions;
+export const { updateHousesStatus, updateHouseOnDisplay, updateMembersStatus } =
+    slice.actions;

@@ -8,7 +8,11 @@ import {
     setHouseToFirestore,
     setMemberToFirestore,
 } from '../handlers/firestoreHandler';
-import { updateHousesStatus, updateMembersStatus } from '../stores/houses';
+import {
+    updateHouseOnDisplay,
+    updateHousesStatus,
+    updateMembersStatus,
+} from '../stores/houses';
 import { Day, House, Member, Month, MonthNum } from '../utils/types';
 import { RootState } from '../stores';
 import StyledPaper from './atoms/StyledPaper';
@@ -23,7 +27,7 @@ const Calendar: React.FC<Props> = ({ uid }): JSX.Element => {
     const [dailyTasksOfTheMonth, setDailyTasksOfTheMonth] = useState<Day>(
         {} as Day
     );
-    const { houses, members } = useSelector(
+    const { houses, houseOnDisplay, members } = useSelector(
         (rootState: RootState) => rootState.houses
     );
 
@@ -43,11 +47,13 @@ const Calendar: React.FC<Props> = ({ uid }): JSX.Element => {
                 );
                 const membersFromFirestore = await Promise.all(tasks);
                 dispatch(updateMembersStatus(membersFromFirestore));
+                dispatch(updateHouseOnDisplay(housesFromFirestore[0]));
             } else {
                 const newHouse: House = await setHouseToFirestore(uid);
                 dispatch(updateHousesStatus([newHouse]));
                 const newUser: Member = await setMemberToFirestore(uid);
                 dispatch(updateMembersStatus([newUser]));
+                dispatch(updateHouseOnDisplay(newHouse));
             }
         };
         // eslint-disable-next-line no-console
@@ -55,8 +61,7 @@ const Calendar: React.FC<Props> = ({ uid }): JSX.Element => {
     }, [dispatch, uid]);
 
     useEffect(() => {
-        if (!date) return;
-        const houseOnDisplay = houses[0]; // TODO 表示中のhouseに置き換える
+        if (!date || !houseOnDisplay) return;
         const year = date.getFullYear();
         const monthNum = (date.getMonth() + 1) as MonthNum;
         const month: Month = houseOnDisplay.logs[year] ?? {
@@ -64,7 +69,7 @@ const Calendar: React.FC<Props> = ({ uid }): JSX.Element => {
         };
         const day: Day = month[monthNum];
         setDailyTasksOfTheMonth(day);
-    }, [date, houses]);
+    }, [date, houses, houseOnDisplay]);
 
     return (
         <StyledPaper>
