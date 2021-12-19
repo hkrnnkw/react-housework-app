@@ -68,12 +68,12 @@ type DayNum =
     | 29
     | 30
     | 31;
-type Day = {
+export type Day = {
     [day in DayNum]: Role[];
 };
 
-type MonthNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
-type Month = {
+export type MonthNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type Month = {
     [month in MonthNum]: Day;
 };
 
