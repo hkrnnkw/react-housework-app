@@ -26,17 +26,13 @@ type SpecificDate = {
     day: number;
 };
 
-type Task = {
+export type Role = {
+    memberId: string;
     houseworkId: string;
     isCompleted: boolean;
 };
 
-type Role = {
-    memberId: string;
-    tasks: Task[];
-};
-
-type DayNum =
+export type DayNum =
     | 1
     | 2
     | 3
