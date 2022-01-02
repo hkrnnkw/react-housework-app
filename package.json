@@ -69,6 +69,9 @@
     "*.{js,jsx,ts,tsx}": [
       "npm run lint",
       "npm run format"
+    ],
+    "*.{css,less,sass,scss}": [
+      "stylelint --fix"
     ]
   }
 }
