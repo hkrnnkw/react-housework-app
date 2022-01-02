@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Checkbox,
   List,
@@ -19,7 +19,7 @@ const TodoList: React.FC<Props> = ({ uid }) => {
   const { selectingDate, houseOnDisplay } = useSelector(
     (rootState: RootState) => rootState.houses
   );
-  const [dailyRolls, setDailyRolls] = React.useState<Role[]>([]);
+  const [dailyRoles, setDailyRoles] = useState<Role[]>([]);
 
   useEffect(() => {
     if (!selectingDate || !houseOnDisplay) return;
@@ -32,17 +32,16 @@ const TodoList: React.FC<Props> = ({ uid }) => {
     const day: Day = month[monthNum];
     const dayNum = date.getDate() as DayNum;
     const roles: Role[] = day[dayNum] ?? [];
-    setDailyRolls(roles);
+    setDailyRoles(roles);
   }, [selectingDate, houseOnDisplay, dispatch]);
 
   const handleToggle = (houseworkId: string) => () => {
     // @todo update dailyRolls
   };
 
-  if (!selectingDate) return null;
   return (
     <List>
-      {dailyRolls.map(({ houseworkId, memberId, isCompleted }) => (
+      {dailyRoles.map(({ houseworkId, memberId, isCompleted }) => (
         <ListItem
           key={houseworkId}
           secondaryAction={
