@@ -27,7 +27,7 @@ type SpecificDate = {
 };
 
 export type Role = {
-  memberId: string;
+  memberId: string | null;
   houseworkId: string;
   isCompleted: boolean;
 };
