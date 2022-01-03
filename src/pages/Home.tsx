@@ -12,24 +12,20 @@ import {
   updateHousesStatus,
   updateMembersStatus,
 } from '../stores/houses';
-import { AppUser, House, Member } from '../utils/types';
+import { House, Member } from '../utils/types';
 import SignIn from '../components/SignIn';
 import Calendar from '../components/Calendar';
 import StyledPaper from '../components/atoms/StyledPaper';
 import TodoList from '../components/TodoList';
 
 const Home: React.FC = () => {
-  const user: AppUser | null = useSelector(
-    (rootState: RootState) => rootState.auth.user
-  );
+  const { uid } = useSelector((rootState: RootState) => rootState.auth);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!user) return;
+    if (!uid.length) return;
     const init = async () => {
-      const housesFromFirestore: House[] = await getHousesFromFirestore(
-        user.uid
-      );
+      const housesFromFirestore: House[] = await getHousesFromFirestore(uid);
       if (housesFromFirestore.length > 0) {
         dispatch(updateHousesStatus(housesFromFirestore));
         const allMemberIds: string[] = housesFromFirestore.flatMap(
@@ -43,22 +39,22 @@ const Home: React.FC = () => {
         dispatch(updateMembersStatus(membersFromFirestore));
         dispatch(updateHouseOnDisplay(housesFromFirestore[0]));
       } else {
-        const newHouse: House = await setHouseToFirestore(user.uid);
+        const newHouse: House = await setHouseToFirestore(uid);
         dispatch(updateHousesStatus([newHouse]));
-        const newUser: Member = await setMemberToFirestore(user.uid);
+        const newUser: Member = await setMemberToFirestore(uid);
         dispatch(updateMembersStatus([newUser]));
         dispatch(updateHouseOnDisplay(newHouse));
       }
     };
     // eslint-disable-next-line no-console
     init().catch((error) => console.error(error));
-  }, [dispatch, user]);
+  }, [dispatch, uid]);
 
-  if (!user) return <SignIn />;
+  if (!uid.length) return <SignIn />;
   return (
     <StyledPaper>
       <Calendar />
-      <TodoList uid={user.uid} />
+      <TodoList uid={uid} />
     </StyledPaper>
   );
 };

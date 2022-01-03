@@ -26,7 +26,10 @@ const App: React.FC = () => {
 
   // Firebase Authチェック（ログイン状態が変更されるたびに発火する）
   onAuthStateChanged(auth, (firebaseUser) => {
-    if (!firebaseUser) return;
+    if (!firebaseUser) {
+      dispatch(updateAuthStatus(null));
+      return;
+    }
     const { uid, displayName, email, photoURL, refreshToken, emailVerified } =
       firebaseUser;
     const user: AppUser = {

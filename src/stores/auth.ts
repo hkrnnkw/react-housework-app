@@ -1,22 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppUser } from '../utils/types';
 
-type AuthState = {
-  user: AppUser | null;
-};
+type AuthState = AppUser;
 
 const initialState: AuthState = {
-  user: null,
+  uid: '',
+  refreshToken: '',
+  displayName: '',
+  email: '',
+  photoURL: null,
+  emailVerified: false,
 };
 
 const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    updateAuthStatus: (state: AuthState, action: PayloadAction<AppUser>) => ({
-      ...state,
-      user: action.payload,
-    }),
+    updateAuthStatus: (
+      state: AuthState,
+      action: PayloadAction<AppUser | null>
+    ) => {
+      if (!action.payload) return initialState;
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
   },
 });
 

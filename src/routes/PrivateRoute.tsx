@@ -9,9 +9,9 @@ type RouteProps = {
 };
 
 const PrivateRoute: React.FC<RouteProps> = ({ component: RouteComponent }) => {
-  const { user } = useSelector((rootState: RootState) => rootState.auth);
+  const { uid } = useSelector((rootState: RootState) => rootState.auth);
 
-  if (!user) return <Navigate to={paths.home} />;
+  if (!uid.length) return <Navigate to={paths.home} />;
   return <RouteComponent />;
 };
 
