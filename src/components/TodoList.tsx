@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../stores';
-import { Day, DayNum, Month, MonthNum, Role } from '../utils/types';
+import { Day, Month, Role } from '../utils/types';
 
 type Props = {
   uid: string;
@@ -25,12 +25,12 @@ const TodoList: React.FC<Props> = ({ uid }) => {
     if (!selectingDate || !houseOnDisplay) return;
     const date = new Date(selectingDate);
     const year = date.getFullYear();
-    const monthNum = (date.getMonth() + 1) as MonthNum;
+    const monthNum = date.getMonth() + 1;
     const month: Month = houseOnDisplay.logs[year] ?? {
       [monthNum]: {} as Day,
     };
     const day: Day = month[monthNum];
-    const dayNum = date.getDate() as DayNum;
+    const dayNum = date.getDate();
     const roles: Role[] = day[dayNum] ?? [];
     setDailyRoles(roles);
   }, [selectingDate, houseOnDisplay, dispatch]);

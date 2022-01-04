@@ -7,21 +7,21 @@ export type AppUser = {
   emailVerified: boolean;
 };
 
-type EveryXDays = {
+export type EveryXDays = {
   times: number;
   days: number;
 };
 
-type SpecificDayOfWeek =
+export type SpecificDayOfWeek =
+  | 'Sunday'
   | 'Monday'
   | 'Tuesday'
   | 'Wednesday'
   | 'Thursday'
   | 'Friday'
-  | 'Saturday'
-  | 'Sunday';
+  | 'Saturday';
 
-type SpecificDate = {
+export type SpecificDate = {
   month: number;
   day: number;
 };
@@ -32,45 +32,12 @@ export type Role = {
   isCompleted: boolean;
 };
 
-export type DayNum =
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15
-  | 16
-  | 17
-  | 18
-  | 19
-  | 20
-  | 21
-  | 22
-  | 23
-  | 24
-  | 25
-  | 26
-  | 27
-  | 28
-  | 29
-  | 30
-  | 31;
 export type Day = {
-  [day in DayNum]: Role[];
+  [day: number]: Role[];
 };
 
-export type MonthNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 export type Month = {
-  [month in MonthNum]: Day;
+  [month: number]: Day;
 };
 
 export type Year = {
@@ -83,6 +50,11 @@ export type Member = {
   avatar: string;
 };
 
+export const EVERY_X_DAYS = 'EveryXDays';
+export const SPECIFIC_DAY_OF_WEEK = 'SpecificDayOfWeek';
+export const SPECIFIC_DATE = 'SpecificDate';
+export const TEMPORARY = 'Temporary';
+
 export type Housework = {
   [id: string]: {
     id: string;
@@ -91,7 +63,13 @@ export type Housework = {
       | EveryXDays
       | SpecificDayOfWeek[]
       | SpecificDate[]
-      | 'Temporary'
+      | typeof TEMPORARY
+      | null;
+    frequencyType:
+      | typeof EVERY_X_DAYS
+      | typeof SPECIFIC_DAY_OF_WEEK
+      | typeof SPECIFIC_DATE
+      | typeof TEMPORARY
       | null;
     categoryId: string;
     description: string;
