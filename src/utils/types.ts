@@ -73,7 +73,7 @@ export type Housework = {
       | null;
     categoryId: string;
     description: string;
-    memberId?: string;
+    memberId: string | null;
   };
 };
 
