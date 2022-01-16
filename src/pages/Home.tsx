@@ -14,7 +14,6 @@ import {
 } from '../stores/houses';
 import { House, Member } from '../utils/types';
 import SignIn from '../components/SignIn';
-import Calendar from '../components/Calendar';
 import StyledPaper from '../components/atoms/StyledPaper';
 import TodoList from '../components/TodoList';
 
@@ -53,7 +52,6 @@ const Home: React.FC = () => {
   if (!uid.length) return <SignIn />;
   return (
     <StyledPaper>
-      <Calendar />
       <TodoList uid={uid} />
     </StyledPaper>
   );
