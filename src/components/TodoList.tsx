@@ -8,7 +8,8 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../stores';
-import { Day, Month, Role } from '../utils/types';
+import { Role } from '../utils/types';
+import { switchRoleStatus } from '../stores/houses';
 
 type Props = {
   uid: string;
@@ -22,28 +23,24 @@ const TodoList: React.FC<Props> = ({ uid }) => {
   const [dailyRoles, setDailyRoles] = useState<Role[]>([]);
 
   useEffect(() => {
-    if (!selectingDate || !houseOnDisplay) return;
+    if (!houseOnDisplay) return;
     const date = new Date(selectingDate);
-    const year = date.getFullYear();
-    const monthNum = date.getMonth() + 1;
-    const month: Month = houseOnDisplay.logs[year] ?? {
-      [monthNum]: {} as Day,
-    };
-    const day: Day = month[monthNum];
+    const yearNum = date.getFullYear();
+    const monthNum = date.getMonth();
     const dayNum = date.getDate();
-    const roles: Role[] = day[dayNum] ?? [];
+    const roles: Role[] = houseOnDisplay.logs[yearNum][monthNum][dayNum] ?? [];
     setDailyRoles(roles);
-  }, [selectingDate, houseOnDisplay, dispatch]);
+  }, [selectingDate, houseOnDisplay]);
 
   const handleToggle = (houseworkId: string) => () => {
-    // @todo update dailyRolls
+    dispatch(switchRoleStatus(houseworkId));
   };
 
   return (
     <List>
-      {dailyRoles.map(({ houseworkId, memberId, isCompleted }) => (
+      {dailyRoles.map(({ houseworkId, memberId, isCompleted }, i) => (
         <ListItem
-          key={houseworkId}
+          key={`${houseworkId}-${i}`} // eslint-disable-line react/no-array-index-key
           secondaryAction={
             <Checkbox
               edge="end"

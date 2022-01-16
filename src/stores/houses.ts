@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { House, Member } from '../utils/types';
+import { createLogs } from '../handlers/logsHandler';
+import { House, Member, Role, Year } from '../utils/types';
 
 type HousesState = {
   houses: House[];
   houseOnDisplay: House | null;
   members: Member[];
-  selectingDate: number | null;
+  selectingDate: number;
 };
 
 const initialState: HousesState = {
@@ -19,6 +20,30 @@ const slice = createSlice({
   name: 'houses',
   initialState,
   reducers: {
+    initHousesStatus: (state: HousesState, action: PayloadAction<House>) => {
+      const house = action.payload;
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      const dayOfWeek = date.getDay();
+      const logs = createLogs(year, month, day, dayOfWeek, house.housework);
+      Object.assign(house.logs, logs);
+      const members = house.memberIds.map(
+        (id) =>
+          ({
+            id,
+            name: '',
+            avatar: '',
+          } as Member)
+      );
+      return {
+        ...state,
+        houses: [house],
+        houseOnDisplay: house,
+        members,
+      };
+    },
     updateHousesStatus: (
       state: HousesState,
       action: PayloadAction<House[]>
@@ -27,13 +52,38 @@ const slice = createSlice({
         state.houses.push(house);
       });
     },
-    updateHouseOnDisplay: (
-      state: HousesState,
-      action: PayloadAction<House>
-    ) => ({
-      ...state,
-      houseOnDisplay: action.payload,
-    }),
+    switchRoleStatus: (state: HousesState, action: PayloadAction<string>) => {
+      if (!state.houseOnDisplay) return state;
+      const date = new Date(state.selectingDate);
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      const roles: Role[] | undefined =
+        state.houseOnDisplay.logs[year][month][day];
+      if (!roles) return state;
+      const updates = roles.map((r) =>
+        r.houseworkId !== action.payload
+          ? r
+          : ({ ...r, isCompleted: !r.isCompleted } as Role)
+      );
+      const logs: Year = {
+        ...state.houseOnDisplay.logs,
+        [year]: {
+          ...state.houseOnDisplay.logs[year],
+          [month]: {
+            ...state.houseOnDisplay.logs[year][month],
+            [day]: updates,
+          },
+        },
+      };
+      return {
+        ...state,
+        houseOnDisplay: {
+          ...state.houseOnDisplay,
+          logs,
+        },
+      };
+    },
     updateMembersStatus: (
       state: HousesState,
       action: PayloadAction<Member[]>
@@ -42,10 +92,7 @@ const slice = createSlice({
         state.members.push(member);
       });
     },
-    setSelectingDate: (
-      state: HousesState,
-      action: PayloadAction<number | null>
-    ) => ({
+    setSelectingDate: (state: HousesState, action: PayloadAction<number>) => ({
       ...state,
       selectingDate: action.payload,
     }),
@@ -55,8 +102,9 @@ const slice = createSlice({
 export default slice;
 
 export const {
+  initHousesStatus,
+  switchRoleStatus,
   updateHousesStatus,
-  updateHouseOnDisplay,
   updateMembersStatus,
   setSelectingDate,
 } = slice.actions;

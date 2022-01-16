@@ -8,19 +8,19 @@ import {
   setMemberToFirestore,
 } from '../handlers/firestoreHandler';
 import {
-  updateHouseOnDisplay,
+  initHousesStatus,
   updateHousesStatus,
   updateMembersStatus,
 } from '../stores/houses';
-import { House, Member } from '../utils/types';
+import { House } from '../utils/types';
 import SignIn from '../components/SignIn';
 import StyledPaper from '../components/atoms/StyledPaper';
 import TodoList from '../components/TodoList';
 
 const Home: React.FC = () => {
+  const dispatch = useDispatch();
   const { uid } = useSelector((rootState: RootState) => rootState.auth);
 
-  const dispatch = useDispatch();
   useEffect(() => {
     if (!uid.length) return;
     const init = async () => {
@@ -36,13 +36,10 @@ const Home: React.FC = () => {
         );
         const membersFromFirestore = await Promise.all(tasks);
         dispatch(updateMembersStatus(membersFromFirestore));
-        dispatch(updateHouseOnDisplay(housesFromFirestore[0]));
       } else {
         const newHouse: House = await setHouseToFirestore(uid);
-        dispatch(updateHousesStatus([newHouse]));
-        const newUser: Member = await setMemberToFirestore(uid);
-        dispatch(updateMembersStatus([newUser]));
-        dispatch(updateHouseOnDisplay(newHouse));
+        dispatch(initHousesStatus(newHouse));
+        await setMemberToFirestore(uid);
       }
     };
     // eslint-disable-next-line no-console
