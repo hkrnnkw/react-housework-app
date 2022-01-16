@@ -6,11 +6,11 @@ import StyledPaper from '../components/atoms/StyledPaper';
 
 const HouseworkItem: React.FC = () => {
   const { id } = useLocation().state as { id: string };
-  const { houseOnDisplay } = useSelector(
+  const { currentHouse } = useSelector(
     (rootState: RootState) => rootState.houses
   );
 
-  if (!houseOnDisplay) return null;
+  if (!currentHouse) return null;
   return (
     <StyledPaper>
       <p>{id}</p>

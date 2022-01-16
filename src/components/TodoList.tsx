@@ -17,20 +17,20 @@ type Props = {
 
 const TodoList: React.FC<Props> = ({ uid }) => {
   const dispatch = useDispatch();
-  const { selectingDate, houseOnDisplay } = useSelector(
+  const { selectingDate, currentHouse } = useSelector(
     (rootState: RootState) => rootState.houses
   );
   const [dailyRoles, setDailyRoles] = useState<Role[]>([]);
 
   useEffect(() => {
-    if (!houseOnDisplay) return;
+    if (!currentHouse) return;
     const date = new Date(selectingDate);
     const yearNum = date.getFullYear();
     const monthNum = date.getMonth();
     const dayNum = date.getDate();
-    const roles: Role[] = houseOnDisplay.logs[yearNum][monthNum][dayNum] ?? [];
+    const roles: Role[] = currentHouse.logs[yearNum][monthNum][dayNum] ?? [];
     setDailyRoles(roles);
-  }, [selectingDate, houseOnDisplay]);
+  }, [selectingDate, currentHouse]);
 
   const handleToggle = (houseworkId: string) => () => {
     dispatch(switchRoleStatus(houseworkId));

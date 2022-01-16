@@ -13,16 +13,16 @@ import StyledPaper from '../components/atoms/StyledPaper';
 import paths from '../utils/paths';
 
 const HouseworkList: React.FC = () => {
-  const { houseOnDisplay } = useSelector(
+  const { currentHouse } = useSelector(
     (rootState: RootState) => rootState.houses
   );
 
-  if (!houseOnDisplay) return null;
+  if (!currentHouse) return null;
   return (
     <StyledPaper>
       <Outlet />
       <List>
-        {Object.entries(houseOnDisplay.housework).map(([key, value]) => (
+        {Object.entries(currentHouse.housework).map(([key, value]) => (
           <ListItem key={key}>
             <Link
               component={RouterLink}

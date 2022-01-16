@@ -13,11 +13,11 @@ import StyledPaper from '../components/atoms/StyledPaper';
 import paths from '../utils/paths';
 
 const Settings: React.FC = () => {
-  const { houseOnDisplay } = useSelector(
+  const { currentHouse } = useSelector(
     (rootState: RootState) => rootState.houses
   );
 
-  if (!houseOnDisplay) return null;
+  if (!currentHouse) return null;
   return (
     <StyledPaper>
       <Outlet />

@@ -4,14 +4,14 @@ import { House, Member, Role, Year } from '../utils/types';
 
 type HousesState = {
   houses: House[];
-  houseOnDisplay: House | null;
+  currentHouse: House | null;
   members: Member[];
   selectingDate: number;
 };
 
 const initialState: HousesState = {
   houses: [],
-  houseOnDisplay: null,
+  currentHouse: null,
   members: [],
   selectingDate: new Date().getTime(),
 };
@@ -53,13 +53,13 @@ const slice = createSlice({
       });
     },
     switchRoleStatus: (state: HousesState, action: PayloadAction<string>) => {
-      if (!state.houseOnDisplay) return state;
+      if (!state.currentHouse) return state;
       const date = new Date(state.selectingDate);
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
       const roles: Role[] | undefined =
-        state.houseOnDisplay.logs[year][month][day];
+        state.currentHouse.logs[year][month][day];
       if (!roles) return state;
       const updates = roles.map((r) =>
         r.houseworkId !== action.payload
@@ -67,19 +67,19 @@ const slice = createSlice({
           : ({ ...r, isCompleted: !r.isCompleted } as Role)
       );
       const logs: Year = {
-        ...state.houseOnDisplay.logs,
+        ...state.currentHouse.logs,
         [year]: {
-          ...state.houseOnDisplay.logs[year],
+          ...state.currentHouse.logs[year],
           [month]: {
-            ...state.houseOnDisplay.logs[year][month],
+            ...state.currentHouse.logs[year][month],
             [day]: updates,
           },
         },
       };
       return {
         ...state,
-        houseOnDisplay: {
-          ...state.houseOnDisplay,
+        currentHouse: {
+          ...state.currentHouse,
           logs,
         },
       };
