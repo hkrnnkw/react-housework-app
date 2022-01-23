@@ -6,14 +6,14 @@ type HousesState = {
   houses: House[];
   currentHouse: House | null;
   members: Member[];
-  selectingDate: number;
+  currentDate: number;
 };
 
 const initialState: HousesState = {
   houses: [],
   currentHouse: null,
   members: [],
-  selectingDate: new Date().getTime(),
+  currentDate: new Date().getTime(),
 };
 
 const slice = createSlice({
@@ -40,7 +40,7 @@ const slice = createSlice({
       return {
         ...state,
         houses: [house],
-        houseOnDisplay: house,
+        currentHouse: house,
         members,
       };
     },
@@ -54,7 +54,7 @@ const slice = createSlice({
     },
     switchRoleStatus: (state: HousesState, action: PayloadAction<string>) => {
       if (!state.currentHouse) return state;
-      const date = new Date(state.selectingDate);
+      const date = new Date(state.currentDate);
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -92,10 +92,17 @@ const slice = createSlice({
         state.members.push(member);
       });
     },
-    setSelectingDate: (state: HousesState, action: PayloadAction<number>) => ({
-      ...state,
-      selectingDate: action.payload,
-    }),
+    changeDate: (
+      state: HousesState,
+      action: PayloadAction<'prev' | 'next'>
+    ) => {
+      const dt = new Date(state.currentDate);
+      dt.setDate(dt.getDate() + (action.payload === 'prev' ? -1 : 1));
+      return {
+        ...state,
+        currentDate: dt.getTime(),
+      };
+    },
   },
 });
 
@@ -106,5 +113,5 @@ export const {
   switchRoleStatus,
   updateHousesStatus,
   updateMembersStatus,
-  setSelectingDate,
+  changeDate,
 } = slice.actions;
