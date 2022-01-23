@@ -29,14 +29,14 @@ const slice = createSlice({
       const dayOfWeek = date.getDay();
       const logs = createLogs(year, month, day, dayOfWeek, house.housework);
       Object.assign(house.logs, logs);
-      const members = house.memberIds.map(
-        (id) =>
-          ({
-            id,
-            name: '',
-            avatar: '',
-          } as Member)
-      );
+      const members = house.memberIds.map((id) => {
+        const member: Member = {
+          id,
+          name: '',
+          avatar: '',
+        };
+        return member;
+      });
       return {
         ...state,
         houses: [house],
