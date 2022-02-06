@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createLogs } from '../handlers/logsHandler';
-import { House, Member, Role, Year } from '../utils/types';
+import { createLogs, getUpdates } from '../handlers/logsHandler';
+import { House, Member, Year } from '../utils/types';
 
 type HousesState = {
   houses: House[];
@@ -48,33 +48,17 @@ const slice = createSlice({
       });
     },
     switchRoleStatus: (state: HousesState, action: PayloadAction<string>) => {
-      if (!state.currentHouse) return state;
-      const date = new Date(state.currentDate);
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDate();
-      const roles: Role[] | undefined =
-        state.currentHouse.logs[year][month][day];
-      if (!roles) return state;
-      const updates = roles.map((r) =>
-        r.houseworkId !== action.payload
-          ? r
-          : ({ ...r, isCompleted: !r.isCompleted } as Role)
+      const { currentHouse, currentDate } = state;
+      if (!currentHouse) return state;
+      const logs: Year = getUpdates(
+        currentDate,
+        currentHouse.logs,
+        action.payload
       );
-      const logs: Year = {
-        ...state.currentHouse.logs,
-        [year]: {
-          ...state.currentHouse.logs[year],
-          [month]: {
-            ...state.currentHouse.logs[year][month],
-            [day]: updates,
-          },
-        },
-      };
       return {
         ...state,
         currentHouse: {
-          ...state.currentHouse,
+          ...currentHouse,
           logs,
         },
       };

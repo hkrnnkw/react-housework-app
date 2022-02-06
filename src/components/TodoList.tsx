@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../stores';
 import { Role } from '../utils/types';
 import { switchRoleStatus } from '../stores/houses';
+import { setLogToFirestore } from '../handlers/firestoreHandler';
 
 type Props = {
   uid: string;
@@ -32,8 +33,14 @@ const TodoList: React.FC<Props> = ({ uid }) => {
     setDailyRoles(roles);
   }, [currentDate, currentHouse]);
 
-  const handleToggle = (houseworkId: string) => () => {
+  const handleToggle = async (houseworkId: string) => {
+    if (!currentHouse) return;
     dispatch(switchRoleStatus(houseworkId));
+    try {
+      await setLogToFirestore(houseworkId, currentHouse, currentDate);
+    } catch (e) {
+      dispatch(switchRoleStatus(houseworkId));
+    }
   };
 
   return (
@@ -44,7 +51,7 @@ const TodoList: React.FC<Props> = ({ uid }) => {
           secondaryAction={
             <Checkbox
               edge="end"
-              onChange={handleToggle(houseworkId)}
+              onChange={() => handleToggle(houseworkId)}
               checked={isCompleted}
               inputProps={{ 'aria-labelledby': houseworkId }}
             />

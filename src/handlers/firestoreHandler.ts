@@ -10,8 +10,9 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore';
-import { House, Member } from '../utils/types';
+import { House, Member, Year } from '../utils/types';
 import { defaultCategories, defaultHousework } from '../constants/defaults';
+import { getUpdates } from './logsHandler';
 
 export const setMemberToFirestore = async (
   uid: string,
@@ -60,4 +61,16 @@ export const getHousesFromFirestore = async (uid: string): Promise<House[]> => {
   );
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map((qDoc) => qDoc.data() as House);
+};
+
+export const setLogToFirestore = async (
+  houseworkId: string,
+  currentHouse: House,
+  currentDate: number
+): Promise<Year> => {
+  const db = getFirestore();
+  const houseRef = doc(db, 'houses', currentHouse.id);
+  const logs: Year = getUpdates(currentDate, currentHouse.logs, houseworkId);
+  await setDoc(houseRef, { logs }, { merge: true });
+  return logs;
 };
