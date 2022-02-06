@@ -88,3 +88,10 @@ export type House = {
   housework: Housework;
   categories: Category;
 };
+
+export type DateObj = {
+  yyyy: number;
+  mm: number;
+  dd: number;
+  dayOfWeek: number;
+};

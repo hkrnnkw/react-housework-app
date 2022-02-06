@@ -22,12 +22,7 @@ const slice = createSlice({
   reducers: {
     initHousesStatus: (state: HousesState, action: PayloadAction<House>) => {
       const house = action.payload;
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDate();
-      const dayOfWeek = date.getDay();
-      const logs = createLogs(year, month, day, dayOfWeek, house.housework);
+      const logs = createLogs(house.housework);
       Object.assign(house.logs, logs);
       const members = house.memberIds.map((id) => {
         const member: Member = {

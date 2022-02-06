@@ -1,4 +1,6 @@
+/* eslint-disable import/prefer-default-export */
 import {
+  DateObj,
   EveryXDays,
   EVERY_X_DAYS,
   Housework,
@@ -32,14 +34,19 @@ const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
   }
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export const createLogs = (
-  yyyy: number,
-  mm: number,
-  dd: number,
-  dayOfWeek: number,
-  housework: Housework
-): Year => {
+const getDateObj = (dateNum?: number): DateObj => {
+  const date = dateNum ? new Date(dateNum) : new Date();
+  return {
+    yyyy: date.getFullYear(),
+    mm: date.getMonth(),
+    dd: date.getDate(),
+    dayOfWeek: date.getDay()
+  } as DateObj;
+};
+
+export const createLogs = (housework: Housework): Year => {
+  const date = getDateObj();
+  const { yyyy, mm, dd, dayOfWeek } = date;
   const logs: Year = { [yyyy]: {} };
   const lastDayNum = new Date(yyyy, mm, 0).getDate();
 
