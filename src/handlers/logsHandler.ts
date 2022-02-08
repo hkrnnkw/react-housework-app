@@ -44,19 +44,21 @@ const getDateObj = (dateNum?: number): DateObj => {
   } as DateObj;
 };
 
-export const createLogs = (housework: Housework): Year => {
+export const createLogs = (housework: Housework, existingLogs?: Year): Year => {
   const date = getDateObj();
   const { yyyy, mm, dd, dayOfWeek } = date;
-  const logs: Year = { [yyyy]: {} };
+  const logs: Year = existingLogs || { [yyyy]: {} };
   const lastDayNum = new Date(yyyy, mm, 0).getDate();
 
-  const initDateObj = (monthNum: number, DayNum: number) => {
+  const initDateObj = (monthNum: number, DayNum: number): boolean => {
     if (!logs[yyyy][monthNum]) {
       Object.assign(logs[yyyy], { [monthNum]: {} });
     }
     if (!logs[yyyy][monthNum][DayNum]) {
       Object.assign(logs[yyyy][monthNum], { [DayNum]: [] });
+      return true;
     }
+    return false;
   };
 
   Object.entries(housework).forEach(([houseworkId, val]) => {
@@ -66,9 +68,11 @@ export const createLogs = (housework: Housework): Year => {
       case EVERY_X_DAYS: {
         const { days, times } = frequency as EveryXDays;
         for (let day = dd + days - 1; day <= lastDayNum; day += days) {
-          initDateObj(mm, day);
-          for (let i = 0; i < times; i += 1) {
-            logs[yyyy][mm][day].push(role);
+          const didInit = initDateObj(mm, day);
+          if (day !== dd || didInit) {
+            for (let i = 0; i < times; i += 1) {
+              logs[yyyy][mm][day].push(role);
+            }
           }
         }
         break;
@@ -79,8 +83,8 @@ export const createLogs = (housework: Housework): Year => {
           let diff = convertDayOfWeekToNum(dow) - dayOfWeek;
           if (diff < 0) diff += 7;
           for (let day = dd + diff; day <= lastDayNum; day += 7) {
-            initDateObj(mm, day);
-            logs[yyyy][mm][day].push(role);
+            const didInit = initDateObj(mm, day);
+            if (day !== dd || didInit) logs[yyyy][mm][day].push(role);
           }
         });
         break;
@@ -89,8 +93,8 @@ export const createLogs = (housework: Housework): Year => {
         const specificDates = frequency as SpecificDate[];
         specificDates.forEach(({ month, day }) => {
           if (month !== mm) return;
-          initDateObj(month, day);
-          logs[yyyy][month][day].push(role);
+          const didInit = initDateObj(month, day);
+          if (day !== dd || didInit) logs[yyyy][month][day].push(role);
         });
         break;
       }

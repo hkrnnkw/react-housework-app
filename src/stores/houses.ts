@@ -43,9 +43,15 @@ const slice = createSlice({
       state: HousesState,
       action: PayloadAction<House[]>
     ) => {
-      action.payload.forEach((house) => {
-        state.houses.push(house);
+      const houses = action.payload.map((house) => {
+        const logs = createLogs(house.housework, house.logs);
+        return { ...house, logs } as House;
       });
+      return {
+        ...state,
+        houses,
+        currentHouse: houses[0],
+      };
     },
     switchRoleStatus: (state: HousesState, action: PayloadAction<string>) => {
       const { currentHouse, currentDate } = state;
