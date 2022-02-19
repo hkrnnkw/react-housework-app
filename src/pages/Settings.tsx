@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link as RouterLink, Outlet } from 'react-router-dom';
 import {
   Link,
@@ -8,16 +7,14 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
-import { RootState } from '../stores';
 import StyledPaper from '../components/atoms/StyledPaper';
 import paths from '../utils/paths';
+import { useHouse } from '../contexts/houses';
 
 const Settings: React.FC = () => {
-  const { currentHouse } = useSelector(
-    (rootState: RootState) => rootState.houses
-  );
+  const { currentHouseId } = useHouse();
 
-  if (!currentHouse) return null;
+  if (!currentHouseId) return null;
   return (
     <StyledPaper>
       <Outlet />

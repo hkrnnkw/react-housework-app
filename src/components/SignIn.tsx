@@ -1,21 +1,16 @@
 import React from 'react';
-import { getAuth, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { Button } from '@mui/material';
 import StyledPaper from './atoms/StyledPaper';
+import { useDispatchHouse } from '../contexts/houses';
 
-const SignUp: React.FC = () => {
-  const provider = new GoogleAuthProvider();
-
-  const handleSignUp = async () => {
-    const auth = getAuth();
-    await signInWithRedirect(auth, provider);
-  };
+const SignIn: React.FC = () => {
+  const { signIn } = useDispatchHouse();
 
   return (
     <StyledPaper>
-      <Button onClick={() => handleSignUp()}>ログイン</Button>
+      <Button onClick={() => signIn()}>ログイン</Button>
     </StyledPaper>
   );
 };
 
-export default SignUp;
+export default SignIn;

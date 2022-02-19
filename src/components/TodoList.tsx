@@ -6,43 +6,38 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../stores';
 import { Role } from '../utils/types';
-import { switchRoleStatus } from '../stores/houses';
 import { setLogToFirestore } from '../handlers/firestoreHandler';
+import { useDispatchHouse, useHouse } from '../contexts/houses';
 
-type Props = {
-  uid: string;
-};
-
-const TodoList: React.FC<Props> = ({ uid }) => {
-  const dispatch = useDispatch();
-  const { currentDate, currentHouse } = useSelector(
-    (rootState: RootState) => rootState.houses
-  );
+const TodoList: React.FC = () => {
+  const { currentDate, currentHouseId, houses, user } = useHouse();
+  const { switchRoleStatus } = useDispatchHouse();
   const [dailyRoles, setDailyRoles] = useState<Role[]>([]);
 
   useEffect(() => {
-    if (!currentHouse) return;
+    if (!currentHouseId) return;
     const date = new Date(currentDate);
     const yearNum = date.getFullYear();
     const monthNum = date.getMonth();
     const dayNum = date.getDate();
-    const roles: Role[] = currentHouse.logs[yearNum][monthNum][dayNum] ?? [];
+    const roles: Role[] =
+      houses[currentHouseId].logs[yearNum][monthNum][dayNum] ?? [];
     setDailyRoles(roles);
-  }, [currentDate, currentHouse]);
+  }, [currentDate, currentHouseId, houses]);
 
   const handleToggle = async (houseworkId: string) => {
-    if (!currentHouse) return;
-    dispatch(switchRoleStatus(houseworkId));
+    if (!currentHouseId) return;
+    switchRoleStatus(houseworkId);
     try {
-      await setLogToFirestore(houseworkId, currentHouse, currentDate);
+      const { logs } = houses[currentHouseId];
+      await setLogToFirestore(currentHouseId, logs);
     } catch (e) {
-      dispatch(switchRoleStatus(houseworkId));
+      switchRoleStatus(houseworkId);
     }
   };
 
+  if (!user) return null;
   return (
     <List>
       {dailyRoles.map(({ houseworkId, memberId, isCompleted }, i) => (
@@ -58,7 +53,7 @@ const TodoList: React.FC<Props> = ({ uid }) => {
           }
           disablePadding
           style={{
-            backgroundColor: memberId === uid ? '#DDDDFF' : '#FFFFFF',
+            backgroundColor: memberId === user.uid ? '#DDDDFF' : '#FFFFFF',
           }}
         >
           <ListItemButton>

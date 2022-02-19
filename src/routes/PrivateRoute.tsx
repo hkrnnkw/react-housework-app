@@ -1,7 +1,6 @@
 import React, { ComponentType } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../stores/index';
+import { useHouse } from '../contexts/houses';
 import paths from '../utils/paths';
 
 type RouteProps = {
@@ -9,9 +8,9 @@ type RouteProps = {
 };
 
 const PrivateRoute: React.FC<RouteProps> = ({ component: RouteComponent }) => {
-  const { uid } = useSelector((rootState: RootState) => rootState.auth);
+  const { user } = useHouse();
 
-  if (!uid.length) return <Navigate to={paths.home} />;
+  if (!user) return <Navigate to={paths.home} />;
   return <RouteComponent />;
 };
 

@@ -1,16 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { RootState } from '../stores';
 import StyledPaper from '../components/atoms/StyledPaper';
+import { useHouse } from '../contexts/houses';
 
 const HouseworkItem: React.FC = () => {
   const { id } = useLocation().state as { id: string };
-  const { currentHouse } = useSelector(
-    (rootState: RootState) => rootState.houses
-  );
+  const { currentHouseId } = useHouse();
 
-  if (!currentHouse) return null;
+  if (!currentHouseId) return null;
   return (
     <StyledPaper>
       <p>{id}</p>

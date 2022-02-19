@@ -1,19 +1,20 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { IconButton, Typography } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { RootState } from '../stores';
-import { changeDate } from '../stores/houses';
+import {
+  DirectionType,
+  DIRECTION_TYPE_ENUM,
+  useDispatchHouse,
+  useHouse,
+} from '../contexts/houses';
 
 const DateDisplay: React.FC = () => {
-  const dispatch = useDispatch();
-  const { currentDate } = useSelector(
-    (rootState: RootState) => rootState.houses
-  );
+  const { currentDate } = useHouse();
+  const { changeDate } = useDispatchHouse();
 
-  const handleDateChange = (to: 'prev' | 'next') => {
-    dispatch(changeDate(to));
+  const handleDateChange = (to: DirectionType) => {
+    changeDate(to);
   };
 
   const makeDate = () => {
@@ -30,7 +31,7 @@ const DateDisplay: React.FC = () => {
         color="primary"
         aria-label="left"
         component="span"
-        onClick={() => handleDateChange('prev')}
+        onClick={() => handleDateChange(DIRECTION_TYPE_ENUM.PREV)}
       >
         <ChevronLeftIcon />
       </IconButton>
@@ -39,7 +40,7 @@ const DateDisplay: React.FC = () => {
         color="primary"
         aria-label="right"
         component="span"
-        onClick={() => handleDateChange('next')}
+        onClick={() => handleDateChange(DIRECTION_TYPE_ENUM.NEXT)}
       >
         <ChevronRightIcon />
       </IconButton>

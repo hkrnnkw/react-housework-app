@@ -1,12 +1,3 @@
-export type AppUser = {
-  uid: string;
-  displayName: string;
-  email: string;
-  photoURL: string | null;
-  refreshToken: string;
-  emailVerified: boolean;
-};
-
 export type EveryXDays = {
   times: number;
   days: number;
@@ -79,14 +70,6 @@ export type Housework = {
 
 export type Category = {
   [id: string]: string;
-};
-
-export type House = {
-  id: string;
-  logs: Year;
-  memberIds: string[];
-  housework: Housework;
-  categories: Category;
 };
 
 export type DateObj = {

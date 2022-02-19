@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import {
   BrowserRouter,
   Route,
@@ -10,37 +9,23 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { IconButton, Link, Toolbar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { auth } from './firebase';
-import { updateAuthStatus } from './stores/auth';
 import paths from './utils/paths';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import StyledAppBar from './components/atoms/StyledAppBar';
-import { AppUser } from './utils/types';
 import PrivateRoute from './routes/PrivateRoute';
 import Settings from './pages/Settings';
 import HouseworkItem from './pages/HouseworkItem';
 import HouseworkList from './pages/HouseworkList';
+import { useDispatchHouse, useHouse } from './contexts/houses';
 
 const App: React.FC = () => {
-  const dispatch = useDispatch();
+  const { user } = useHouse();
+  const { setUserData } = useDispatchHouse();
 
-  // Firebase Authチェック（ログイン状態が変更されるたびに発火する）
   onAuthStateChanged(auth, (firebaseUser) => {
-    if (!firebaseUser) {
-      dispatch(updateAuthStatus(null));
-      return;
-    }
-    const { uid, displayName, email, photoURL, refreshToken, emailVerified } =
-      firebaseUser;
-    const user: AppUser = {
-      uid,
-      displayName: displayName ?? '',
-      email: email ?? '',
-      photoURL,
-      refreshToken,
-      emailVerified,
-    };
-    dispatch(updateAuthStatus(user));
+    if (firebaseUser?.uid === user?.uid) return;
+    setUserData(firebaseUser);
   });
 
   return (

@@ -51,6 +51,9 @@ export const createLogs = (housework: Housework, existingLogs?: Year): Year => {
   const lastDayNum = new Date(yyyy, mm, 0).getDate();
 
   const initDateObj = (monthNum: number, DayNum: number): boolean => {
+    if (!logs[yyyy]) {
+      Object.assign(logs, { [yyyy]: {} });
+    }
     if (!logs[yyyy][monthNum]) {
       Object.assign(logs[yyyy], { [monthNum]: {} });
     }
