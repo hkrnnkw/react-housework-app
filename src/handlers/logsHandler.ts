@@ -34,7 +34,7 @@ const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
   }
 };
 
-const getDateObj = (dateNum?: number): DateObj => {
+export const getDateObj = (dateNum?: number): DateObj => {
   const date = dateNum ? new Date(dateNum) : new Date();
   return {
     yyyy: date.getFullYear(),

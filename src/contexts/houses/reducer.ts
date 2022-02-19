@@ -1,5 +1,5 @@
 import { User } from 'firebase/auth';
-import { createLogs, getUpdates } from '../../handlers/logsHandler';
+import { createLogs } from '../../handlers/logsHandler';
 import { Year } from '../../utils/types';
 import {
   State,
@@ -22,9 +22,9 @@ export const actions = {
     type: HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE,
     payload: houseId,
   }),
-  switchRoleStatus: (houseworkId: string): HouseActionType => ({
+  switchRoleStatus: (logs: Year): HouseActionType => ({
     type: HOUSE_ACTIONS.SWITCH_ROLE_STATUS,
-    payload: houseworkId,
+    payload: logs,
   }),
   changeDate: (direction: DirectionType): HouseActionType => ({
     type: HOUSE_ACTIONS.CHANGE_DATE,
@@ -54,17 +54,14 @@ export const reducer = (state: State, action: HouseActionType): State => {
       return { ...state, currentHouseId: action.payload };
     }
     case HOUSE_ACTIONS.SWITCH_ROLE_STATUS: {
-      const { currentHouseId, currentDate } = state;
+      const { currentHouseId, houses } = state;
       if (!currentHouseId) return state;
-      const house = state.houses[currentHouseId];
-      const logs: Year = getUpdates(currentDate, house.logs, action.payload);
-      return {
-        ...state,
-        houses: {
-          ...state.houses,
-          [currentHouseId]: { ...house, logs },
-        },
+      const logs = action.payload;
+      const newHouses = {
+        ...houses,
+        [currentHouseId]: { ...houses[currentHouseId], logs },
       };
+      return { ...state, houses: newHouses };
     }
     case HOUSE_ACTIONS.CHANGE_DATE: {
       const dt = new Date(state.currentDate);

@@ -6,9 +6,11 @@ import {
   getHousesFromFirestore,
   getMemberFromFirestore,
   setHouseToFirestore,
+  setLogToFirestore,
   setMemberToFirestore,
 } from '../../handlers/firestoreHandler';
 import { Member } from '../../utils/types';
+import { getUpdates } from '../../handlers/logsHandler';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {
@@ -55,10 +57,17 @@ const useHouseForContext = () => {
     dispatch(actions.changeCurrentHouse(...args));
   };
 
-  const switchRoleStatus = (
-    ...args: Parameters<typeof actions.switchRoleStatus>
-  ) => {
-    dispatch(actions.switchRoleStatus(...args));
+  const switchRoleStatus = async (houseworkId: string) => {
+    const { currentHouseId, currentDate, houses } = state;
+    if (!currentHouseId) return;
+    const house = houses[currentHouseId];
+    const logs = getUpdates(currentDate, house.logs, houseworkId);
+    dispatch(actions.switchRoleStatus(logs));
+    try {
+      await setLogToFirestore(currentHouseId, logs);
+    } catch (e) {
+      dispatch(actions.switchRoleStatus(logs));
+    }
   };
 
   const changeDate = (...args: Parameters<typeof actions.changeDate>) => {

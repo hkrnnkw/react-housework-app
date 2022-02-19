@@ -55,7 +55,7 @@ export type HouseActionType =
     }
   | {
       type: typeof HOUSE_ACTIONS.SWITCH_ROLE_STATUS;
-      payload: string;
+      payload: Year;
     }
   | {
       type: typeof HOUSE_ACTIONS.CHANGE_DATE;
