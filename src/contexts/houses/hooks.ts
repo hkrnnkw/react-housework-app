@@ -16,20 +16,24 @@ const useHouseForContext = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    if (!state.user) return;
-    const init = async (uid: string) => {
-      const houses = await getHousesFromFirestore(uid);
+    const { user } = state;
+    if (!user) return;
+
+    const init = async () => {
+      const houses = await getHousesFromFirestore(user.uid);
       if (houses.length > 0) {
         dispatch(actions.updateHouses(houses));
+        await changeCurrentHouse(houses[0]);
         return;
       }
-      const newHouse = await setHouseToFirestore(uid);
-      dispatch(actions.updateHouses([newHouse]));
-      await setMemberToFirestore(uid);
+      // @todo move init-function to backend
+      const newHouse = await setHouseToFirestore(user.uid);
+      dispatch(actions.initHouse(newHouse));
+      await setMemberToFirestore(user);
     };
     // eslint-disable-next-line no-console
-    init(state.user.uid).catch((e) => console.error(e));
-  }, [state.user]);
+    init().catch((e) => console.error(e));
+  }, [state]);
 
   const signIn = async () => {
     const auth = getAuth();

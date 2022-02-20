@@ -11,24 +11,15 @@ import {
   where,
 } from 'firebase/firestore';
 import { User } from 'firebase/auth';
-import { Member, Year } from '../utils/types';
+import { Year } from '../utils/types';
 import { defaultCategories, defaultHousework } from '../constants/defaults';
 import { House } from '../contexts/houses/constants';
 
-export const setMemberToFirestore = async (
-  uid: string,
-  name = '',
-  avatar = ''
-): Promise<Member> => {
+export const setMemberToFirestore = async (user: User): Promise<void> => {
   const db = getFirestore();
+  const { uid } = user;
   const memberRef: DocumentReference<DocumentData> = doc(db, 'members', uid);
-  const member: Member = {
-    id: uid,
-    name,
-    avatar,
-  };
-  await setDoc(memberRef, member, { merge: true });
-  return member;
+  await setDoc(memberRef, user, { merge: true });
 };
 
 export const getMemberFromFirestore = async (uid: string): Promise<User> => {

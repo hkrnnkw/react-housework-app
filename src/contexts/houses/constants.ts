@@ -37,6 +37,7 @@ export const initialState: State = {
 
 export const HOUSE_ACTIONS = {
   SET_USER_DATA: 'HouseActions:setUserData',
+  INIT_HOUSE: 'HouseActions:initHouse',
   UPDATE_HOUSES: 'HouseActions:updateHouses',
   CHANGE_CURRENT_HOUSE: 'HouseActions:changeCurrentHouse',
   SWITCH_ROLE_STATUS: 'HouseActions:switchRoleStatus',
@@ -47,6 +48,10 @@ export type HouseActionType =
   | {
       type: typeof HOUSE_ACTIONS.SET_USER_DATA;
       payload: User | null;
+    }
+  | {
+      type: typeof HOUSE_ACTIONS.INIT_HOUSE;
+      payload: House;
     }
   | {
       type: typeof HOUSE_ACTIONS.UPDATE_HOUSES;

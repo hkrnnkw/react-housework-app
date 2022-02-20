@@ -14,6 +14,10 @@ export const actions = {
     type: HOUSE_ACTIONS.SET_USER_DATA,
     payload: user,
   }),
+  initHouse: (house: House): HouseActionType => ({
+    type: HOUSE_ACTIONS.INIT_HOUSE,
+    payload: house,
+  }),
   updateHouses: (houses: House[]): HouseActionType => ({
     type: HOUSE_ACTIONS.UPDATE_HOUSES,
     payload: houses,
@@ -32,21 +36,37 @@ export const actions = {
   }),
 } as const;
 
+const setLogsToEachHouses = (houseArray: House[]): State['houses'] => {
+  const houses: ReturnType<typeof setLogsToEachHouses> = {};
+  houseArray.forEach((house: House) => {
+    const logs = createLogs(house.housework, house.logs);
+    houses[house.id] = { ...house, logs };
+  });
+  return houses;
+};
+
 export const reducer = (state: State, action: HouseActionType): State => {
   switch (action.type) {
     case HOUSE_ACTIONS.SET_USER_DATA: {
       const user = action.payload ?? null;
       return { ...state, user };
     }
-    case HOUSE_ACTIONS.UPDATE_HOUSES: {
-      const houses: State['houses'] = {};
-      action.payload.forEach((house: House) => {
-        const logs = createLogs(house.housework, house.logs);
-        houses[house.id] = { ...house, logs };
-      });
+    case HOUSE_ACTIONS.INIT_HOUSE: {
+      if (!state.user) return state;
+      const house = action.payload;
       return {
         ...state,
-        houses,
+        houses: setLogsToEachHouses([house]),
+        currentHouse: {
+          id: house.id,
+          members: [state.user],
+        },
+      };
+    }
+    case HOUSE_ACTIONS.UPDATE_HOUSES: {
+      return {
+        ...state,
+        houses: setLogsToEachHouses(action.payload),
       };
     }
     case HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE: {
@@ -74,5 +94,4 @@ export const reducer = (state: State, action: HouseActionType): State => {
       return state;
     }
   }
-  return state;
 };
