@@ -5,9 +5,9 @@ import { useHouse } from '../contexts/houses';
 
 const HouseworkItem: React.FC = () => {
   const { id } = useLocation().state as { id: string };
-  const { currentHouseId } = useHouse();
+  const { currentHouse } = useHouse();
 
-  if (!currentHouseId) return null;
+  if (!currentHouse) return null;
   return (
     <StyledPaper>
       <p>{id}</p>

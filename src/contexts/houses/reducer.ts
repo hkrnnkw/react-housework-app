@@ -18,9 +18,9 @@ export const actions = {
     type: HOUSE_ACTIONS.UPDATE_HOUSES,
     payload: houses,
   }),
-  changeCurrentHouse: (houseId: string): HouseActionType => ({
+  changeCurrentHouse: (house: State['currentHouse']): HouseActionType => ({
     type: HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE,
-    payload: houseId,
+    payload: house,
   }),
   switchRoleStatus: (logs: Year): HouseActionType => ({
     type: HOUSE_ACTIONS.SWITCH_ROLE_STATUS,
@@ -47,19 +47,18 @@ export const reducer = (state: State, action: HouseActionType): State => {
       return {
         ...state,
         houses,
-        currentHouseId: action.payload[0].id,
       };
     }
     case HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE: {
-      return { ...state, currentHouseId: action.payload };
+      return { ...state, currentHouse: action.payload };
     }
     case HOUSE_ACTIONS.SWITCH_ROLE_STATUS: {
-      const { currentHouseId, houses } = state;
-      if (!currentHouseId) return state;
+      const { currentHouse, houses } = state;
+      if (!currentHouse) return state;
       const logs = action.payload;
       const newHouses = {
         ...houses,
-        [currentHouseId]: { ...houses[currentHouseId], logs },
+        [currentHouse.id]: { ...houses[currentHouse.id], logs },
       };
       return { ...state, houses: newHouses };
     }

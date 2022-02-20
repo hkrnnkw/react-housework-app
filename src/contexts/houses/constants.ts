@@ -21,14 +21,17 @@ export type State = {
   houses: {
     [key: string]: House;
   };
-  currentHouseId: string | null;
+  currentHouse: {
+    id: string;
+    members: User[] | readonly [];
+  } | null;
   currentDate: number;
 };
 
 export const initialState: State = {
   user: null,
   houses: {},
-  currentHouseId: null,
+  currentHouse: null,
   currentDate: new Date().getTime(),
 } as const;
 
@@ -51,7 +54,7 @@ export type HouseActionType =
     }
   | {
       type: typeof HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE;
-      payload: string;
+      payload: State['currentHouse'];
     }
   | {
       type: typeof HOUSE_ACTIONS.SWITCH_ROLE_STATUS;

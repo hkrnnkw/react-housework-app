@@ -10,6 +10,7 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore';
+import { User } from 'firebase/auth';
 import { Member, Year } from '../utils/types';
 import { defaultCategories, defaultHousework } from '../constants/defaults';
 import { House } from '../contexts/houses/constants';
@@ -30,11 +31,11 @@ export const setMemberToFirestore = async (
   return member;
 };
 
-export const getMemberFromFirestore = async (uid: string): Promise<Member> => {
+export const getMemberFromFirestore = async (uid: string): Promise<User> => {
   const db = getFirestore();
   const docRef: DocumentReference<DocumentData> = doc(db, 'members', uid);
   const docSnap = await getDoc(docRef);
-  return docSnap.data() as Member;
+  return docSnap.data() as User;
 };
 
 export const setHouseToFirestore = async (uid: string): Promise<House> => {

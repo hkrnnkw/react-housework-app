@@ -12,9 +12,9 @@ import paths from '../utils/paths';
 import { useHouse } from '../contexts/houses';
 
 const Settings: React.FC = () => {
-  const { currentHouseId } = useHouse();
+  const { currentHouse } = useHouse();
 
-  if (!currentHouseId) return null;
+  if (!currentHouse) return null;
   return (
     <StyledPaper>
       <Outlet />

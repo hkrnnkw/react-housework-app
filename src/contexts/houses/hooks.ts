@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from 'react';
 import { getAuth, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
-import { initialState } from './constants';
+import { House, initialState } from './constants';
 import { actions, reducer } from './reducer';
 import {
   getHousesFromFirestore,
@@ -9,7 +9,6 @@ import {
   setLogToFirestore,
   setMemberToFirestore,
 } from '../../handlers/firestoreHandler';
-import { Member } from '../../utils/types';
 import { getUpdates } from '../../handlers/logsHandler';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -42,29 +41,20 @@ const useHouseForContext = () => {
     dispatch(actions.setUserData(...args));
   };
 
-  const fetchMembers = async (): Promise<Member[]> => {
-    const houseId = state.currentHouseId;
-    if (!houseId) return [];
-    const allMemberIds = state.houses[houseId]?.memberIds ?? [];
-    const tasks = allMemberIds.map((id) => getMemberFromFirestore(id));
-    const membersFromFirestore = await Promise.all(tasks);
-    return membersFromFirestore;
-  };
-
-  const changeCurrentHouse = (
-    ...args: Parameters<typeof actions.changeCurrentHouse>
-  ) => {
-    dispatch(actions.changeCurrentHouse(...args));
+  const changeCurrentHouse = async (house: House): Promise<void> => {
+    const tasks = house.memberIds.map((id) => getMemberFromFirestore(id));
+    const members = await Promise.all(tasks);
+    dispatch(actions.changeCurrentHouse({ id: house.id, members }));
   };
 
   const switchRoleStatus = async (houseworkId: string) => {
-    const { currentHouseId, currentDate, houses } = state;
-    if (!currentHouseId) return;
-    const house = houses[currentHouseId];
+    const { currentHouse, currentDate, houses } = state;
+    if (!currentHouse) return;
+    const house = houses[currentHouse.id];
     const logs = getUpdates(currentDate, house.logs, houseworkId);
     dispatch(actions.switchRoleStatus(logs));
     try {
-      await setLogToFirestore(currentHouseId, logs);
+      await setLogToFirestore(currentHouse.id, logs);
     } catch (e) {
       dispatch(actions.switchRoleStatus(logs));
     }
@@ -78,7 +68,6 @@ const useHouseForContext = () => {
     state,
     signIn,
     setUserData,
-    fetchMembers,
     changeCurrentHouse,
     switchRoleStatus,
     changeDate,

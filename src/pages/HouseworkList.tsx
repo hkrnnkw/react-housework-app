@@ -12,14 +12,14 @@ import paths from '../utils/paths';
 import { useHouse } from '../contexts/houses';
 
 const HouseworkList: React.FC = () => {
-  const { currentHouseId, houses } = useHouse();
+  const { currentHouse, houses } = useHouse();
 
-  if (!currentHouseId) return null;
+  if (!currentHouse) return null;
   return (
     <StyledPaper>
       <Outlet />
       <List>
-        {Object.entries(houses[currentHouseId].housework).map(
+        {Object.entries(houses[currentHouse.id].housework).map(
           ([key, value]) => (
             <ListItem key={key}>
               <Link

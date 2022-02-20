@@ -11,11 +11,11 @@ import { useDispatchHouse, useHouse } from '../contexts/houses';
 import { getDateObj } from '../handlers/logsHandler';
 
 const TodoList: React.FC = () => {
-  const { currentDate, currentHouseId, houses, user } = useHouse();
+  const { currentDate, currentHouse, houses, user } = useHouse();
   const { switchRoleStatus } = useDispatchHouse();
-  if (!user || !currentHouseId) return null;
+  if (!user || !currentHouse) return null;
 
-  const { logs } = houses[currentHouseId];
+  const { logs } = houses[currentHouse.id];
   const { yyyy, mm, dd } = getDateObj(currentDate);
   const roles: Role[] = logs[yyyy][mm][dd] ?? [];
 
