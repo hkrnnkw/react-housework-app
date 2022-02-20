@@ -1,27 +1,27 @@
-import React from 'react';
+import React from 'react'
 import {
   Checkbox,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
-} from '@mui/material';
-import { Role } from '../utils/types';
-import { useDispatchHouse, useHouse } from '../contexts/houses';
-import { getDateObj } from '../handlers/logsHandler';
+} from '@mui/material'
+import { Role } from '../utils/types'
+import { useDispatchHouse, useHouse } from '../contexts/houses'
+import { getDateObj } from '../handlers/logsHandler'
 
 const TodoList: React.FC = () => {
-  const { currentDate, currentHouse, houses, user } = useHouse();
-  const { switchRoleStatus } = useDispatchHouse();
-  if (!user || !currentHouse) return null;
+  const { currentDate, currentHouse, houses, user } = useHouse()
+  const { switchRoleStatus } = useDispatchHouse()
+  if (!user || !currentHouse) return null
 
-  const { logs, housework } = houses[currentHouse.id];
-  const { yyyy, mm, dd } = getDateObj(currentDate);
-  const roles: Role[] = logs[yyyy][mm][dd] ?? [];
+  const { logs, housework } = houses[currentHouse.id]
+  const { yyyy, mm, dd } = getDateObj(currentDate)
+  const roles: Role[] = logs[yyyy][mm][dd] ?? []
 
   const handleToggle = async (houseworkId: string) => {
-    await switchRoleStatus(houseworkId);
-  };
+    await switchRoleStatus(houseworkId)
+  }
 
   return (
     <List>
@@ -51,7 +51,7 @@ const TodoList: React.FC = () => {
         </ListItem>
       ))}
     </List>
-  );
-};
+  )
+}
 
-export default TodoList;
+export default TodoList

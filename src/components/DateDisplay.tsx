@@ -1,29 +1,29 @@
-import React from 'react';
-import { IconButton, Typography } from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import React from 'react'
+import { IconButton, Typography } from '@mui/material'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import {
   DirectionType,
   DIRECTION_TYPE_ENUM,
   useDispatchHouse,
   useHouse,
-} from '../contexts/houses';
+} from '../contexts/houses'
 
 const DateDisplay: React.FC = () => {
-  const { currentDate } = useHouse();
-  const { changeDate } = useDispatchHouse();
+  const { currentDate } = useHouse()
+  const { changeDate } = useDispatchHouse()
 
   const handleDateChange = (to: DirectionType) => {
-    changeDate(to);
-  };
+    changeDate(to)
+  }
 
   const makeDate = () => {
-    const dt = new Date(currentDate);
-    const year = dt.getFullYear();
-    const month = dt.getMonth() + 1;
-    const day = dt.getDate();
-    return `${year} / ${month} / ${day}`;
-  };
+    const dt = new Date(currentDate)
+    const year = dt.getFullYear()
+    const month = dt.getMonth() + 1
+    const day = dt.getDate()
+    return `${year} / ${month} / ${day}`
+  }
 
   return (
     <div style={{ display: 'flex' }}>
@@ -45,7 +45,7 @@ const DateDisplay: React.FC = () => {
         <ChevronRightIcon />
       </IconButton>
     </div>
-  );
-};
+  )
+}
 
-export default DateDisplay;
+export default DateDisplay

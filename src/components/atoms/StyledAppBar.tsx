@@ -1,5 +1,5 @@
-import { AppBar } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { AppBar } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -10,6 +10,6 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
     justifyContent: 'space-between',
     padding: theme.spacing(1, 2),
   },
-}));
+}))
 
-export default StyledAppBar;
+export default StyledAppBar

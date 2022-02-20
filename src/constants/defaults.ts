@@ -5,19 +5,19 @@ import {
   SPECIFIC_DATE,
   SPECIFIC_DAY_OF_WEEK,
   TEMPORARY,
-} from '../utils/types';
+} from '../utils/types'
 
-const c000 = 'c000';
-const c001 = 'c001';
-const c002 = 'c002';
-const c003 = 'c003';
-const c004 = 'c004';
-const c005 = 'c005';
-const c006 = 'c006';
-const c007 = 'c007';
-const c008 = 'c008';
-const c009 = 'c009';
-const c010 = 'c010';
+const c000 = 'c000'
+const c001 = 'c001'
+const c002 = 'c002'
+const c003 = 'c003'
+const c004 = 'c004'
+const c005 = 'c005'
+const c006 = 'c006'
+const c007 = 'c007'
+const c008 = 'c008'
+const c009 = 'c009'
+const c010 = 'c010'
 
 export const defaultCategories: Category = {
   [c000]: 'その他',
@@ -31,22 +31,22 @@ export const defaultCategories: Category = {
   [c008]: '季節ごと',
   [c009]: '猫ちゃん',
   [c010]: 'ごみ',
-};
+}
 
-const hw000 = 'hw000';
-const hw001 = 'hw001';
-const hw002 = 'hw002';
-const hw003 = 'hw003';
-const hw004 = 'hw004';
-const hw005 = 'hw005';
-const hw006 = 'hw006';
-const hw007 = 'hw007';
-const hw008 = 'hw008';
-const hw009 = 'hw009';
-const hw010 = 'hw010';
-const hw011 = 'hw011';
-const hw012 = 'hw012';
-const hw013 = 'hw013';
+const hw000 = 'hw000'
+const hw001 = 'hw001'
+const hw002 = 'hw002'
+const hw003 = 'hw003'
+const hw004 = 'hw004'
+const hw005 = 'hw005'
+const hw006 = 'hw006'
+const hw007 = 'hw007'
+const hw008 = 'hw008'
+const hw009 = 'hw009'
+const hw010 = 'hw010'
+const hw011 = 'hw011'
+const hw012 = 'hw012'
+const hw013 = 'hw013'
 
 export const defaultHousework: Housework = {
   // その他
@@ -1030,4 +1030,4 @@ export const defaultHousework: Housework = {
     description: 'ごみ袋を装着する',
     memberId: null,
   },
-};
+}

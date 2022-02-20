@@ -1,20 +1,20 @@
-import React from 'react';
-import { Link as RouterLink, Outlet } from 'react-router-dom';
+import React from 'react'
+import { Link as RouterLink, Outlet } from 'react-router-dom'
 import {
   Link,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
-} from '@mui/material';
-import StyledPaper from '../components/atoms/StyledPaper';
-import paths from '../utils/paths';
-import { useHouse } from '../contexts/houses';
+} from '@mui/material'
+import StyledPaper from '../components/atoms/StyledPaper'
+import paths from '../utils/paths'
+import { useHouse } from '../contexts/houses'
 
 const Settings: React.FC = () => {
-  const { currentHouse } = useHouse();
+  const { currentHouse } = useHouse()
 
-  if (!currentHouse) return null;
+  if (!currentHouse) return null
   return (
     <StyledPaper>
       <Outlet />
@@ -31,7 +31,7 @@ const Settings: React.FC = () => {
         </ListItem>
       </List>
     </StyledPaper>
-  );
-};
+  )
+}
 
-export default Settings;
+export default Settings

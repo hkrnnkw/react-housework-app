@@ -7,6 +7,6 @@ const paths = {
   // 異常系
   errorOccurred: '/erroroccurred',
   userNotFound: '/usernotfound',
-};
+}
 
-export default paths;
+export default paths

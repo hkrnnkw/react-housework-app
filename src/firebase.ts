@@ -1,8 +1,8 @@
-import { getApps, initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getApps, initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 
-const apps = getApps();
+const apps = getApps()
 if (!apps.length) {
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_DEV_API_KEY,
@@ -11,9 +11,9 @@ if (!apps.length) {
     storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_APP_ID,
-  };
-  initializeApp(firebaseConfig);
+  }
+  initializeApp(firebaseConfig)
 }
 
-export const auth = getAuth();
-export const db = getFirestore();
+export const auth = getAuth()
+export const db = getFirestore()

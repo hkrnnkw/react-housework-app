@@ -1,5 +1,5 @@
-import { Paper } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Paper } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   height: 'calc(100vh - 60px)',
@@ -16,6 +16,6 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
       textDecoration: 'none',
     },
   },
-}));
+}))
 
-export default StyledPaper;
+export default StyledPaper
