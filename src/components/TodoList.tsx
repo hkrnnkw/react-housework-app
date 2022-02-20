@@ -15,7 +15,7 @@ const TodoList: React.FC = () => {
   const { switchRoleStatus } = useDispatchHouse();
   if (!user || !currentHouse) return null;
 
-  const { logs } = houses[currentHouse.id];
+  const { logs, housework } = houses[currentHouse.id];
   const { yyyy, mm, dd } = getDateObj(currentDate);
   const roles: Role[] = logs[yyyy][mm][dd] ?? [];
 
@@ -44,8 +44,8 @@ const TodoList: React.FC = () => {
           <ListItemButton>
             <ListItemText
               id={houseworkId}
-              primary={houseworkId}
-              secondary={memberId}
+              primary={housework[houseworkId].description}
+              secondary={memberId ? currentHouse.members[memberId] : ''}
             />
           </ListItemButton>
         </ListItem>
