@@ -1,4 +1,3 @@
-import { User } from 'firebase/auth'
 import { createLogs } from '../../handlers/logsHandler'
 import { Year } from '../../utils/types'
 import {
@@ -7,10 +6,11 @@ import {
   HOUSE_ACTIONS,
   House,
   DirectionType,
+  Member,
 } from './constants'
 
 export const actions = {
-  setUserData: (user: User | null): HouseActionType => ({
+  setUserData: (user: Member | null): HouseActionType => ({
     type: HOUSE_ACTIONS.SET_USER_DATA,
     payload: user,
   }),
@@ -22,7 +22,7 @@ export const actions = {
     type: HOUSE_ACTIONS.UPDATE_HOUSES,
     payload: houses,
   }),
-  changeCurrentHouse: (id: string, members: User[]): HouseActionType => ({
+  changeCurrentHouse: (id: string, members: Member[]): HouseActionType => ({
     type: HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE,
     payload: { id, members },
   }),
@@ -48,8 +48,7 @@ const setLogsToEachHouses = (houseArray: House[]): State['houses'] => {
 export const reducer = (state: State, action: HouseActionType): State => {
   switch (action.type) {
     case HOUSE_ACTIONS.SET_USER_DATA: {
-      const user = action.payload ?? null
-      return { ...state, user }
+      return { ...state, user: action.payload }
     }
     case HOUSE_ACTIONS.INIT_HOUSE: {
       if (!state.user) return state
@@ -74,7 +73,7 @@ export const reducer = (state: State, action: HouseActionType): State => {
     case HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE: {
       const { id, members: memberArray } = action.payload
       const currentHouse: State['currentHouse'] = { id, members: {} }
-      memberArray.forEach((member: User) => {
+      memberArray.forEach((member: Member) => {
         currentHouse.members[member.uid] = member
       })
       return { ...state, currentHouse }

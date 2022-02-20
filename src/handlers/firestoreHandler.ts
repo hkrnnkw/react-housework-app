@@ -10,23 +10,22 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore'
-import { User } from 'firebase/auth'
 import { Year } from '../utils/types'
 import { defaultCategories, defaultHousework } from '../constants/defaults'
-import { House } from '../contexts/houses/constants'
+import { House, Member } from '../contexts/houses/constants'
 
-export const setMemberToFirestore = async (user: User): Promise<void> => {
+export const setMemberToFirestore = async (user: Member): Promise<void> => {
   const db = getFirestore()
   const { uid } = user
   const memberRef: DocumentReference<DocumentData> = doc(db, 'members', uid)
   await setDoc(memberRef, user, { merge: true })
 }
 
-export const getMemberFromFirestore = async (uid: string): Promise<User> => {
+export const getMemberFromFirestore = async (uid: string): Promise<Member> => {
   const db = getFirestore()
   const docRef: DocumentReference<DocumentData> = doc(db, 'members', uid)
   const docSnap = await getDoc(docRef)
-  return docSnap.data() as User
+  return docSnap.data() as Member
 }
 
 export const setHouseToFirestore = async (uid: string): Promise<House> => {

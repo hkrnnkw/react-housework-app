@@ -1,4 +1,3 @@
-import { User } from 'firebase/auth'
 import { Category, Housework, Year } from '../../utils/types'
 
 export const DIRECTION_TYPE_ENUM = {
@@ -16,15 +15,24 @@ export type House = {
   categories: Category
 }
 
+export type Member = {
+  displayName: string | null
+  email: string | null
+  emailVerified: boolean
+  photoURL: string | null
+  refreshToken: string
+  uid: string
+}
+
 export type State = {
-  user: User | null
+  user: Member | null
   houses: {
     [key: string]: House
   }
   currentHouse: {
     id: string
     members: {
-      [key: string]: User
+      [key: string]: Member
     }
   } | null
   currentDate: number
@@ -49,7 +57,7 @@ export const HOUSE_ACTIONS = {
 export type HouseActionType =
   | {
       type: typeof HOUSE_ACTIONS.SET_USER_DATA
-      payload: User | null
+      payload: Member | null
     }
   | {
       type: typeof HOUSE_ACTIONS.INIT_HOUSE
@@ -61,7 +69,7 @@ export type HouseActionType =
     }
   | {
       type: typeof HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE
-      payload: { id: string; members: User[] }
+      payload: { id: string; members: Member[] }
     }
   | {
       type: typeof HOUSE_ACTIONS.SWITCH_ROLE_STATUS

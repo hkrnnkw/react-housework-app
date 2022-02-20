@@ -35,12 +35,6 @@ export type Year = {
   [year: number]: Month
 }
 
-export type Member = {
-  id: string
-  name: string
-  avatar: string
-}
-
 export const EVERY_X_DAYS = 'EveryXDays'
 export const SPECIFIC_DAY_OF_WEEK = 'SpecificDayOfWeek'
 export const SPECIFIC_DATE = 'SpecificDate'
