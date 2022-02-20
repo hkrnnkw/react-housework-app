@@ -48,7 +48,7 @@ const useHouseForContext = () => {
   const changeCurrentHouse = async (house: House): Promise<void> => {
     const tasks = house.memberIds.map((id) => getMemberFromFirestore(id));
     const members = await Promise.all(tasks);
-    dispatch(actions.changeCurrentHouse({ id: house.id, members }));
+    dispatch(actions.changeCurrentHouse(house.id, members));
   };
 
   const switchRoleStatus = async (houseworkId: string) => {

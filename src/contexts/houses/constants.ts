@@ -23,7 +23,9 @@ export type State = {
   };
   currentHouse: {
     id: string;
-    members: User[] | readonly [];
+    members: {
+      [key: string]: User;
+    };
   } | null;
   currentDate: number;
 };
@@ -59,7 +61,7 @@ export type HouseActionType =
     }
   | {
       type: typeof HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE;
-      payload: State['currentHouse'];
+      payload: { id: string; members: User[] };
     }
   | {
       type: typeof HOUSE_ACTIONS.SWITCH_ROLE_STATUS;

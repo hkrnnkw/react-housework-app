@@ -22,9 +22,9 @@ export const actions = {
     type: HOUSE_ACTIONS.UPDATE_HOUSES,
     payload: houses,
   }),
-  changeCurrentHouse: (house: State['currentHouse']): HouseActionType => ({
+  changeCurrentHouse: (id: string, members: User[]): HouseActionType => ({
     type: HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE,
-    payload: house,
+    payload: { id, members },
   }),
   switchRoleStatus: (logs: Year): HouseActionType => ({
     type: HOUSE_ACTIONS.SWITCH_ROLE_STATUS,
@@ -59,7 +59,9 @@ export const reducer = (state: State, action: HouseActionType): State => {
         houses: setLogsToEachHouses([house]),
         currentHouse: {
           id: house.id,
-          members: [state.user],
+          members: {
+            [state.user.uid]: state.user,
+          },
         },
       };
     }
@@ -70,7 +72,12 @@ export const reducer = (state: State, action: HouseActionType): State => {
       };
     }
     case HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE: {
-      return { ...state, currentHouse: action.payload };
+      const { id, members: memberArray } = action.payload;
+      const currentHouse: State['currentHouse'] = { id, members: {} };
+      memberArray.forEach((member: User) => {
+        currentHouse.members[member.uid] = member;
+      });
+      return { ...state, currentHouse };
     }
     case HOUSE_ACTIONS.SWITCH_ROLE_STATUS: {
       const { currentHouse, houses } = state;
