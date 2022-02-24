@@ -1,60 +1,69 @@
-import React from 'react'
+import React, { FC } from 'react'
 import {
   BrowserRouter,
   Route,
   Routes,
   Link as RouterLink,
 } from 'react-router-dom'
-import { onAuthStateChanged } from 'firebase/auth'
-import { IconButton, Link, Toolbar } from '@mui/material'
+import { AppBar, IconButton, Link, Toolbar } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { auth } from './firebase'
 import paths from './utils/paths'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
-import StyledAppBar from './components/atoms/StyledAppBar'
 import PrivateRoute from './routes/PrivateRoute'
 import Settings from './pages/Settings'
 import HouseworkItem from './pages/HouseworkItem'
 import HouseworkList from './pages/HouseworkList'
-import { Member, useDispatchHouse, useHouse } from './contexts/houses'
+import SignIn, { Loading } from './components/SignIn'
+import { useDispatchHouse, useHouse } from './contexts/houses'
 
-const App: React.FC = () => {
+const AppBarStyle = styled(AppBar)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  backgroundColor: theme.palette.background.default,
+  '& div.MuiToolbar-regular': {
+    width: `calc(100% - ${theme.spacing(4)}px)`,
+    minHeight: '44px',
+    justifyContent: 'space-between',
+    padding: theme.spacing(1, 2),
+  },
+}))
+
+const StyledAppBar: FC = (): JSX.Element => (
+  <AppBarStyle position="fixed">
+    <Toolbar>
+      <div id="title">
+        <Link component={RouterLink} to={paths.home} id="logo">
+          Top
+        </Link>
+      </div>
+      <IconButton aria-label="settings">
+        <Link component={RouterLink} to={paths.settings}>
+          <SettingsIcon />
+        </Link>
+      </IconButton>
+    </Toolbar>
+  </AppBarStyle>
+)
+
+type Props = {
+  children: JSX.Element
+}
+
+const Auth: FC<Props> = ({ children }): JSX.Element => {
   const { user } = useHouse()
-  const { setUserData } = useDispatchHouse()
+  const { useAuth } = useDispatchHouse()
+  const isLoading = useAuth()
+  if (!user) return <SignIn />
+  if (isLoading) return <Loading />
+  return children
+}
 
-  onAuthStateChanged(auth, (firebaseUser) => {
-    if (!firebaseUser || firebaseUser.uid === user?.uid) return
-    const { displayName, email, emailVerified, photoURL, refreshToken, uid } =
-      firebaseUser
-    const member: Member = {
-      displayName,
-      email,
-      emailVerified,
-      photoURL,
-      refreshToken,
-      uid,
-    }
-    setUserData(member)
-  })
-
-  return (
-    <BrowserRouter>
-      <div>
-        <StyledAppBar position="fixed">
-          <Toolbar>
-            <div id="title">
-              <Link component={RouterLink} to={paths.home} id="logo">
-                Top
-              </Link>
-            </div>
-            <IconButton aria-label="settings">
-              <Link component={RouterLink} to={paths.settings}>
-                <SettingsIcon />
-              </Link>
-            </IconButton>
-          </Toolbar>
-        </StyledAppBar>
+const App: FC = () => (
+  <BrowserRouter>
+    <div>
+      <StyledAppBar />
+      <Auth>
         <Routes>
           <Route path={paths.home} element={<Home />} />
           <Route
@@ -73,9 +82,9 @@ const App: React.FC = () => {
           </Route>
           <Route element={<NotFound />} />
         </Routes>
-      </div>
-    </BrowserRouter>
-  )
-}
+      </Auth>
+    </div>
+  </BrowserRouter>
+)
 
 export default App

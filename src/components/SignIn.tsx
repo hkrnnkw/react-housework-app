@@ -1,9 +1,15 @@
-import React from 'react'
-import { Button } from '@mui/material'
+import React, { FC } from 'react'
+import { Button, Typography } from '@mui/material'
 import StyledPaper from './atoms/StyledPaper'
 import { useDispatchHouse } from '../contexts/houses'
 
-const SignIn: React.FC = () => {
+export const Loading: FC = () => (
+  <StyledPaper>
+    <Typography>Loading...</Typography>
+  </StyledPaper>
+)
+
+const SignIn: FC = () => {
   const { signIn } = useDispatchHouse()
 
   return (

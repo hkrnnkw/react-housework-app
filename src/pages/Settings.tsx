@@ -9,12 +9,11 @@ import {
 } from '@mui/material'
 import StyledPaper from '../components/atoms/StyledPaper'
 import paths from '../utils/paths'
-import { useHouse } from '../contexts/houses'
+import { useDispatchHouse } from '../contexts/houses'
 
 const Settings: React.FC = () => {
-  const { currentHouse } = useHouse()
+  const { signOut } = useDispatchHouse()
 
-  if (!currentHouse) return null
   return (
     <StyledPaper>
       <Outlet />
@@ -28,6 +27,11 @@ const Settings: React.FC = () => {
               <ListItemText primary="家事を登録する" />
             </ListItemButton>
           </Link>
+        </ListItem>
+        <ListItem key="signOut">
+          <ListItemButton onClick={() => signOut()}>
+            <ListItemText primary="ログアウト" />
+          </ListItemButton>
         </ListItem>
       </List>
     </StyledPaper>

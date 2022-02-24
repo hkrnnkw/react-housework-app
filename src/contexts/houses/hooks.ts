@@ -1,6 +1,12 @@
-import { useEffect, useReducer } from 'react'
-import { getAuth, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth'
-import { House, initialState } from './constants'
+import { useEffect, useReducer, useState } from 'react'
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithRedirect,
+  signOut as signOutFromFireAuth,
+} from 'firebase/auth'
+import { auth } from '../../firebase'
+import { House, initialState, Member } from './constants'
 import { actions, reducer } from './reducer'
 import {
   getHousesFromFirestore,
@@ -26,7 +32,6 @@ const useHouseForContext = () => {
         await changeCurrentHouse(houses[0])
         return
       }
-      // @todo move init-function to backend
       const newHouse = await setHouseToFirestore(user.uid)
       dispatch(actions.initHouse(newHouse))
       await setMemberToFirestore(user)
@@ -35,10 +40,41 @@ const useHouseForContext = () => {
     init().catch((e) => console.error(e))
   }, [state])
 
+  const useAuth = (): boolean => {
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(
+      () =>
+        onAuthStateChanged(auth, (firebaseUser) => {
+          if (!firebaseUser) {
+            setUserData(null)
+            return
+          }
+          const member: Member = {
+            displayName: firebaseUser.displayName,
+            email: firebaseUser.email,
+            emailVerified: firebaseUser.emailVerified,
+            photoURL: firebaseUser.photoURL,
+            refreshToken: firebaseUser.refreshToken,
+            uid: firebaseUser.uid,
+          }
+          setUserData(member)
+          setIsLoading(false)
+        }),
+      []
+    )
+
+    return isLoading
+  }
+
   const signIn = async () => {
-    const auth = getAuth()
     const provider = new GoogleAuthProvider()
     await signInWithRedirect(auth, provider)
+  }
+
+  const signOut = async (): Promise<void> => {
+    setUserData(null)
+    await signOutFromFireAuth(auth)
   }
 
   const setUserData = (...args: Parameters<typeof actions.setUserData>) => {
@@ -70,7 +106,9 @@ const useHouseForContext = () => {
 
   return {
     state,
+    useAuth,
     signIn,
+    signOut,
     setUserData,
     changeCurrentHouse,
     switchRoleStatus,
