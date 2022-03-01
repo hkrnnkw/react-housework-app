@@ -13,16 +13,11 @@ import { getDateObj } from '../handlers/logsHandler'
 const DateDisplay: React.FC = () => {
   const { currentDate } = useHouse()
   const { changeDate } = useDispatchHouse()
+  const { yyyy, mm, dd } = getDateObj(currentDate)
 
   const handleDateChange = (to: DirectionType) => {
     changeDate(to)
   }
-
-  const makeDate = () => {
-    const { yyyy, mm, dd } = getDateObj(currentDate)
-    return `${yyyy} / ${mm} / ${dd}`
-  }
-  const date = makeDate()
 
   return (
     <div style={{ display: 'flex' }}>
@@ -34,7 +29,9 @@ const DateDisplay: React.FC = () => {
       >
         <ChevronLeftIcon />
       </IconButton>
-      <Typography variant="h5">{date}</Typography>
+      <Typography variant="h5">
+        {yyyy} / {mm} / {dd}
+      </Typography>
       <IconButton
         color="primary"
         aria-label="right"
