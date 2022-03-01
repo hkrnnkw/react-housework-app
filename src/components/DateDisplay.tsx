@@ -30,7 +30,7 @@ const DateDisplay: React.FC = () => {
         <ChevronLeftIcon />
       </IconButton>
       <Typography variant="h5">
-        {yyyy} / {mm} / {dd}
+        {yyyy} / {mm + 1} / {dd}
       </Typography>
       <IconButton
         color="primary"
