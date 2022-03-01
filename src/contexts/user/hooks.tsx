@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   signInWithRedirect,
   signOut as signOutFromFireAuth,
+  User,
 } from 'firebase/auth'
 import { auth } from '../../firebase'
 import { initialState, State } from './constants'
@@ -37,30 +38,33 @@ const useUserForContext = () => {
     init().catch((e) => console.error(e))
   }, [state])
 
+  const handleUser = (firebaseUser: User) => {
+    const user: State = {
+      displayName: firebaseUser.displayName,
+      email: firebaseUser.email,
+      emailVerified: firebaseUser.emailVerified,
+      photoURL: firebaseUser.photoURL,
+      refreshToken: firebaseUser.refreshToken,
+      uid: firebaseUser.uid,
+      houseIds: [],
+    }
+    dispatch(actions.setUserData(user))
+  }
+
   const useAuth = (): boolean => {
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(
-      () =>
-        onAuthStateChanged(auth, (firebaseUser) => {
-          if (!firebaseUser) {
-            dispatch(actions.initUserData())
-            return
-          }
-          const user: State = {
-            displayName: firebaseUser.displayName,
-            email: firebaseUser.email,
-            emailVerified: firebaseUser.emailVerified,
-            photoURL: firebaseUser.photoURL,
-            refreshToken: firebaseUser.refreshToken,
-            uid: firebaseUser.uid,
-            houseIds: [],
-          }
-          dispatch(actions.setUserData(user))
-          setIsLoading(false)
-        }),
-      []
-    )
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+        if (!firebaseUser) {
+          dispatch(actions.initUserData())
+          return
+        }
+        handleUser(firebaseUser)
+        setIsLoading(false)
+      })
+      return () => unsubscribe()
+    }, [])
 
     return isLoading
   }
