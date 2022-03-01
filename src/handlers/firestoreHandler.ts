@@ -4,31 +4,29 @@ import {
   DocumentData,
   DocumentReference,
   getDoc,
-  getDocs,
   getFirestore,
-  query,
   setDoc,
-  where,
 } from 'firebase/firestore'
 import { Year } from '../utils/types'
 import { defaultCategories, defaultHousework } from '../constants/defaults'
-import { House, Member } from '../contexts/houses/constants'
+import { House } from '../contexts/houses/constants'
+import { State as UserState } from '../contexts/user/constants'
 
-export const setMemberToFirestore = async (user: Member): Promise<void> => {
+export const createUserToFirestore = async (user: UserState): Promise<void> => {
   const db = getFirestore()
   const { uid } = user
-  const memberRef: DocumentReference<DocumentData> = doc(db, 'members', uid)
-  await setDoc(memberRef, user, { merge: true })
+  const newUserRef: DocumentReference<DocumentData> = doc(db, 'users', uid)
+  await setDoc(newUserRef, user, { merge: true })
 }
 
-export const getMemberFromFirestore = async (uid: string): Promise<Member> => {
+export const getHouseIdsFromFirestore = async (uid: string): Promise<string[]> => {
   const db = getFirestore()
-  const docRef: DocumentReference<DocumentData> = doc(db, 'members', uid)
+  const docRef: DocumentReference<DocumentData> = doc(db, 'users', uid)
   const docSnap = await getDoc(docRef)
-  return docSnap.data() as Member
+  return docSnap.data()?.houseIds as string[] ?? []
 }
 
-export const setHouseToFirestore = async (uid: string): Promise<House> => {
+export const createHouseToFirestore = async (uid: string): Promise<House> => {
   const db = getFirestore()
   const newHouseRef: DocumentReference<DocumentData> = doc(
     collection(db, 'houses')
@@ -44,14 +42,11 @@ export const setHouseToFirestore = async (uid: string): Promise<House> => {
   return newHouse
 }
 
-export const getHousesFromFirestore = async (uid: string): Promise<House[]> => {
+export const getHouseFromFirestore = async (houseId: string): Promise<House> => {
   const db = getFirestore()
-  const q = query(
-    collection(db, 'houses'),
-    where('memberIds', 'array-contains', uid)
-  )
-  const querySnapshot = await getDocs(q)
-  return querySnapshot.docs.map((qDoc) => qDoc.data() as House)
+  const docRef: DocumentReference<DocumentData> = doc(db, 'houses', houseId)
+  const docSnap = await getDoc(docRef)
+  return docSnap.data() as House
 }
 
 export const setLogToFirestore = async (

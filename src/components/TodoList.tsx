@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Checkbox,
   List,
@@ -6,16 +5,27 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material'
+import React, { FC, useEffect, useState } from 'react'
 import { Role } from '../utils/types'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
+import { useUser } from '../contexts/user'
 import { getDateObj } from '../handlers/logsHandler'
 
-const TodoList: React.FC = () => {
-  const { currentDate, currentHouse, houses, user } = useHouse()
   const { switchRoleStatus } = useDispatchHouse()
-  if (!user || !currentHouse) return null
 
-  const { logs, housework } = houses[currentHouse.id]
+const TodoList: FC = () => {
+  const { houseIds, uid } = useUser()
+  const { changeCurrentHouse } = useDispatchHouse()
+  const { currentDate, currentHouse } = useHouse()
+
+  useEffect(() => {
+    if (!houseIds.length) return
+    // eslint-disable-next-line no-console
+    changeCurrentHouse(houseIds[0]).catch((e) => console.error(e))
+  }, [changeCurrentHouse, houseIds])
+
+  if (!currentHouse) return null
+  const { logs, housework } = currentHouse
   const { yyyy, mm, dd } = getDateObj(currentDate)
   const roles: Role[] = logs[yyyy][mm][dd] ?? []
 
@@ -38,14 +48,14 @@ const TodoList: React.FC = () => {
           }
           disablePadding
           style={{
-            backgroundColor: memberId === user.uid ? '#DDDDFF' : '#FFFFFF',
+            backgroundColor: memberId === uid ? '#DDDDFF' : '#FFFFFF',
           }}
         >
           <ListItemButton>
             <ListItemText
               id={houseworkId}
               primary={housework[houseworkId].description}
-              secondary={memberId ? currentHouse.members[memberId] : ''}
+              secondary={memberId ?? ''}
             />
           </ListItemButton>
         </ListItem>

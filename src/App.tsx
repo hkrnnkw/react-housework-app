@@ -16,7 +16,7 @@ import Settings from './pages/Settings'
 import HouseworkItem from './pages/HouseworkItem'
 import HouseworkList from './pages/HouseworkList'
 import SignIn, { Loading } from './components/SignIn'
-import { useDispatchHouse, useHouse } from './contexts/houses'
+import { useDispatchUser, useUser } from './contexts/user'
 
 const AppBarStyle = styled(AppBar)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -51,10 +51,10 @@ type Props = {
 }
 
 const Auth: FC<Props> = ({ children }): JSX.Element => {
-  const { user } = useHouse()
-  const { useAuth } = useDispatchHouse()
+  const { uid } = useUser()
+  const { useAuth } = useDispatchUser()
   const isLoading = useAuth()
-  if (!user) return <SignIn />
+  if (!uid.length) return <SignIn />
   if (isLoading) return <Loading />
   return children
 }

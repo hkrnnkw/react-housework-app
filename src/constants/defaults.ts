@@ -1,7 +1,7 @@
+import { House } from '../contexts/houses/constants'
 import {
   Category,
   EVERY_X_DAYS,
-  Housework,
   SPECIFIC_DATE,
   SPECIFIC_DAY_OF_WEEK,
   TEMPORARY,
@@ -48,7 +48,7 @@ const hw011 = 'hw011'
 const hw012 = 'hw012'
 const hw013 = 'hw013'
 
-export const defaultHousework: Housework = {
+export const defaultHousework: House['housework'] = {
   // その他
   [`${c000}-${hw000}`]: {
     id: hw000,

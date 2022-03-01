@@ -1,6 +1,6 @@
 import React, { ComponentType } from 'react'
 import { Navigate } from 'react-router-dom'
-import { useHouse } from '../contexts/houses'
+import { useUser } from '../contexts/user'
 import paths from '../utils/paths'
 
 type RouteProps = {
@@ -8,9 +8,9 @@ type RouteProps = {
 }
 
 const PrivateRoute: React.FC<RouteProps> = ({ component: RouteComponent }) => {
-  const { user } = useHouse()
+  const { uid } = useUser()
 
-  if (!user) return <Navigate to={paths.home} />
+  if (!uid.length) return <Navigate to={paths.home} />
   return <RouteComponent />
 }
 

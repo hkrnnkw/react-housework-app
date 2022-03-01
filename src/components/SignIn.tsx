@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Button, Typography } from '@mui/material'
 import StyledPaper from './atoms/StyledPaper'
-import { useDispatchHouse } from '../contexts/houses'
+import { useDispatchUser } from '../contexts/user'
 
 export const Loading: FC = () => (
   <StyledPaper>
@@ -10,7 +10,7 @@ export const Loading: FC = () => (
 )
 
 const SignIn: FC = () => {
-  const { signIn } = useDispatchHouse()
+  const { signIn } = useDispatchUser()
 
   return (
     <StyledPaper>

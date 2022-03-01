@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { UserProvider } from './contexts/user'
 import { HouseProvider } from './contexts/houses'
 
 ReactDOM.render(
-  <HouseProvider>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </HouseProvider>,
+  <UserProvider>
+    <HouseProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </HouseProvider>
+  </UserProvider>,
   document.getElementById('root')
 )
 

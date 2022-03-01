@@ -9,10 +9,10 @@ import {
 } from '@mui/material'
 import StyledPaper from '../components/atoms/StyledPaper'
 import paths from '../utils/paths'
-import { useDispatchHouse } from '../contexts/houses'
+import { useDispatchUser } from '../contexts/user'
 
 const Settings: React.FC = () => {
-  const { signOut } = useDispatchHouse()
+  const { signOut } = useDispatchUser()
 
   return (
     <StyledPaper>

@@ -1,9 +1,9 @@
 /* eslint-disable import/prefer-default-export */
+import { House } from '../contexts/houses/constants'
 import {
   DateObj,
   EveryXDays,
   EVERY_X_DAYS,
-  Housework,
   Role,
   SpecificDate,
   SpecificDayOfWeek,
@@ -44,7 +44,7 @@ export const getDateObj = (dateNum?: number): DateObj => {
   } as DateObj
 }
 
-export const createLogs = (housework: Housework, existingLogs?: Year): Year => {
+export const createLogs = (housework: House['housework'], existingLogs?: Year): Year => {
   const date = getDateObj()
   const { yyyy, mm, dd, dayOfWeek } = date
   const logs: Year = existingLogs || { [yyyy]: {} }
