@@ -56,7 +56,8 @@ export type Housework = {
     | typeof TEMPORARY
     | null
   categoryId: string
-  description: string
+  title: string
+  description?: string
   memberId: string | null
 }
 

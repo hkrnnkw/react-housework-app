@@ -61,7 +61,7 @@ const TodoList: FC = () => {
             key={`${houseworkId}-${i}`}
             id={houseworkId}
             secondaryAction={<Checkbox role={role} />}
-            primaryText={housework[houseworkId].description}
+            primaryText={housework[houseworkId].title}
             secondaryText={memberId ?? ''}
             bgColor={memberId === uid ? '#DDDDFF' : '#FFFFFF'}
           />

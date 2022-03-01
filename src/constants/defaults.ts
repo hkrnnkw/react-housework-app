@@ -56,7 +56,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c000,
-    description: 'その他',
+    title: 'その他',
     memberId: null,
   },
   [`${c000}-${hw001}`]: {
@@ -65,7 +65,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c000,
-    description: '郵便物を取りに行く',
+    title: '郵便物を取りに行く',
     memberId: null,
   },
   [`${c000}-${hw002}`]: {
@@ -74,7 +74,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c000,
-    description: '郵便物を分けて捨てる',
+    title: '郵便物を分けて捨てる',
     memberId: null,
   },
   [`${c000}-${hw003}`]: {
@@ -86,7 +86,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c000,
-    description: '植物への水やり',
+    title: '植物への水やり',
     memberId: null,
   },
   [`${c000}-${hw004}`]: {
@@ -98,7 +98,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c000,
-    description: '除／加湿器のタンク替え',
+    title: '除／加湿器のタンク替え',
     memberId: null,
   },
   [`${c000}-${hw005}`]: {
@@ -107,7 +107,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c000,
-    description: 'ティッシュペーパーの補充',
+    title: 'ティッシュペーパーの補充',
     memberId: null,
   },
   [`${c000}-${hw006}`]: {
@@ -116,7 +116,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c000,
-    description: 'ウェットティッシュの補充',
+    title: 'ウェットティッシュの補充',
     memberId: null,
   },
   [`${c000}-${hw007}`]: {
@@ -125,7 +125,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c000,
-    description: 'コロコロの補充',
+    title: 'コロコロの補充',
     memberId: null,
   },
   // 洗濯
@@ -138,7 +138,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
-    description: '洗濯機を回す',
+    title: '洗濯機を回す',
     memberId: null,
   },
   [`${c001}-${hw001}`]: {
@@ -150,7 +150,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
-    description: '洗濯物を干す',
+    title: '洗濯物を干す',
     memberId: null,
   },
   [`${c001}-${hw002}`]: {
@@ -162,7 +162,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
-    description: '洗濯物を取り込む',
+    title: '洗濯物を取り込む',
     memberId: null,
   },
   [`${c001}-${hw003}`]: {
@@ -174,7 +174,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
-    description: '洗濯物を畳む',
+    title: '洗濯物を畳む',
     memberId: null,
   },
   [`${c001}-${hw004}`]: {
@@ -186,7 +186,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
-    description: '洗濯物をしまう',
+    title: '洗濯物をしまう',
     memberId: null,
   },
   [`${c001}-${hw005}`]: {
@@ -200,7 +200,7 @@ export const defaultHousework: House['housework'] = {
     ],
     frequencyType: SPECIFIC_DATE,
     categoryId: c001,
-    description: '洗濯機のフィルタのホコリを取る',
+    title: '洗濯機のフィルタのホコリを取る',
     memberId: null,
   },
   [`${c001}-${hw006}`]: {
@@ -209,7 +209,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c001,
-    description: '洗濯洗剤を詰め替える',
+    title: '洗濯洗剤を詰め替える',
     memberId: null,
   },
   [`${c001}-${hw007}`]: {
@@ -218,7 +218,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c001,
-    description: '柔軟剤を詰め替える',
+    title: '柔軟剤を詰め替える',
     memberId: null,
   },
   // 洗面所
@@ -231,7 +231,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c002,
-    description: '鏡を拭く',
+    title: '鏡を拭く',
     memberId: null,
   },
   [`${c002}-${hw001}`]: {
@@ -243,7 +243,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c002,
-    description: 'タオルを替える',
+    title: 'タオルを替える',
     memberId: null,
   },
   [`${c002}-${hw002}`]: {
@@ -255,7 +255,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c002,
-    description: '洗面台の掃除',
+    title: '洗面台の掃除',
     memberId: null,
   },
   [`${c002}-${hw003}`]: {
@@ -264,7 +264,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Monday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c002,
-    description: '排水溝の掃除',
+    title: '排水溝の掃除',
     memberId: null,
   },
   [`${c002}-${hw004}`]: {
@@ -276,7 +276,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c002,
-    description: '洗面所の床掃除',
+    title: '洗面所の床掃除',
     memberId: null,
   },
   // お風呂場
@@ -286,7 +286,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c003,
-    description: '浴槽を洗う',
+    title: '浴槽を洗う',
     memberId: null,
   },
   [`${c003}-${hw001}`]: {
@@ -295,7 +295,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c003,
-    description: 'フタを洗う',
+    title: 'フタを洗う',
     memberId: null,
   },
   [`${c003}-${hw002}`]: {
@@ -304,7 +304,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c003,
-    description: 'お風呂場の床を洗う',
+    title: 'お風呂場の床を洗う',
     memberId: null,
   },
   [`${c003}-${hw003}`]: {
@@ -316,7 +316,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c003,
-    description: '排水溝のパーツを洗う',
+    title: '排水溝のパーツを洗う',
     memberId: null,
   },
   [`${c003}-${hw004}`]: {
@@ -325,7 +325,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Monday', 'Thursday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c003,
-    description: '髪の毛を取る',
+    title: '髪の毛を取る',
     memberId: null,
   },
   [`${c003}-${hw005}`]: {
@@ -334,7 +334,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Monday', 'Thursday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c003,
-    description: 'ネットを交換する',
+    title: 'ネットを交換する',
     memberId: null,
   },
   [`${c003}-${hw006}`]: {
@@ -343,7 +343,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c003,
-    description: 'カビキラーする',
+    title: 'カビキラーする',
     memberId: null,
   },
   // トイレ
@@ -356,7 +356,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c004,
-    description: 'トイレを拭く',
+    title: 'トイレを拭く',
     memberId: null,
   },
   [`${c004}-${hw001}`]: {
@@ -368,7 +368,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c004,
-    description: 'トイレの床掃除',
+    title: 'トイレの床掃除',
     memberId: null,
   },
   [`${c004}-${hw002}`]: {
@@ -377,7 +377,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c004,
-    description: 'トイレットペーパーの交換',
+    title: 'トイレットペーパーの交換',
     memberId: null,
   },
   [`${c004}-${hw003}`]: {
@@ -386,7 +386,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c004,
-    description: 'トイレスタンプする',
+    title: 'トイレスタンプする',
     memberId: null,
   },
   [`${c004}-${hw004}`]: {
@@ -398,7 +398,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c004,
-    description: 'タオルを替える',
+    title: 'タオルを替える',
     memberId: null,
   },
   // キッチン
@@ -411,7 +411,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: '洗い物',
+    title: '洗い物',
     memberId: null,
   },
   [`${c005}-${hw001}`]: {
@@ -420,7 +420,7 @@ export const defaultHousework: House['housework'] = {
     frequency: null,
     frequencyType: null,
     categoryId: c005,
-    description: '食器を拭く',
+    title: '食器を拭く',
     memberId: null,
   },
   [`${c005}-${hw002}`]: {
@@ -432,7 +432,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: 'シンクの水気を拭く',
+    title: 'シンクの水気を拭く',
     memberId: null,
   },
   [`${c005}-${hw003}`]: {
@@ -444,7 +444,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: '食器をしまう',
+    title: '食器をしまう',
     memberId: null,
   },
   [`${c005}-${hw004}`]: {
@@ -453,7 +453,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c005,
-    description: '調味料の補充',
+    title: '調味料の補充',
     memberId: null,
   },
   [`${c005}-${hw005}`]: {
@@ -465,7 +465,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: 'キッチン壁の掃除',
+    title: 'キッチン壁の掃除',
     memberId: null,
   },
   [`${c005}-${hw006}`]: {
@@ -477,7 +477,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: 'フライパン・調理器具などをしまう',
+    title: 'フライパン・調理器具などをしまう',
     memberId: null,
   },
   [`${c005}-${hw007}`]: {
@@ -489,7 +489,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: 'IHの拭き掃除',
+    title: 'IHの拭き掃除',
     memberId: null,
   },
   [`${c005}-${hw008}`]: {
@@ -501,7 +501,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: '炊飯器の洗浄・掃除',
+    title: '炊飯器の洗浄・掃除',
     memberId: null,
   },
   [`${c005}-${hw009}`]: {
@@ -513,7 +513,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: '電子レンジの洗浄・掃除',
+    title: '電子レンジの洗浄・掃除',
     memberId: null,
   },
   [`${c005}-${hw010}`]: {
@@ -525,7 +525,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: 'コーヒーメーカーの掃除',
+    title: 'コーヒーメーカーの掃除',
     memberId: null,
   },
   [`${c005}-${hw011}`]: {
@@ -534,7 +534,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Monday', 'Thursday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c005,
-    description: 'ネットを交換する',
+    title: 'ネットを交換する',
     memberId: null,
   },
   [`${c005}-${hw012}`]: {
@@ -552,7 +552,7 @@ export const defaultHousework: House['housework'] = {
     ],
     frequencyType: SPECIFIC_DATE,
     categoryId: c005,
-    description: 'レンジフードのフィルタを交換する',
+    title: 'レンジフードのフィルタを交換する',
     memberId: null,
   },
   [`${c005}-${hw013}`]: {
@@ -564,7 +564,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
-    description: 'トレイ、牛乳パックをリサイクル',
+    title: 'トレイ、牛乳パックをリサイクル',
     memberId: null,
   },
   // 料理
@@ -574,7 +574,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Saturday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c006,
-    description: '買い出し',
+    title: '買い出し',
     memberId: null,
   },
   [`${c006}-${hw001}`]: {
@@ -583,7 +583,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Saturday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c006,
-    description: '買い物した荷物を運ぶ',
+    title: '買い物した荷物を運ぶ',
     memberId: null,
   },
   [`${c006}-${hw002}`]: {
@@ -592,7 +592,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Saturday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c006,
-    description: '買い物した荷物を冷蔵庫へ入れる',
+    title: '買い物した荷物を冷蔵庫へ入れる',
     memberId: null,
   },
   [`${c006}-${hw003}`]: {
@@ -604,7 +604,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c006,
-    description: '料理する',
+    title: '料理する',
     memberId: null,
   },
   [`${c006}-${hw004}`]: {
@@ -616,7 +616,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c006,
-    description: '配膳する',
+    title: '配膳する',
     memberId: null,
   },
   [`${c006}-${hw005}`]: {
@@ -628,7 +628,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c006,
-    description: 'テーブルを拭く',
+    title: 'テーブルを拭く',
     memberId: null,
   },
   [`${c006}-${hw006}`]: {
@@ -654,7 +654,7 @@ export const defaultHousework: House['housework'] = {
     ],
     frequencyType: SPECIFIC_DATE,
     categoryId: c006,
-    description: '浄水器のフィルター交換',
+    title: '浄水器のフィルター交換',
     memberId: null,
   },
   [`${c006}-${hw007}`]: {
@@ -666,7 +666,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c006,
-    description: '食器用洗剤の補充',
+    title: '食器用洗剤の補充',
     memberId: null,
   },
   [`${c006}-${hw008}`]: {
@@ -675,7 +675,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c006,
-    description: '包丁を研ぐ',
+    title: '包丁を研ぐ',
     memberId: null,
   },
   [`${c006}-${hw009}`]: {
@@ -687,7 +687,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c006,
-    description: 'ランチョンマットを洗う',
+    title: 'ランチョンマットを洗う',
     memberId: null,
   },
   // 掃除
@@ -700,7 +700,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
-    description: 'リビングの床掃除',
+    title: 'リビングの床掃除',
     memberId: null,
   },
   [`${c007}-${hw001}`]: {
@@ -712,7 +712,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
-    description: 'ベッドルームの床掃除',
+    title: 'ベッドルームの床掃除',
     memberId: null,
   },
   [`${c007}-${hw002}`]: {
@@ -724,7 +724,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
-    description: 'カーペットのコロコロ',
+    title: 'カーペットのコロコロ',
     memberId: null,
   },
   [`${c007}-${hw003}`]: {
@@ -736,7 +736,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
-    description: 'カーペットの洗濯・乾燥',
+    title: 'カーペットの洗濯・乾燥',
     memberId: null,
   },
   [`${c007}-${hw004}`]: {
@@ -748,7 +748,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
-    description: 'ホコリ落とし',
+    title: 'ホコリ落とし',
     memberId: null,
   },
   // 季節ごと
@@ -758,7 +758,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c008,
-    description: '除／加湿器の洗浄',
+    title: '除／加湿器の洗浄',
     memberId: null,
   },
   [`${c008}-${hw001}`]: {
@@ -767,7 +767,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c008,
-    description: 'エアコンの掃除',
+    title: 'エアコンの掃除',
     memberId: null,
   },
   [`${c008}-${hw002}`]: {
@@ -785,7 +785,7 @@ export const defaultHousework: House['housework'] = {
     ],
     frequencyType: SPECIFIC_DATE,
     categoryId: c008,
-    description: '防虫剤の交換',
+    title: '防虫剤の交換',
     memberId: null,
   },
   // 猫ちゃん
@@ -798,7 +798,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: 'えさやり',
+    title: 'えさやり',
     memberId: null,
   },
   [`${c009}-${hw001}`]: {
@@ -810,7 +810,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: 'えさ皿を洗う',
+    title: 'えさ皿を洗う',
     memberId: null,
   },
   [`${c009}-${hw002}`]: {
@@ -822,7 +822,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: 'えさ補充',
+    title: 'えさ補充',
     memberId: null,
   },
   [`${c009}-${hw003}`]: {
@@ -834,7 +834,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: '水替え',
+    title: '水替え',
     memberId: null,
   },
   [`${c009}-${hw004}`]: {
@@ -846,7 +846,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: 'ブラッシング',
+    title: 'ブラッシング',
     memberId: null,
   },
   [`${c009}-${hw005}`]: {
@@ -858,7 +858,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: 'うんち取る',
+    title: 'うんち取る',
     memberId: null,
   },
   [`${c009}-${hw006}`]: {
@@ -870,7 +870,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: '猫砂の補充',
+    title: '猫砂の補充',
     memberId: null,
   },
   [`${c009}-${hw007}`]: {
@@ -879,7 +879,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Thursday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c009,
-    description: 'おしっこシートを替える',
+    title: 'おしっこシートを替える',
     memberId: null,
   },
   [`${c009}-${hw008}`]: {
@@ -891,7 +891,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: '涙拭く',
+    title: '涙拭く',
     memberId: null,
   },
   [`${c009}-${hw009}`]: {
@@ -903,7 +903,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: '手の爪切り',
+    title: '手の爪切り',
     memberId: null,
   },
   [`${c009}-${hw010}`]: {
@@ -915,7 +915,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: '足の爪切り',
+    title: '足の爪切り',
     memberId: null,
   },
   [`${c009}-${hw011}`]: {
@@ -927,7 +927,7 @@ export const defaultHousework: House['housework'] = {
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
-    description: 'トイレを洗う',
+    title: 'トイレを洗う',
     memberId: null,
   },
   // ごみ
@@ -937,7 +937,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Monday', 'Thursday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c010,
-    description: '可燃ごみ',
+    title: '可燃ごみ',
     memberId: null,
   },
   [`${c010}-${hw001}`]: {
@@ -946,7 +946,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Sunday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c010,
-    description: 'プラスチック',
+    title: 'プラスチック',
     memberId: null,
   },
   [`${c010}-${hw002}`]: {
@@ -955,7 +955,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Sunday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c010,
-    description: '缶・ビン',
+    title: '缶・ビン',
     memberId: null,
   },
   [`${c010}-${hw003}`]: {
@@ -964,7 +964,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Friday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c010,
-    description: 'ペットボトル',
+    title: 'ペットボトル',
     memberId: null,
   },
   [`${c010}-${hw004}`]: {
@@ -973,7 +973,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Friday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c010,
-    description: '段ボール',
+    title: '段ボール',
     memberId: null,
   },
   [`${c010}-${hw005}`]: {
@@ -982,7 +982,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c010,
-    description: '不燃ごみ',
+    title: '不燃ごみ',
     memberId: null,
   },
   [`${c010}-${hw006}`]: {
@@ -991,7 +991,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c010,
-    description: '粗大ごみ',
+    title: '粗大ごみ',
     memberId: null,
   },
   [`${c010}-${hw007}`]: {
@@ -1000,7 +1000,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c010,
-    description: '粗大ごみを申し込む',
+    title: '粗大ごみを申し込む',
     memberId: null,
   },
   [`${c010}-${hw008}`]: {
@@ -1009,7 +1009,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c010,
-    description: '粗大ごみ券を買う',
+    title: '粗大ごみ券を買う',
     memberId: null,
   },
   [`${c010}-${hw009}`]: {
@@ -1018,7 +1018,7 @@ export const defaultHousework: House['housework'] = {
     frequency: TEMPORARY,
     frequencyType: TEMPORARY,
     categoryId: c010,
-    description: 'ごみ箱を洗う',
+    title: 'ごみ箱を洗う',
     memberId: null,
   },
   [`${c010}-${hw010}`]: {
@@ -1027,7 +1027,7 @@ export const defaultHousework: House['housework'] = {
     frequency: ['Sunday', 'Monday', 'Thursday'],
     frequencyType: SPECIFIC_DAY_OF_WEEK,
     categoryId: c010,
-    description: 'ごみ袋を装着する',
+    title: 'ごみ袋を装着する',
     memberId: null,
   },
 }

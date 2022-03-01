@@ -23,7 +23,7 @@ const HouseworkList: React.FC = () => {
           >
             <ListItem
               id={key}
-              primaryText={value.description}
+              primaryText={value.title}
               secondaryText={value.points}
             />
           </Link>
