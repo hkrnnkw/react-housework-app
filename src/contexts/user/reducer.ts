@@ -3,16 +3,16 @@ import { initialState, State, UserActionType, USER_ACTIONS } from './constants'
 export const actions = {
   initUserData: (): UserActionType => ({
     type: USER_ACTIONS.SET_USER_DATA,
-    payload: initialState
+    payload: initialState,
   }),
   setUserData: (user: State): UserActionType => ({
     type: USER_ACTIONS.SET_USER_DATA,
-    payload: user
+    payload: user,
   }),
   setHouseIds: (houseIds: State['houseIds']): UserActionType => ({
     type: USER_ACTIONS.SET_HOUSE_IDS,
-    payload: houseIds
-  })
+    payload: houseIds,
+  }),
 } as const
 
 export const reducer = (state: State, action: UserActionType): State => {
@@ -25,7 +25,7 @@ export const reducer = (state: State, action: UserActionType): State => {
     case USER_ACTIONS.SET_HOUSE_IDS: {
       return {
         ...state,
-        houseIds: action.payload
+        houseIds: action.payload,
       }
     }
     default:

@@ -19,11 +19,13 @@ export const createUserToFirestore = async (user: UserState): Promise<void> => {
   await setDoc(newUserRef, user, { merge: true })
 }
 
-export const getHouseIdsFromFirestore = async (uid: string): Promise<string[]> => {
+export const getHouseIdsFromFirestore = async (
+  uid: string
+): Promise<string[]> => {
   const db = getFirestore()
   const docRef: DocumentReference<DocumentData> = doc(db, 'users', uid)
   const docSnap = await getDoc(docRef)
-  return docSnap.data()?.houseIds as string[] ?? []
+  return (docSnap.data()?.houseIds as string[]) ?? []
 }
 
 export const createHouseToFirestore = async (uid: string): Promise<House> => {
@@ -42,7 +44,9 @@ export const createHouseToFirestore = async (uid: string): Promise<House> => {
   return newHouse
 }
 
-export const getHouseFromFirestore = async (houseId: string): Promise<House> => {
+export const getHouseFromFirestore = async (
+  houseId: string
+): Promise<House> => {
   const db = getFirestore()
   const docRef: DocumentReference<DocumentData> = doc(db, 'houses', houseId)
   const docSnap = await getDoc(docRef)

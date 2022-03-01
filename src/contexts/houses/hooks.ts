@@ -1,7 +1,10 @@
 import { useReducer } from 'react'
 import { initialState } from './constants'
 import { actions, reducer } from './reducer'
-import { getHouseFromFirestore, setLogToFirestore } from '../../handlers/firestoreHandler'
+import {
+  getHouseFromFirestore,
+  setLogToFirestore,
+} from '../../handlers/firestoreHandler'
 import { createLogs, getUpdates } from '../../handlers/logsHandler'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

@@ -10,9 +10,10 @@ export type Member = {
   uid: string
 }
 
-export type State = Auth & Member & {
-  houseIds: string[] | readonly []
-}
+export type State = Auth &
+  Member & {
+    houseIds: string[] | readonly []
+  }
 
 export const initialState: State = {
   displayName: null,

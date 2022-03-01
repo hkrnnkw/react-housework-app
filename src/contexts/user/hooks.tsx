@@ -8,7 +8,11 @@ import {
 import { auth } from '../../firebase'
 import { initialState, State } from './constants'
 import { actions, reducer } from './reducer'
-import { createHouseToFirestore, createUserToFirestore, getHouseIdsFromFirestore } from '../../handlers/firestoreHandler'
+import {
+  createHouseToFirestore,
+  createUserToFirestore,
+  getHouseIdsFromFirestore,
+} from '../../handlers/firestoreHandler'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useUserForContext = () => {
@@ -36,24 +40,26 @@ const useUserForContext = () => {
   const useAuth = (): boolean => {
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() =>
-      onAuthStateChanged(auth, (firebaseUser) => {
-        if (!firebaseUser) {
-          dispatch(actions.initUserData())
-          return
-        }
-        const user: State = {
-          displayName: firebaseUser.displayName,
-          email: firebaseUser.email,
-          emailVerified: firebaseUser.emailVerified,
-          photoURL: firebaseUser.photoURL,
-          refreshToken: firebaseUser.refreshToken,
-          uid: firebaseUser.uid,
-          houseIds: [],
-        }
-        dispatch(actions.setUserData(user))
-        setIsLoading(false)
-      }), []
+    useEffect(
+      () =>
+        onAuthStateChanged(auth, (firebaseUser) => {
+          if (!firebaseUser) {
+            dispatch(actions.initUserData())
+            return
+          }
+          const user: State = {
+            displayName: firebaseUser.displayName,
+            email: firebaseUser.email,
+            emailVerified: firebaseUser.emailVerified,
+            photoURL: firebaseUser.photoURL,
+            refreshToken: firebaseUser.refreshToken,
+            uid: firebaseUser.uid,
+            houseIds: [],
+          }
+          dispatch(actions.setUserData(user))
+          setIsLoading(false)
+        }),
+      []
     )
 
     return isLoading
