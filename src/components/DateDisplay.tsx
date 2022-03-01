@@ -8,6 +8,7 @@ import {
   useDispatchHouse,
   useHouse,
 } from '../contexts/houses'
+import { getDateObj } from '../handlers/logsHandler'
 
 const DateDisplay: React.FC = () => {
   const { currentDate } = useHouse()
@@ -18,12 +19,10 @@ const DateDisplay: React.FC = () => {
   }
 
   const makeDate = () => {
-    const dt = new Date(currentDate)
-    const year = dt.getFullYear()
-    const month = dt.getMonth() + 1
-    const day = dt.getDate()
-    return `${year} / ${month} / ${day}`
+    const { yyyy, mm, dd } = getDateObj(currentDate)
+    return `${yyyy} / ${mm} / ${dd}`
   }
+  const date = makeDate()
 
   return (
     <div style={{ display: 'flex' }}>
@@ -35,7 +34,7 @@ const DateDisplay: React.FC = () => {
       >
         <ChevronLeftIcon />
       </IconButton>
-      <Typography variant="h5">{makeDate()}</Typography>
+      <Typography variant="h5">{date}</Typography>
       <IconButton
         color="primary"
         aria-label="right"
