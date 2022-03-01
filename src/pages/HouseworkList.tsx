@@ -1,13 +1,8 @@
 import React from 'react'
 import { Link as RouterLink, Outlet } from 'react-router-dom'
-import {
-  Link,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from '@mui/material'
+import { Link, List } from '@mui/material'
 import StyledPaper from '../components/atoms/StyledPaper'
+import ListItem from '../components/atoms/ListItem'
 import paths from '../utils/paths'
 import { useHouse } from '../contexts/houses'
 
@@ -19,23 +14,20 @@ const HouseworkList: React.FC = () => {
     <StyledPaper>
       <Outlet />
       <List>
-            <ListItem key={key}>
-              <Link
-                component={RouterLink}
-                to={`${paths.settings}${paths.houseworkList}/${key}`}
-                state={{ id: key }}
-              >
-                <ListItemButton>
-                  <ListItemText
-                    primary={value.description}
-                    secondary={value.points}
-                  />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          )
-        )}
         {Object.entries(currentHouse.housework).map(([key, value]) => (
+          <Link
+            key={key}
+            component={RouterLink}
+            to={`${paths.settings}${paths.houseworkList}/${key}`}
+            state={{ id: key }}
+          >
+            <ListItem
+              id={key}
+              primaryText={value.description}
+              secondaryText={value.points}
+            />
+          </Link>
+        ))}
       </List>
     </StyledPaper>
   )
