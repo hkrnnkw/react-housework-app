@@ -29,9 +29,11 @@ const Settings: React.FC = () => {
           </Link>
         </ListItem>
         <ListItem key="signOut">
-          <ListItemButton onClick={() => signOut()}>
-            <ListItemText primary="ログアウト" />
-          </ListItemButton>
+          <Link component={RouterLink} to={`${paths.home}`}>
+            <ListItemButton onClick={() => signOut()}>
+              <ListItemText primary="ログアウト" />
+            </ListItemButton>
+          </Link>
         </ListItem>
       </List>
     </StyledPaper>
