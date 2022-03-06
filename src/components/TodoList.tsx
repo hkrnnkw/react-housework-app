@@ -36,18 +36,18 @@ const Checkbox: FC<CheckboxProps> = ({ role }) => {
 }
 
 const TodoList: FC = () => {
-  const { houseIds, uid } = useUser()
-  const { changeCurrentHouse } = useDispatchHouse()
-  const { currentDate, currentHouse } = useHouse()
+  const { uid } = useUser()
+  const { initHouses } = useDispatchHouse()
+  const { currentDate, currentHouse, houses } = useHouse()
 
   useEffect(() => {
-    if (!houseIds.length) return
+    if (!uid.length) return
     // eslint-disable-next-line no-console
-    changeCurrentHouse(houseIds[0]).catch((e) => console.error(e))
-  }, [changeCurrentHouse, houseIds])
+    initHouses(uid).catch((e) => console.error(e))
+  }, [initHouses, uid])
 
-  if (!currentHouse) return null
-  const { logs, housework } = currentHouse
+  if (!currentHouse || !houses) return null
+  const { logs, housework } = houses[currentHouse.id]
   const { yyyy, mm, dd } = getDateObj(currentDate)
   const roles: Role[] = logs[yyyy][mm][dd] ?? []
 

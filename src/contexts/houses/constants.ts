@@ -1,4 +1,5 @@
 import { Category, Housework, Year } from '../../utils/types'
+import { State as UserState } from '../user/constants'
 
 export const DIRECTION_TYPE_ENUM = {
   PREV: -1,
@@ -16,24 +17,38 @@ export type House = {
 }
 
 export type State = {
-  currentHouse: House | null
+  houses: {
+    [id: string]: House
+  } | null
+  currentHouse: {
+    id: string
+    members: {
+      [uid: string]: UserState
+    }
+  } | null
   currentDate: number
 }
 
 export const initialState: State = {
+  houses: null,
   currentHouse: null,
   currentDate: new Date().getTime(),
 } as const
 
 export const HOUSE_ACTIONS = {
+  SET_HOUSES: 'HouseActions:setHouses',
   CHANGE_CURRENT_HOUSE: 'HouseActions:changeCurrentHouse',
   CHANGE_DATE: 'HouseActions:changeDate',
 } as const
 
 export type HouseActionType =
   | {
+      type: typeof HOUSE_ACTIONS.SET_HOUSES
+      payload: House[]
+    }
+  | {
       type: typeof HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE
-      payload: House
+      payload: { id: string; members: UserState[] }
     }
   | {
       type: typeof HOUSE_ACTIONS.CHANGE_DATE

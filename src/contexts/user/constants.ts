@@ -10,10 +10,7 @@ export type Member = {
   uid: string
 }
 
-export type State = Auth &
-  Member & {
-    houseIds: string[] | readonly []
-  }
+export type State = Auth & Member
 
 export const initialState: State = {
   displayName: null,
@@ -22,20 +19,13 @@ export const initialState: State = {
   photoURL: null,
   refreshToken: '',
   uid: '',
-  houseIds: [],
 } as const
 
 export const USER_ACTIONS = {
   SET_USER_DATA: 'UserActions:setUserData',
-  SET_HOUSE_IDS: 'UserActions:setHouseIds',
 } as const
 
-export type UserActionType =
-  | {
-      type: typeof USER_ACTIONS.SET_USER_DATA
-      payload: State
-    }
-  | {
-      type: typeof USER_ACTIONS.SET_HOUSE_IDS
-      payload: State['houseIds']
-    }
+export type UserActionType = {
+  type: typeof USER_ACTIONS.SET_USER_DATA
+  payload: State
+}

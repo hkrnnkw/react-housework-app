@@ -4,28 +4,29 @@ import {
   DocumentData,
   DocumentReference,
   getDoc,
+  getDocs,
   getFirestore,
+  query,
   setDoc,
+  where,
 } from 'firebase/firestore'
 import { Year } from '../utils/types'
 import { defaultCategories, defaultHousework } from '../constants/defaults'
 import { House } from '../contexts/houses/constants'
 import { State as UserState } from '../contexts/user/constants'
 
-export const createUserToFirestore = async (user: UserState): Promise<void> => {
+export const setUserToFirestore = async (user: UserState): Promise<void> => {
   const db = getFirestore()
   const { uid } = user
   const newUserRef: DocumentReference<DocumentData> = doc(db, 'users', uid)
   await setDoc(newUserRef, user, { merge: true })
 }
 
-export const getHouseIdsFromFirestore = async (
-  uid: string
-): Promise<string[]> => {
+export const getUserFromFirestore = async (uid: string): Promise<UserState> => {
   const db = getFirestore()
   const docRef: DocumentReference<DocumentData> = doc(db, 'users', uid)
   const docSnap = await getDoc(docRef)
-  return (docSnap.data()?.houseIds as string[]) ?? []
+  return docSnap.data() as UserState
 }
 
 export const createHouseToFirestore = async (uid: string): Promise<House> => {
@@ -44,13 +45,14 @@ export const createHouseToFirestore = async (uid: string): Promise<House> => {
   return newHouse
 }
 
-export const getHouseFromFirestore = async (
-  houseId: string
-): Promise<House> => {
+export const getHousesFromFirestore = async (uid: string): Promise<House[]> => {
   const db = getFirestore()
-  const docRef: DocumentReference<DocumentData> = doc(db, 'houses', houseId)
-  const docSnap = await getDoc(docRef)
-  return docSnap.data() as House
+  const q = query(
+    collection(db, 'houses'),
+    where('memberIds', 'array-contains', uid)
+  )
+  const querySnapshot = await getDocs(q)
+  return querySnapshot.docs.map((qDoc) => qDoc.data() as House)
 }
 
 export const setLogToFirestore = async (

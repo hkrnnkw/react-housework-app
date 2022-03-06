@@ -9,36 +9,13 @@ import {
 import { auth } from '../../firebase'
 import { initialState, State } from './constants'
 import { actions, reducer } from './reducer'
-import {
-  createHouseToFirestore,
-  createUserToFirestore,
-  getHouseIdsFromFirestore,
-} from '../../handlers/firestoreHandler'
+import { setUserToFirestore } from '../../handlers/firestoreHandler'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useUserForContext = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  useEffect(() => {
-    const { uid } = state
-    if (!uid.length) return
-
-    const init = async () => {
-      const houseIds = await getHouseIdsFromFirestore(uid)
-      if (houseIds.length > 0) {
-        dispatch(actions.setHouseIds(houseIds))
-        return
-      }
-      const newHouse = await createHouseToFirestore(uid)
-      dispatch(actions.setHouseIds([newHouse.id]))
-      const newUser: State = { ...state, houseIds: [newHouse.id] }
-      await createUserToFirestore(newUser)
-    }
-    // eslint-disable-next-line no-console
-    init().catch((e) => console.error(e))
-  }, [state])
-
-  const handleUser = (firebaseUser: User) => {
+  const handleUser = async (firebaseUser: User) => {
     const user: State = {
       displayName: firebaseUser.displayName,
       email: firebaseUser.email,
@@ -46,9 +23,9 @@ const useUserForContext = () => {
       photoURL: firebaseUser.photoURL,
       refreshToken: firebaseUser.refreshToken,
       uid: firebaseUser.uid,
-      houseIds: [],
     }
     dispatch(actions.setUserData(user))
+    await setUserToFirestore(user)
   }
 
   const useAuth = (): boolean => {
@@ -61,7 +38,9 @@ const useUserForContext = () => {
           return
         }
         handleUser(firebaseUser)
-        setIsLoading(false)
+          .then(() => setIsLoading(false))
+          // eslint-disable-next-line no-console
+          .catch((e) => console.error(e))
       })
       return () => unsubscribe()
     }, [])

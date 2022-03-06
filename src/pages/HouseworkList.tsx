@@ -7,14 +7,16 @@ import paths from '../utils/paths'
 import { useHouse } from '../contexts/houses'
 
 const HouseworkList: React.FC = () => {
-  const { currentHouse } = useHouse()
+  const { currentHouse, houses } = useHouse()
 
-  if (!currentHouse) return null
+  if (!currentHouse || !houses) return null
+  const { housework } = houses[currentHouse.id]
+
   return (
     <StyledPaper>
       <Outlet />
       <List>
-        {Object.entries(currentHouse.housework).map(([key, value]) => (
+        {Object.entries(housework).map(([key, value]) => (
           <Link
             key={key}
             component={RouterLink}
