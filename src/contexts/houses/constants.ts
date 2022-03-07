@@ -1,4 +1,4 @@
-import { Category, Housework, Year } from '../../utils/types'
+import { Category, HouseworkDetail, Year } from '../../utils/types'
 import { State as UserState } from '../user/constants'
 
 export const DIRECTION_TYPE_ENUM = {
@@ -12,7 +12,9 @@ export type House = {
   id: string
   logs: Year
   memberIds: string[]
-  housework: { [id: string]: Housework }
+  housework: {
+    [id: string]: HouseworkDetail
+  }
   categories: Category
 }
 

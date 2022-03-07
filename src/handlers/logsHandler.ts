@@ -114,28 +114,3 @@ export const createLogs = (
   })
   return logs
 }
-
-export const getUpdates = (
-  dateNum: number,
-  logs: Year,
-  houseworkId: string
-): Year => {
-  const date = getDateObj(dateNum)
-  const { yyyy, mm, dd } = date
-  const roles: Role[] = logs[yyyy][mm][dd] ?? []
-  const updates = roles.map((r) => {
-    if (r.houseworkId !== houseworkId) return r
-    const isCompleted = !r.isCompleted
-    return { ...r, isCompleted } as Role
-  })
-  return {
-    ...logs,
-    [yyyy]: {
-      ...logs[yyyy],
-      [mm]: {
-        ...logs[yyyy][mm],
-        [dd]: updates,
-      },
-    },
-  } as Year
-}

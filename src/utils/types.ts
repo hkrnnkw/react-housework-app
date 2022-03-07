@@ -20,7 +20,7 @@ export type SpecificDate = {
 export type Task = {
   memberId: string | null
   houseworkId: string
-  isCompleted: boolean
+  isCompleted?: boolean
 }
 
 export type Day = {
@@ -40,8 +40,7 @@ export const SPECIFIC_DAY_OF_WEEK = 'SpecificDayOfWeek'
 export const SPECIFIC_DATE = 'SpecificDate'
 export const TEMPORARY = 'Temporary'
 
-export type Housework = {
-  id: string
+export type HouseworkDetail = Task & {
   points: 1 | 2 | 3 | 4 | 5
   frequency:
     | EveryXDays
@@ -58,7 +57,6 @@ export type Housework = {
   categoryId: string
   title: string
   description?: string
-  memberId: string | null
 }
 
 export type Category = {

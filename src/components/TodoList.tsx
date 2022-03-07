@@ -11,10 +11,7 @@ type CheckboxProps = {
 }
 
 const Checkbox: FC<CheckboxProps> = ({
-  task: {
-    houseworkId,
-    isCompleted = false,
-  }
+  task: { houseworkId, isCompleted = false },
 }) => {
   const [isChecked, setIsChecked] = useState(isCompleted)
   const { switchTaskStatus } = useDispatchHouse()
@@ -23,7 +20,7 @@ const Checkbox: FC<CheckboxProps> = ({
     const prevStatus = isChecked
     setIsChecked(!prevStatus)
     try {
-      await switchTaskStatus(houseworkId)
+      await switchTaskStatus(houseworkId, prevStatus)
     } catch (e) {
       setIsChecked(prevStatus)
     }
@@ -51,7 +48,8 @@ const TodoList: FC = () => {
   }, [initHouses, uid])
 
   if (!currentHouse || !houses) return null
-  const { logs, housework } = houses[currentHouse.id]
+  const { id: currentHouseId, members } = currentHouse
+  const { logs, housework } = houses[currentHouseId]
   const { yyyy, mm, dd } = getDateObj(currentDate)
   const tasks = logs[yyyy][mm][dd] ?? []
 
@@ -66,7 +64,7 @@ const TodoList: FC = () => {
             id={houseworkId}
             secondaryAction={<Checkbox task={task} />}
             primaryText={housework[houseworkId].title}
-            secondaryText={memberId ?? ''}
+            secondaryText={memberId ? members[memberId].displayName ?? '' : ''}
             bgColor={memberId === uid ? '#DDDDFF' : '#FFFFFF'}
           />
         )
