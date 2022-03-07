@@ -35,7 +35,7 @@ const useHouseForContext = () => {
     dispatch(actions.changeCurrentHouse(houseId, members))
   }
 
-  const switchRoleStatus = async (houseworkId: string) => {
+  const switchTaskStatus = async (houseworkId: string) => {
     const { currentHouse, currentDate, houses } = state
     if (!currentHouse || !houses) return
     const logs = getUpdates(
@@ -54,7 +54,7 @@ const useHouseForContext = () => {
     state,
     initHouses,
     changeCurrentHouse,
-    switchRoleStatus,
+    switchTaskStatus,
     changeDate,
   } as const
 }

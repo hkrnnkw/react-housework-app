@@ -1,25 +1,29 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Checkbox as MuiCheckbox, List } from '@mui/material'
-import { Role } from '../utils/types'
+import { Task } from '../utils/types'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { useUser } from '../contexts/user'
 import { getDateObj } from '../handlers/logsHandler'
 import ListItem from './atoms/ListItem'
 
 type CheckboxProps = {
-  role: Omit<Role, 'memberId'>
+  task: Task
 }
 
-const Checkbox: FC<CheckboxProps> = ({ role }) => {
-  const { isCompleted, houseworkId } = role
+const Checkbox: FC<CheckboxProps> = ({
+  task: {
+    houseworkId,
+    isCompleted = false,
+  }
+}) => {
   const [isChecked, setIsChecked] = useState(isCompleted)
-  const { switchRoleStatus } = useDispatchHouse()
+  const { switchTaskStatus } = useDispatchHouse()
 
   const handleToggle = async () => {
     const prevStatus = isChecked
     setIsChecked(!prevStatus)
     try {
-      await switchRoleStatus(houseworkId)
+      await switchTaskStatus(houseworkId)
     } catch (e) {
       setIsChecked(prevStatus)
     }
@@ -49,18 +53,18 @@ const TodoList: FC = () => {
   if (!currentHouse || !houses) return null
   const { logs, housework } = houses[currentHouse.id]
   const { yyyy, mm, dd } = getDateObj(currentDate)
-  const roles: Role[] = logs[yyyy][mm][dd] ?? []
+  const tasks = logs[yyyy][mm][dd] ?? []
 
   return (
     <List>
-      {roles.map((role, i) => {
-        const { houseworkId, memberId } = role
+      {tasks.map((task, i) => {
+        const { houseworkId, memberId } = task
         return (
           <ListItem
             // eslint-disable-next-line react/no-array-index-key
             key={`${houseworkId}-${i}`}
             id={houseworkId}
-            secondaryAction={<Checkbox role={role} />}
+            secondaryAction={<Checkbox task={task} />}
             primaryText={housework[houseworkId].title}
             secondaryText={memberId ?? ''}
             bgColor={memberId === uid ? '#DDDDFF' : '#FFFFFF'}

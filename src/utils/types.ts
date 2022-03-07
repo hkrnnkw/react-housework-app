@@ -17,14 +17,14 @@ export type SpecificDate = {
   day: number
 }
 
-export type Role = {
+export type Task = {
   memberId: string | null
   houseworkId: string
   isCompleted: boolean
 }
 
 export type Day = {
-  [day: number]: Role[]
+  [day: number]: Task[]
 }
 
 export type Month = {

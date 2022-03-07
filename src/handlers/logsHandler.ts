@@ -4,7 +4,7 @@ import {
   DateObj,
   EveryXDays,
   EVERY_X_DAYS,
-  Role,
+  Task,
   SpecificDate,
   SpecificDayOfWeek,
   SPECIFIC_DATE,
@@ -69,7 +69,7 @@ export const createLogs = (
 
   Object.entries(housework).forEach(([houseworkId, val]) => {
     const { frequency, frequencyType, memberId } = val
-    const role: Role = { memberId, houseworkId, isCompleted: false }
+    const task: Task = { memberId, houseworkId, isCompleted: false }
     switch (frequencyType) {
       case EVERY_X_DAYS: {
         const { days, times } = frequency as EveryXDays
@@ -77,7 +77,7 @@ export const createLogs = (
           const didInit = initDateObj(mm, day)
           if (day !== dd || didInit) {
             for (let i = 0; i < times; i += 1) {
-              logs[yyyy][mm][day].push(role)
+              logs[yyyy][mm][day].push(task)
             }
           }
         }
@@ -90,7 +90,7 @@ export const createLogs = (
           if (diff < 0) diff += 7
           for (let day = dd + diff; day <= lastDayNum; day += 7) {
             const didInit = initDateObj(mm, day)
-            if (day !== dd || didInit) logs[yyyy][mm][day].push(role)
+            if (day !== dd || didInit) logs[yyyy][mm][day].push(task)
           }
         })
         break
@@ -100,7 +100,7 @@ export const createLogs = (
         specificDates.forEach(({ month, day }) => {
           if (month !== mm) return
           const didInit = initDateObj(month, day)
-          if (day !== dd || didInit) logs[yyyy][month][day].push(role)
+          if (day !== dd || didInit) logs[yyyy][month][day].push(task)
         })
         break
       }
