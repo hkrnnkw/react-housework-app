@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles'
 const StyledPaper = styled(Paper)(({ theme }) => ({
   height: 'calc(100vh - 60px)',
   marginTop: '60px',
-  overflowY: 'hidden',
+  overflowY: 'scroll',
   borderRadius: 0,
   boxShadow: 'none',
   background: theme.palette.background.paper,
