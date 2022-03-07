@@ -48,10 +48,9 @@ export const createLogs = (
   housework: House['housework'],
   existingLogs?: Year
 ): Year => {
-  const date = getDateObj()
-  const { yyyy, mm, dd, dayOfWeek } = date
-  const logs: Year = existingLogs || { [yyyy]: {} }
-  const lastDayNum = new Date(yyyy, mm, 0).getDate()
+  const { yyyy, mm, dd, dayOfWeek } = getDateObj()
+  const logs: Year = existingLogs ? { ...existingLogs } : { [yyyy]: {} }
+  const lastDayNum = new Date(yyyy, mm + 1, 0).getDate()
 
   const initDateObj = (monthNum: number, DayNum: number): boolean => {
     if (!logs[yyyy]) {
