@@ -52,7 +52,7 @@ export const createLogs = (
   const logs: Year = existingLogs ? { ...existingLogs } : { [yyyy]: {} }
   const lastDayNum = new Date(yyyy, mm + 1, 0).getDate()
 
-  const initDateObj = (monthNum: number, DayNum: number): boolean => {
+  const initDateObj = (monthNum: number, DayNum: number) => {
     if (!logs[yyyy]) {
       Object.assign(logs, { [yyyy]: {} })
     }
@@ -61,9 +61,7 @@ export const createLogs = (
     }
     if (!logs[yyyy][monthNum][DayNum]) {
       Object.assign(logs[yyyy][monthNum], { [DayNum]: [] })
-      return true
     }
-    return false
   }
 
   Object.entries(housework).forEach(([houseworkId, val]) => {
@@ -73,11 +71,9 @@ export const createLogs = (
       case EVERY_X_DAYS: {
         const { days, times } = frequency as EveryXDays
         for (let day = dd + days - 1; day <= lastDayNum; day += days) {
-          const didInit = initDateObj(mm, day)
-          if (day !== dd || didInit) {
-            for (let i = 0; i < times; i += 1) {
-              logs[yyyy][mm][day].push(task)
-            }
+          initDateObj(mm, day)
+          for (let i = 0; i < times; i += 1) {
+            logs[yyyy][mm][day].push(task)
           }
         }
         break
@@ -88,8 +84,8 @@ export const createLogs = (
           let diff = convertDayOfWeekToNum(dow) - dayOfWeek
           if (diff < 0) diff += 7
           for (let day = dd + diff; day <= lastDayNum; day += 7) {
-            const didInit = initDateObj(mm, day)
-            if (day !== dd || didInit) logs[yyyy][mm][day].push(task)
+            initDateObj(mm, day)
+            logs[yyyy][mm][day].push(task)
           }
         })
         break
@@ -98,8 +94,8 @@ export const createLogs = (
         const specificDates = frequency as SpecificDate[]
         specificDates.forEach(({ month, day }) => {
           if (month !== mm) return
-          const didInit = initDateObj(month, day)
-          if (day !== dd || didInit) logs[yyyy][month][day].push(task)
+          initDateObj(month, day)
+          logs[yyyy][month][day].push(task)
         })
         break
       }
