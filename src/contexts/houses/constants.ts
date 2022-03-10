@@ -41,6 +41,7 @@ export const HOUSE_ACTIONS = {
   SET_HOUSES: 'HouseActions:setHouses',
   CHANGE_CURRENT_HOUSE: 'HouseActions:changeCurrentHouse',
   CHANGE_DATE: 'HouseActions:changeDate',
+  UPDATE_CURRENT_LOGS: 'HouseActions:updateCurrentLogs',
 } as const
 
 export type HouseActionType =
@@ -55,4 +56,8 @@ export type HouseActionType =
   | {
       type: typeof HOUSE_ACTIONS.CHANGE_DATE
       payload: DirectionType
+    }
+  | {
+      type: typeof HOUSE_ACTIONS.UPDATE_CURRENT_LOGS
+      payload: Year
     }

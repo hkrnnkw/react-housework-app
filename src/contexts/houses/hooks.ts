@@ -9,7 +9,7 @@ import {
 } from '../../handlers/firestoreHandler'
 import { getDateObj } from '../../handlers/logsHandler'
 import { State as UserState } from '../user/constants'
-import { Year } from '../../utils/types'
+import { Task, Year } from '../../utils/types'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {
@@ -36,23 +36,37 @@ const useHouseForContext = () => {
     dispatch(actions.changeCurrentHouse(houseId, members))
   }
 
-  const switchTaskStatus = async (houseworkId: string, prevStatus: boolean) => {
+  const switchTaskStatus = async (
+    uid: string,
+    houseworkId: string,
+    prevStatus: boolean
+  ) => {
     const { currentHouse, currentDate, houses } = state
     if (!currentHouse || !houses) return
 
     const logs: Year = { ...houses[currentHouse.id].logs }
     const { yyyy, mm, dd } = getDateObj(currentDate)
     const tasks = [...(logs[yyyy][mm][dd] ?? [])]
-
     const i = tasks.findIndex(
-      (r) => r.houseworkId === houseworkId && r.isCompleted === prevStatus
+      (t) => t.houseworkId === houseworkId && t.isCompleted === prevStatus
     )
-    if (i > -1) {
-      const task = tasks[i]
-      tasks[i] = { ...task, isCompleted: !prevStatus }
-      logs[yyyy][mm][dd] = tasks
+    if (i === -1) return
+
+    const done: Task = { memberId: uid, houseworkId, isCompleted: true }
+    const undo: Task = { memberId: null, houseworkId, isCompleted: false }
+
+    try {
+      tasks[i] = prevStatus ? undo : done
+      logs[yyyy][mm][dd] = [...tasks]
+      dispatch(actions.updateCurrentLogs(logs))
+      const completedTasks = tasks.filter((t) => t.isCompleted)
+      const newLogs: Year = { [yyyy]: { [mm]: { [dd]: completedTasks } } }
+      await setLogToFirestore(currentHouse.id, newLogs)
+    } catch (e) {
+      tasks[i] = prevStatus ? done : undo
+      logs[yyyy][mm][dd] = [...tasks]
+      dispatch(actions.updateCurrentLogs(logs))
     }
-    await setLogToFirestore(currentHouse.id, logs)
   }
 
   const changeDate = (...args: Parameters<typeof actions.changeDate>) => {

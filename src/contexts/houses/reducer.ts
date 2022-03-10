@@ -7,6 +7,7 @@ import {
 } from './constants'
 import { State as UserState } from '../user/constants'
 import { createLogs } from '../../handlers/logsHandler'
+import { Year } from '../../utils/types'
 
 export const actions = {
   setHouses: (houses: House[]): HouseActionType => ({
@@ -20,6 +21,10 @@ export const actions = {
   changeDate: (direction: DirectionType): HouseActionType => ({
     type: HOUSE_ACTIONS.CHANGE_DATE,
     payload: direction,
+  }),
+  updateCurrentLogs: (logs: Year): HouseActionType => ({
+    type: HOUSE_ACTIONS.UPDATE_CURRENT_LOGS,
+    payload: logs,
   }),
 } as const
 
@@ -54,6 +59,18 @@ export const reducer = (state: State, action: HouseActionType): State => {
         ...state,
         currentDate: dt.getTime(),
       }
+    }
+    case HOUSE_ACTIONS.UPDATE_CURRENT_LOGS: {
+      const { houses, currentHouse } = state
+      if (!houses || !currentHouse) return state
+
+      const updates: House = { ...houses[currentHouse.id] }
+      updates.logs = action.payload
+      const updatedHouses: State['houses'] = {
+        ...houses,
+        [currentHouse.id]: updates,
+      }
+      return { ...state, houses: updatedHouses }
     }
     default: {
       return state
