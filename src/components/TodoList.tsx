@@ -2,13 +2,16 @@ import React, { FC, useEffect } from 'react'
 import { Checkbox, List } from '@mui/material'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { useUser } from '../contexts/user'
-import { getDateObj } from '../handlers/logsHandler'
 import ListItem from './atoms/ListItem'
 
 const TodoList: FC = () => {
   const { uid } = useUser()
   const { initHouses, switchTaskStatus } = useDispatchHouse()
-  const { currentDate, currentHouse, houses } = useHouse()
+  const {
+    currentDate: { yyyy, mm, dd },
+    currentHouse,
+    houses,
+  } = useHouse()
 
   useEffect(() => {
     if (!uid.length) return
@@ -19,7 +22,6 @@ const TodoList: FC = () => {
   if (!currentHouse || !houses) return null
   const { id: currentHouseId, members } = currentHouse
   const { logs, housework } = houses[currentHouseId]
-  const { yyyy, mm, dd } = getDateObj(currentDate)
   const tasks = [...(logs[yyyy][mm][dd] ?? [])]
 
   const handleTaskComplete = async (id: string, prevStatus: boolean) => {

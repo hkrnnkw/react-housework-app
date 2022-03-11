@@ -7,7 +7,6 @@ import {
   getUserFromFirestore,
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
-import { getDateObj } from '../../handlers/logsHandler'
 import { State as UserState } from '../user/constants'
 import { Task, Year } from '../../utils/types'
 
@@ -41,11 +40,14 @@ const useHouseForContext = () => {
     houseworkId: string,
     prevStatus: boolean
   ) => {
-    const { currentHouse, currentDate, houses } = state
+    const {
+      currentHouse,
+      currentDate: { yyyy, mm, dd },
+      houses,
+    } = state
     if (!currentHouse || !houses) return
 
     const logs: Year = { ...houses[currentHouse.id].logs }
-    const { yyyy, mm, dd } = getDateObj(currentDate)
     const tasks = [...(logs[yyyy][mm][dd] ?? [])]
     const i = tasks.findIndex(
       (t) => t.houseworkId === houseworkId && t.isCompleted === prevStatus

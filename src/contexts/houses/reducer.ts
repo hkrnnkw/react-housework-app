@@ -6,7 +6,7 @@ import {
   DirectionType,
 } from './constants'
 import { State as UserState } from '../user/constants'
-import { createLogs } from '../../handlers/logsHandler'
+import { createLogs, getDateObj } from '../../handlers/logsHandler'
 import { Year } from '../../utils/types'
 
 export const actions = {
@@ -53,12 +53,12 @@ export const reducer = (state: State, action: HouseActionType): State => {
       return { ...state, houses, currentHouse }
     }
     case HOUSE_ACTIONS.CHANGE_DATE: {
-      const dt = new Date(state.currentDate)
+      const {
+        currentDate: { yyyy, mm, dd },
+      } = state
+      const dt = new Date(yyyy, mm, dd)
       dt.setDate(dt.getDate() + action.payload)
-      return {
-        ...state,
-        currentDate: dt.getTime(),
-      }
+      return { ...state, currentDate: getDateObj(dt.getTime()) }
     }
     case HOUSE_ACTIONS.UPDATE_CURRENT_LOGS: {
       const { houses, currentHouse } = state

@@ -8,12 +8,12 @@ import {
   useDispatchHouse,
   useHouse,
 } from '../contexts/houses'
-import { getDateObj } from '../handlers/logsHandler'
 
 const DateDisplay: React.FC = () => {
-  const { currentDate } = useHouse()
+  const {
+    currentDate: { yyyy, mm, dd },
+  } = useHouse()
   const { changeDate } = useDispatchHouse()
-  const { yyyy, mm, dd } = getDateObj(currentDate)
 
   const handleDateChange = (to: DirectionType) => {
     changeDate(to)

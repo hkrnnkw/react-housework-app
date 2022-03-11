@@ -1,5 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-import { House } from '../contexts/houses/constants'
 import {
   DateObj,
   EveryXDays,
@@ -11,6 +10,7 @@ import {
   SPECIFIC_DAY_OF_WEEK,
   TEMPORARY,
   Year,
+  HouseworkDetail,
 } from '../utils/types'
 
 const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
@@ -45,7 +45,7 @@ export const getDateObj = (dateNum?: number): DateObj => {
 }
 
 export const createLogs = (
-  housework: House['housework'],
+  housework: { [id: string]: HouseworkDetail },
   existingLogs?: Year
 ): Year => {
   const { yyyy, mm, dd, dayOfWeek } = getDateObj()

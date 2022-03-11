@@ -1,4 +1,5 @@
-import { Category, HouseworkDetail, Year } from '../../utils/types'
+import { getDateObj } from '../../handlers/logsHandler'
+import { Category, DateObj, HouseworkDetail, Year } from '../../utils/types'
 import { State as UserState } from '../user/constants'
 
 export const DIRECTION_TYPE_ENUM = {
@@ -28,13 +29,13 @@ export type State = {
       [uid: string]: UserState
     }
   } | null
-  currentDate: number
+  currentDate: DateObj
 }
 
 export const initialState: State = {
   houses: null,
   currentHouse: null,
-  currentDate: new Date().getTime(),
+  currentDate: getDateObj(),
 } as const
 
 export const HOUSE_ACTIONS = {
