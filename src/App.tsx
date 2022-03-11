@@ -16,6 +16,7 @@ import Settings from './pages/Settings'
 import HouseworkItem from './pages/HouseworkItem'
 import HouseworkList from './pages/HouseworkList'
 import SignIn, { Loading } from './components/SignIn'
+import DateDisplay from './components/DateDisplay'
 import { useDispatchUser, useUser } from './contexts/user'
 
 const AppBarStyle = styled(AppBar)(({ theme }) => ({
@@ -37,6 +38,7 @@ const StyledAppBar: FC = (): JSX.Element => (
           Top
         </Link>
       </div>
+      <DateDisplay />
       <IconButton aria-label="settings">
         <Link component={RouterLink} to={paths.settings}>
           <SettingsIcon />
