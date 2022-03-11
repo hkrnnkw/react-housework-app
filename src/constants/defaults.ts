@@ -793,7 +793,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw000,
     points: 1,
     frequency: {
-      times: 3,
+      times: 2,
       days: 1,
     },
     frequencyType: EVERY_X_DAYS,
@@ -805,7 +805,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw001,
     points: 1,
     frequency: {
-      times: 3,
+      times: 2,
       days: 1,
     },
     frequencyType: EVERY_X_DAYS,
@@ -816,10 +816,7 @@ export const defaultHousework: House['housework'] = {
   [`${c009}-${hw002}`]: {
     houseworkId: hw002,
     points: 1,
-    frequency: {
-      times: 1,
-      days: 3,
-    },
+    frequency: 'Temporary',
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
     title: 'えさ補充',
