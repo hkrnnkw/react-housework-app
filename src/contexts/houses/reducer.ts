@@ -43,7 +43,7 @@ export const reducer = (state: State, action: HouseActionType): State => {
 
       const { id, members } = action.payload
       const { housework, logs, ...other } = houses[id]
-      const updatedLogs = createLogs(housework, logs)
+      const updatedLogs = createLogs(housework, { ...logs })
       houses[id] = { housework, logs: updatedLogs, ...other }
 
       const currentHouse: State['currentHouse'] = { id, members: {} }
