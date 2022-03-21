@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs'
+import { House } from '../contexts/houses/constants'
 import {
   XTimesPerDay,
   X_TIMES_PER_DAY,
@@ -12,7 +13,6 @@ import {
   SPECIFIC_DAY_OF_WEEK,
   TEMPORARY,
   Log,
-  HouseworkDetail,
 } from '../utils/types'
 
 const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
@@ -37,7 +37,7 @@ const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
 }
 
 export const createLogs = (
-  housework: { [id: string]: HouseworkDetail },
+  housework: House['housework'],
   logs: Log = {},
   currentDateStr: string
 ): Log => {
