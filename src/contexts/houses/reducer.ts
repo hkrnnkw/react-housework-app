@@ -38,12 +38,12 @@ export const reducer = (state: State, action: HouseActionType): State => {
       return { ...state, houses }
     }
     case HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE: {
-      const { houses } = state
+      const { currentDate, houses } = state
       if (!houses) return state
 
       const { id, members } = action.payload
       const { housework, logs, ...other } = houses[id]
-      const updatedLogs = createLogs(housework, { ...logs })
+      const updatedLogs = createLogs(housework, { ...logs }, currentDate)
       houses[id] = { housework, logs: updatedLogs, ...other }
 
       const currentHouse: State['currentHouse'] = { id, members: {} }
@@ -54,11 +54,19 @@ export const reducer = (state: State, action: HouseActionType): State => {
     }
     case HOUSE_ACTIONS.CHANGE_DATE: {
       const {
+        currentHouse,
         currentDate: { yyyy, mm, dd },
+        houses,
       } = state
       const dt = new Date(yyyy, mm, dd)
       dt.setDate(dt.getDate() + action.payload)
-      return { ...state, currentDate: getDateObj(dt.getTime()) }
+      const currentDate = getDateObj(dt.getTime())
+      if (currentHouse && houses) {
+        const { housework, logs, ...other } = houses[currentHouse.id]
+        const updatedLogs = createLogs(housework, { ...logs }, currentDate)
+        houses[currentHouse.id] = { housework, logs: updatedLogs, ...other }
+      }
+      return { ...state, houses, currentDate }
     }
     case HOUSE_ACTIONS.UPDATE_CURRENT_LOGS: {
       const { houses, currentHouse } = state

@@ -1,10 +1,11 @@
-import { House } from '../contexts/houses/constants'
 import {
   Category,
+  X_TIMES_PER_DAY,
   EVERY_X_DAYS,
   SPECIFIC_DATE,
   SPECIFIC_DAY_OF_WEEK,
   TEMPORARY,
+  HouseworkDetail,
 } from '../utils/types'
 
 const c000 = 'c000'
@@ -48,7 +49,7 @@ const hw011 = 'hw011'
 const hw012 = 'hw012'
 const hw013 = 'hw013'
 
-export const defaultHousework: House['housework'] = {
+export const defaultHousework: { [id: string]: HouseworkDetail } = {
   // その他
   [`${c000}-${hw000}`]: {
     houseworkId: hw000,
@@ -81,8 +82,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw003,
     points: 1,
     frequency: {
-      times: 1,
-      days: 14,
+      x: 14,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c000,
@@ -93,10 +93,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw004,
     points: 1,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c000,
     title: '除／加湿器のタンク替え',
     memberId: null,
@@ -133,8 +132,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw000,
     points: 1,
     frequency: {
-      times: 1,
-      days: 3,
+      x: 3,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
@@ -145,8 +143,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw001,
     points: 2,
     frequency: {
-      times: 1,
-      days: 3,
+      x: 3,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
@@ -157,8 +154,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw002,
     points: 1,
     frequency: {
-      times: 1,
-      days: 3,
+      x: 3,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
@@ -169,8 +165,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw003,
     points: 2,
     frequency: {
-      times: 1,
-      days: 3,
+      x: 3,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
@@ -181,8 +176,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw004,
     points: 1,
     frequency: {
-      times: 1,
-      days: 3,
+      x: 3,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c001,
@@ -226,8 +220,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw000,
     points: 1,
     frequency: {
-      times: 1,
-      days: 7,
+      x: 7,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c002,
@@ -238,8 +231,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw001,
     points: 1,
     frequency: {
-      times: 1,
-      days: 7,
+      x: 7,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c002,
@@ -250,8 +242,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw002,
     points: 3,
     frequency: {
-      times: 1,
-      days: 14,
+      x: 14,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c002,
@@ -271,8 +262,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw004,
     points: 1,
     frequency: {
-      times: 1,
-      days: 2,
+      x: 2,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c002,
@@ -311,8 +301,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw003,
     points: 4,
     frequency: {
-      times: 1,
-      days: 30,
+      x: 30,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c003,
@@ -351,8 +340,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw000,
     points: 5,
     frequency: {
-      times: 1,
-      days: 7,
+      x: 7,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c004,
@@ -363,8 +351,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw001,
     points: 2,
     frequency: {
-      times: 1,
-      days: 2,
+      x: 2,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c004,
@@ -393,8 +380,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw004,
     points: 1,
     frequency: {
-      times: 1,
-      days: 7,
+      x: 7,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c004,
@@ -406,10 +392,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw000,
     points: 3,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c005,
     title: '洗い物',
     memberId: null,
@@ -427,10 +412,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw002,
     points: 2,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c005,
     title: 'シンクの水気を拭く',
     memberId: null,
@@ -439,10 +423,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw003,
     points: 1,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c005,
     title: '食器をしまう',
     memberId: null,
@@ -460,8 +443,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw005,
     points: 1,
     frequency: {
-      times: 1,
-      days: 7,
+      x: 7,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
@@ -472,10 +454,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw006,
     points: 1,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c005,
     title: 'フライパン・調理器具などをしまう',
     memberId: null,
@@ -484,10 +465,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw007,
     points: 2,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c005,
     title: 'IHの拭き掃除',
     memberId: null,
@@ -496,8 +476,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw008,
     points: 1,
     frequency: {
-      times: 1,
-      days: 30,
+      x: 30,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
@@ -508,8 +487,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw009,
     points: 1,
     frequency: {
-      times: 1,
-      days: 14,
+      x: 14,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
@@ -520,10 +498,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw010,
     points: 1,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c005,
     title: 'コーヒーメーカーの掃除',
     memberId: null,
@@ -559,8 +536,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw013,
     points: 1,
     frequency: {
-      times: 1,
-      days: 7,
+      x: 7,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c005,
@@ -599,10 +575,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw003,
     points: 3,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c006,
     title: '料理する',
     memberId: null,
@@ -611,10 +586,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw004,
     points: 1,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c006,
     title: '配膳する',
     memberId: null,
@@ -623,10 +597,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw005,
     points: 1,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c006,
     title: 'テーブルを拭く',
     memberId: null,
@@ -661,8 +634,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw007,
     points: 1,
     frequency: {
-      times: 1,
-      days: 30,
+      x: 30,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c006,
@@ -682,8 +654,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw009,
     points: 1,
     frequency: {
-      times: 1,
-      days: 14,
+      x: 14,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c006,
@@ -695,8 +666,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw000,
     points: 2,
     frequency: {
-      times: 1,
-      days: 2,
+      x: 2,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
@@ -707,8 +677,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw001,
     points: 1,
     frequency: {
-      times: 1,
-      days: 2,
+      x: 2,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
@@ -719,8 +688,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw002,
     points: 1,
     frequency: {
-      times: 1,
-      days: 2,
+      x: 2,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
@@ -731,8 +699,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw003,
     points: 1,
     frequency: {
-      times: 1,
-      days: 14,
+      x: 14,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
@@ -743,8 +710,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw004,
     points: 1,
     frequency: {
-      times: 1,
-      days: 7,
+      x: 7,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c007,
@@ -793,10 +759,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw000,
     points: 1,
     frequency: {
-      times: 2,
-      days: 1,
+      x: 2,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c009,
     title: 'えさやり',
     memberId: null,
@@ -805,10 +770,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw001,
     points: 1,
     frequency: {
-      times: 2,
-      days: 1,
+      x: 2,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c009,
     title: 'えさ皿を洗う',
     memberId: null,
@@ -816,8 +780,8 @@ export const defaultHousework: House['housework'] = {
   [`${c009}-${hw002}`]: {
     houseworkId: hw002,
     points: 1,
-    frequency: 'Temporary',
-    frequencyType: EVERY_X_DAYS,
+    frequency: TEMPORARY,
+    frequencyType: TEMPORARY,
     categoryId: c009,
     title: 'えさ補充',
     memberId: null,
@@ -826,8 +790,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw003,
     points: 3,
     frequency: {
-      times: 1,
-      days: 2,
+      x: 2,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
@@ -838,10 +801,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw004,
     points: 1,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c009,
     title: 'ブラッシング',
     memberId: null,
@@ -850,10 +812,9 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw005,
     points: 1,
     frequency: {
-      times: 1,
-      days: 1,
+      x: 1,
     },
-    frequencyType: EVERY_X_DAYS,
+    frequencyType: X_TIMES_PER_DAY,
     categoryId: c009,
     title: 'うんち取る',
     memberId: null,
@@ -862,8 +823,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw006,
     points: 1,
     frequency: {
-      times: 1,
-      days: 7,
+      x: 7,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
@@ -883,8 +843,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw008,
     points: 1,
     frequency: {
-      times: 1,
-      days: 3,
+      x: 3,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
@@ -895,8 +854,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw009,
     points: 2,
     frequency: {
-      times: 1,
-      days: 14,
+      x: 14,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
@@ -907,8 +865,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw010,
     points: 2,
     frequency: {
-      times: 1,
-      days: 30,
+      x: 30,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
@@ -919,8 +876,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw011,
     points: 4,
     frequency: {
-      times: 1,
-      days: 30,
+      x: 30,
     },
     frequencyType: EVERY_X_DAYS,
     categoryId: c009,
