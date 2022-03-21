@@ -53,12 +53,14 @@ export const createLogs = (
   currentDateObj: DateObj
 ): Year => {
   const { yyyy, mm, dd, dayOfWeek } = currentDateObj
+  const dateStr = `${yyyy}-${mm + 1}-${dd}`
+  const currentDate = dayjs(dateStr).hour(0).minute(0).second(0).millisecond(0)
+  const today = dayjs().hour(0).minute(0).second(0).millisecond(0)
+  if (currentDate.isBefore(today)) return logs
+
   if (!logs[yyyy]) Object.assign(logs, { [yyyy]: {} })
   if (!logs[yyyy][mm]) Object.assign(logs[yyyy], { [mm]: {} })
   if (!logs[yyyy][mm][dd]) Object.assign(logs[yyyy][mm], { [dd]: [] })
-
-  // @todo: do not create new tasks if it is dated before today
-  const currentDate = dayjs(`${yyyy}-${mm + 1}-${dd}`)
 
   Object.entries(housework).forEach(([houseworkId, val]) => {
     const { frequency, frequencyType, memberId } = val
