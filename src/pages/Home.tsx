@@ -1,11 +1,21 @@
-import React, { FC, useEffect } from 'react'
-import { Checkbox, List } from '@mui/material'
+import React, { FC, useEffect, useState } from 'react'
+import {
+  Checkbox,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  SwipeableDrawer,
+} from '@mui/material'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { useUser } from '../contexts/user'
-import ListItem from '../components/atoms/ListItem'
 import StyledPaper from '../components/atoms/StyledPaper'
 
 const Home: FC = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const { uid } = useUser()
   const { initHouses, switchTaskStatus } = useDispatchHouse()
   const { currentDate, currentHouse, houses } = useHouse()
@@ -21,6 +31,10 @@ const Home: FC = () => {
   const { logs, housework } = houses[currentHouseId]
   const tasks = [...(logs[currentDate] ?? [])]
 
+  const toggleDrawer = (open: boolean) => {
+    setIsDrawerOpen(open)
+  }
+
   const handleTaskComplete = async (id: string, prevStatus: boolean) => {
     await switchTaskStatus(uid, id, prevStatus)
   }
@@ -34,24 +48,50 @@ const Home: FC = () => {
             <ListItem
               // eslint-disable-next-line react/no-array-index-key
               key={`${houseworkId}-${i}`}
-              id={houseworkId}
               secondaryAction={
-                <Checkbox
+                <IconButton
                   edge="end"
-                  onChange={() => handleTaskComplete(houseworkId, isCompleted)}
-                  checked={isCompleted}
-                  inputProps={{ 'aria-labelledby': houseworkId }}
+                  aria-label="more"
+                  onClick={() => toggleDrawer(true)}
+                >
+                  <MoreHorizIcon />
+                </IconButton>
+              }
+              disablePadding
+              style={{
+                backgroundColor: memberId === uid ? '#DDDDFF' : '#FFFFFF',
+              }}
+            >
+              <ListItemButton
+                onClick={() => handleTaskComplete(houseworkId, isCompleted)}
+              >
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={isCompleted}
+                    inputProps={{ 'aria-labelledby': houseworkId }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  id={houseworkId}
+                  primary={housework[houseworkId].title}
+                  secondary={
+                    memberId ? members[memberId].displayName ?? '' : ''
+                  }
                 />
-              }
-              primaryText={housework[houseworkId].title}
-              secondaryText={
-                memberId ? members[memberId].displayName ?? '' : ''
-              }
-              bgColor={memberId === uid ? '#DDDDFF' : '#FFFFFF'}
-            />
+              </ListItemButton>
+            </ListItem>
           )
         })}
       </List>
+      <SwipeableDrawer
+        anchor="bottom"
+        open={isDrawerOpen}
+        onClose={() => toggleDrawer(false)}
+        onOpen={() => toggleDrawer(true)}
+      >
+        <List />
+      </SwipeableDrawer>
     </StyledPaper>
   )
 }
