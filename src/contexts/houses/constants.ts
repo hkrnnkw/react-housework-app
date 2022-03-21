@@ -1,5 +1,5 @@
-import { getDateObj } from '../../handlers/logsHandler'
-import { Category, DateObj, HouseworkDetail, Year } from '../../utils/types'
+import dayjs from 'dayjs'
+import { Category, HouseworkDetail, Log } from '../../utils/types'
 import { State as UserState } from '../user/constants'
 
 export const DIRECTION_TYPE_ENUM = {
@@ -11,7 +11,7 @@ export type DirectionType =
 
 export type House = {
   id: string
-  logs: Year
+  logs: Log
   memberIds: string[]
   housework: {
     [id: string]: HouseworkDetail
@@ -29,13 +29,13 @@ export type State = {
       [uid: string]: UserState
     }
   } | null
-  currentDate: DateObj
+  currentDate: string
 }
 
 export const initialState: State = {
   houses: null,
   currentHouse: null,
-  currentDate: getDateObj(),
+  currentDate: dayjs().format('YYYY/MM/DD'),
 } as const
 
 export const HOUSE_ACTIONS = {
@@ -60,5 +60,5 @@ export type HouseActionType =
     }
   | {
       type: typeof HOUSE_ACTIONS.UPDATE_CURRENT_LOGS
-      payload: Year
+      payload: Log
     }

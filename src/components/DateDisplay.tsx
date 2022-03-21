@@ -10,9 +10,7 @@ import {
 } from '../contexts/houses'
 
 const DateDisplay: React.FC = () => {
-  const {
-    currentDate: { yyyy, mm, dd },
-  } = useHouse()
+  const { currentDate } = useHouse()
   const { changeDate } = useDispatchHouse()
 
   const handleDateChange = (to: DirectionType) => {
@@ -29,9 +27,7 @@ const DateDisplay: React.FC = () => {
       >
         <ChevronLeftIcon />
       </IconButton>
-      <Typography variant="h5">
-        {yyyy} / {mm + 1} / {dd}
-      </Typography>
+      <Typography variant="h5">{currentDate}</Typography>
       <IconButton
         color="primary"
         aria-label="right"

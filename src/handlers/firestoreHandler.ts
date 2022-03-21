@@ -10,7 +10,7 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore'
-import { Year } from '../utils/types'
+import { Log } from '../utils/types'
 import { defaultCategories, defaultHousework } from '../constants/defaults'
 import { House } from '../contexts/houses/constants'
 import { State as UserState } from '../contexts/user/constants'
@@ -57,7 +57,7 @@ export const getHousesFromFirestore = async (uid: string): Promise<House[]> => {
 
 export const setLogToFirestore = async (
   houseId: string,
-  logs: Year
+  logs: Log
 ): Promise<void> => {
   const db = getFirestore()
   const houseRef = doc(db, 'houses', houseId)

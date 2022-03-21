@@ -8,7 +8,7 @@ import {
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
-import { Task, Year } from '../../utils/types'
+import { Task, Log } from '../../utils/types'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {
@@ -40,15 +40,11 @@ const useHouseForContext = () => {
     houseworkId: string,
     prevStatus: boolean
   ) => {
-    const {
-      currentHouse,
-      currentDate: { yyyy, mm, dd },
-      houses,
-    } = state
+    const { currentHouse, currentDate, houses } = state
     if (!currentHouse || !houses) return
 
-    const logs: Year = { ...houses[currentHouse.id].logs }
-    const tasks = [...(logs[yyyy][mm][dd] ?? [])]
+    const logs: Log = { ...houses[currentHouse.id].logs }
+    const tasks = [...(logs[currentDate] ?? [])]
     const i = tasks.findIndex(
       (t) => t.houseworkId === houseworkId && t.isCompleted === prevStatus
     )
@@ -59,14 +55,14 @@ const useHouseForContext = () => {
 
     try {
       tasks[i] = prevStatus ? undo : done
-      logs[yyyy][mm][dd] = [...tasks]
+      logs[currentDate] = [...tasks]
       dispatch(actions.updateCurrentLogs(logs))
       const completedTasks = tasks.filter((t) => t.isCompleted)
-      const newLogs: Year = { [yyyy]: { [mm]: { [dd]: completedTasks } } }
+      const newLogs: Log = { [currentDate]: completedTasks }
       await setLogToFirestore(currentHouse.id, newLogs)
     } catch (e) {
       tasks[i] = prevStatus ? done : undo
-      logs[yyyy][mm][dd] = [...tasks]
+      logs[currentDate] = [...tasks]
       dispatch(actions.updateCurrentLogs(logs))
     }
   }

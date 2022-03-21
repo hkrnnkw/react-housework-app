@@ -7,11 +7,7 @@ import ListItem from './atoms/ListItem'
 const TodoList: FC = () => {
   const { uid } = useUser()
   const { initHouses, switchTaskStatus } = useDispatchHouse()
-  const {
-    currentDate: { yyyy, mm, dd },
-    currentHouse,
-    houses,
-  } = useHouse()
+  const { currentDate, currentHouse, houses } = useHouse()
 
   useEffect(() => {
     if (!uid.length) return
@@ -22,7 +18,7 @@ const TodoList: FC = () => {
   if (!currentHouse || !houses) return null
   const { id: currentHouseId, members } = currentHouse
   const { logs, housework } = houses[currentHouseId]
-  const tasks = [...(logs[yyyy][mm][dd] ?? [])]
+  const tasks = [...(logs[currentDate] ?? [])]
 
   const handleTaskComplete = async (id: string, prevStatus: boolean) => {
     await switchTaskStatus(uid, id, prevStatus)

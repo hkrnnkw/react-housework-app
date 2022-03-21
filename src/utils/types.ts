@@ -26,16 +26,8 @@ export type Task = {
   isCompleted?: boolean
 }
 
-export type Day = {
-  [day: number]: Task[]
-}
-
-export type Month = {
-  [month: number]: Day
-}
-
-export type Year = {
-  [year: number]: Month
+export type Log = {
+  [date: string]: Task[]
 }
 
 export const X_TIMES_PER_DAY = 'XTimesPerDay'
@@ -67,11 +59,4 @@ export type HouseworkDetail = Task & {
 
 export type Category = {
   [id: string]: string
-}
-
-export type DateObj = {
-  yyyy: number
-  mm: number
-  dd: number
-  dayOfWeek: number
 }

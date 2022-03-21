@@ -1,7 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs'
 import {
-  DateObj,
   XTimesPerDay,
   X_TIMES_PER_DAY,
   EveryXDays,
@@ -12,7 +11,7 @@ import {
   SPECIFIC_DATE,
   SPECIFIC_DAY_OF_WEEK,
   TEMPORARY,
-  Year,
+  Log,
   HouseworkDetail,
 } from '../utils/types'
 
@@ -37,40 +36,29 @@ const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
   }
 }
 
-export const getDateObj = (dateNum?: number): DateObj => {
-  const date = dateNum ? new Date(dateNum) : new Date()
-  return {
-    yyyy: date.getFullYear(),
-    mm: date.getMonth(),
-    dd: date.getDate(),
-    dayOfWeek: date.getDay(),
-  } as DateObj
-}
-
 export const createLogs = (
   housework: { [id: string]: HouseworkDetail },
-  logs: Year = {},
-  currentDateObj: DateObj
-): Year => {
-  const { yyyy, mm, dd, dayOfWeek } = currentDateObj
-  const dateStr = `${yyyy}-${mm + 1}-${dd}`
-  const currentDate = dayjs(dateStr).hour(0).minute(0).second(0).millisecond(0)
+  logs: Log = {},
+  currentDateStr: string
+): Log => {
+  const currentDate = dayjs(currentDateStr)
+    .hour(0)
+    .minute(0)
+    .second(0)
+    .millisecond(0)
   const today = dayjs().hour(0).minute(0).second(0).millisecond(0)
   if (currentDate.isBefore(today)) return logs
-
-  if (!logs[yyyy]) Object.assign(logs, { [yyyy]: {} })
-  if (!logs[yyyy][mm]) Object.assign(logs[yyyy], { [mm]: {} })
-  if (!logs[yyyy][mm][dd]) Object.assign(logs[yyyy][mm], { [dd]: [] })
+  if (!logs[currentDateStr]) Object.assign(logs, { [currentDateStr]: [] })
 
   Object.entries(housework).forEach(([houseworkId, val]) => {
     const { frequency, frequencyType, memberId } = val
     const addTasks = (times = 1) => {
-      const alreadyAdded = logs[yyyy][mm][dd].filter(
+      const alreadyAdded = logs[currentDateStr].filter(
         (t) => t.houseworkId === houseworkId
       )
       for (let i = 0; i < times - alreadyAdded.length; i += 1) {
         const todoTask: Task = { memberId, houseworkId, isCompleted: false }
-        logs[yyyy][mm][dd].push(todoTask)
+        logs[currentDateStr].push(todoTask)
       }
     }
     switch (frequencyType) {
@@ -85,19 +73,12 @@ export const createLogs = (
         const max = span * 2
         const maxDate = currentDate.add(span, 'day')
         for (let i = 0; i <= max; i += 1) {
-          const dt = maxDate.subtract(i, 'day')
-          const y = dt.year()
-          if (logs[y]) {
-            const m = dt.month()
-            if (logs[y][m]) {
-              const d = dt.date()
-              if (logs[y][m][d]) {
-                const alreadyAdded = logs[y][m][d].find(
-                  (t) => t.houseworkId === houseworkId
-                )
-                if (alreadyAdded) break
-              }
-            }
+          const dt = maxDate.subtract(i, 'day').format('YYYY/MM/DD')
+          if (logs[dt]) {
+            const alreadyAdded = logs[dt].find(
+              (t) => t.houseworkId === houseworkId
+            )
+            if (alreadyAdded) break
           }
           if (i === max) addTasks()
         }
@@ -106,13 +87,15 @@ export const createLogs = (
       case SPECIFIC_DAY_OF_WEEK: {
         const specificDaysOfWeek = frequency as SpecificDayOfWeek[]
         specificDaysOfWeek.forEach((dow) => {
-          if (convertDayOfWeekToNum(dow) === dayOfWeek) addTasks()
+          if (convertDayOfWeekToNum(dow) === currentDate.day()) addTasks()
         })
         break
       }
       case SPECIFIC_DATE: {
         const specificDates = frequency as SpecificDate[]
         specificDates.forEach(({ month, day }) => {
+          const mm = currentDate.month() + 1
+          const dd = currentDate.date()
           if (month === mm && day === dd) addTasks()
         })
         break

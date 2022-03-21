@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import {
   State,
   HouseActionType,
@@ -6,8 +7,8 @@ import {
   DirectionType,
 } from './constants'
 import { State as UserState } from '../user/constants'
-import { createLogs, getDateObj } from '../../handlers/logsHandler'
-import { Year } from '../../utils/types'
+import { createLogs } from '../../handlers/logsHandler'
+import { Log } from '../../utils/types'
 
 export const actions = {
   setHouses: (houses: House[]): HouseActionType => ({
@@ -22,7 +23,7 @@ export const actions = {
     type: HOUSE_ACTIONS.CHANGE_DATE,
     payload: direction,
   }),
-  updateCurrentLogs: (logs: Year): HouseActionType => ({
+  updateCurrentLogs: (logs: Log): HouseActionType => ({
     type: HOUSE_ACTIONS.UPDATE_CURRENT_LOGS,
     payload: logs,
   }),
@@ -53,20 +54,16 @@ export const reducer = (state: State, action: HouseActionType): State => {
       return { ...state, houses, currentHouse }
     }
     case HOUSE_ACTIONS.CHANGE_DATE: {
-      const {
-        currentHouse,
-        currentDate: { yyyy, mm, dd },
-        houses,
-      } = state
-      const dt = new Date(yyyy, mm, dd)
-      dt.setDate(dt.getDate() + action.payload)
-      const currentDate = getDateObj(dt.getTime())
+      const { currentHouse, currentDate, houses } = state
+      const dt = dayjs(currentDate)
+        .add(action.payload, 'day')
+        .format('YYYY/MM/DD')
       if (currentHouse && houses) {
         const { housework, logs, ...other } = houses[currentHouse.id]
-        const updatedLogs = createLogs(housework, { ...logs }, currentDate)
+        const updatedLogs = createLogs(housework, { ...logs }, dt)
         houses[currentHouse.id] = { housework, logs: updatedLogs, ...other }
       }
-      return { ...state, houses, currentDate }
+      return { ...state, houses, currentDate: dt }
     }
     case HOUSE_ACTIONS.UPDATE_CURRENT_LOGS: {
       const { houses, currentHouse } = state
