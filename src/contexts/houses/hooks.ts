@@ -57,9 +57,7 @@ const useHouseForContext = () => {
       tasks[i] = prevStatus ? undo : done
       logs[currentDate] = [...tasks]
       dispatch(actions.updateCurrentLogs(logs))
-      const completedTasks = tasks.filter((t) => t.isCompleted)
-      const newLogs: Log = { [currentDate]: completedTasks }
-      await setLogToFirestore(currentHouse.id, newLogs)
+      await setLogToFirestore(currentHouse.id, logs)
     } catch (e) {
       tasks[i] = prevStatus ? done : undo
       logs[currentDate] = [...tasks]
