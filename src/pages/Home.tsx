@@ -7,15 +7,15 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  SwipeableDrawer,
 } from '@mui/material'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { useUser } from '../contexts/user'
 import StyledPaper from '../components/atoms/StyledPaper'
+import CustomDrawer from '../components/CustomDrawer'
 
 const Home: FC = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [editingHwId, setEditingHwId] = useState<string | null>(null)
   const { uid } = useUser()
   const { initHouses, switchTaskStatus } = useDispatchHouse()
   const { currentDate, currentHouse, houses } = useHouse()
@@ -31,8 +31,8 @@ const Home: FC = () => {
   const { logs, housework } = houses[currentHouseId]
   const tasks = [...(logs[currentDate] ?? [])]
 
-  const toggleDrawer = (open: boolean) => {
-    setIsDrawerOpen(open)
+  const toggleDrawer = (houseworkId: string | null) => {
+    setEditingHwId(houseworkId)
   }
 
   const handleTaskComplete = async (id: string, prevStatus: boolean) => {
@@ -52,7 +52,7 @@ const Home: FC = () => {
                 <IconButton
                   edge="end"
                   aria-label="more"
-                  onClick={() => toggleDrawer(true)}
+                  onClick={() => toggleDrawer(houseworkId)}
                 >
                   <MoreHorizIcon />
                 </IconButton>
@@ -84,14 +84,7 @@ const Home: FC = () => {
           )
         })}
       </List>
-      <SwipeableDrawer
-        anchor="bottom"
-        open={isDrawerOpen}
-        onClose={() => toggleDrawer(false)}
-        onOpen={() => toggleDrawer(true)}
-      >
-        <List />
-      </SwipeableDrawer>
+      <CustomDrawer houseworkId={editingHwId} toggleDrawer={toggleDrawer} />
     </StyledPaper>
   )
 }

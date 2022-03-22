@@ -13,6 +13,7 @@ import {
   SPECIFIC_DAY_OF_WEEK,
   TEMPORARY,
   Log,
+  HouseworkDetail,
 } from '../utils/types'
 
 const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
@@ -33,6 +34,59 @@ const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
       return 6
     default:
       return 0
+  }
+}
+
+const japaneseLocalizeDayOfWeek = (dayOfWeek: SpecificDayOfWeek): string => {
+  switch (dayOfWeek) {
+    case 'Sunday':
+      return '日'
+    case 'Monday':
+      return '月'
+    case 'Tuesday':
+      return '火'
+    case 'Wednesday':
+      return '水'
+    case 'Thursday':
+      return '木'
+    case 'Friday':
+      return '金'
+    case 'Saturday':
+      return '土'
+    default:
+      return ''
+  }
+}
+
+export const makeFrequencyText = (
+  frequency: HouseworkDetail['frequency'],
+  frequencyType: HouseworkDetail['frequencyType']
+): string => {
+  switch (frequencyType) {
+    case X_TIMES_PER_DAY: {
+      const { x } = frequency as XTimesPerDay
+      return `1日に${x}回`
+    }
+    case EVERY_X_DAYS: {
+      const { x } = frequency as EveryXDays
+      return `${x}日ごと`
+    }
+    case SPECIFIC_DAY_OF_WEEK: {
+      const specificDaysOfWeek = frequency as SpecificDayOfWeek[]
+      return specificDaysOfWeek
+        .map((dow) => japaneseLocalizeDayOfWeek(dow))
+        .join(', ')
+    }
+    case SPECIFIC_DATE: {
+      const specificDates = frequency as SpecificDate[]
+      return specificDates.map(({ month, day }) => `${month}/${day}`).join(', ')
+    }
+    case TEMPORARY: {
+      return '不定期'
+    }
+    default: {
+      return ''
+    }
   }
 }
 
