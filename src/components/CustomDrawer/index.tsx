@@ -6,8 +6,8 @@ import {
   ListItemText,
   SwipeableDrawer,
 } from '@mui/material'
-import { useHouse } from '../contexts/houses'
-import { makeFrequencyText } from '../handlers/logsHandler'
+import { useHouse } from '../../contexts/houses'
+import { makeFrequencyText } from '../../handlers/logsHandler'
 
 type Props = {
   houseworkId: string | null
