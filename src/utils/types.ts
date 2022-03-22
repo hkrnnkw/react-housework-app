@@ -1,24 +1,19 @@
-export type XTimesPerDay = {
-  x: number
-}
-
-export type EveryXDays = {
-  x: number
-}
-
-export type SpecificDayOfWeek =
-  | 'Sunday'
-  | 'Monday'
-  | 'Tuesday'
-  | 'Wednesday'
-  | 'Thursday'
-  | 'Friday'
-  | 'Saturday'
-
-export type SpecificDate = {
-  month: number
-  day: number
-}
+import {
+  EveryXDaysType,
+  EVERY_X_DAYS,
+} from '../components/CustomDrawer/Frequency/EveryXDays'
+import {
+  SpecificDateType,
+  SPECIFIC_DATE,
+} from '../components/CustomDrawer/Frequency/SpecificDate'
+import {
+  SpecificDayOfWeekType,
+  SPECIFIC_DAY_OF_WEEK,
+} from '../components/CustomDrawer/Frequency/SpecificDayOfWeek'
+import {
+  XTimesPerDayType,
+  X_TIMES_PER_DAY,
+} from '../components/CustomDrawer/Frequency/XTimesPerDay'
 
 export type Task = {
   memberId: string | null
@@ -30,19 +25,15 @@ export type Log = {
   [date: string]: Task[]
 }
 
-export const X_TIMES_PER_DAY = 'XTimesPerDay'
-export const EVERY_X_DAYS = 'EveryXDays'
-export const SPECIFIC_DAY_OF_WEEK = 'SpecificDayOfWeek'
-export const SPECIFIC_DATE = 'SpecificDate'
 export const TEMPORARY = 'Temporary'
 
 export type HouseworkDetail = Task & {
   points: 1 | 2 | 3 | 4 | 5
   frequency:
-    | XTimesPerDay
-    | EveryXDays
-    | SpecificDayOfWeek[]
-    | SpecificDate[]
+    | XTimesPerDayType
+    | EveryXDaysType
+    | SpecificDayOfWeekType[]
+    | SpecificDateType[]
     | typeof TEMPORARY
     | null
   frequencyType:

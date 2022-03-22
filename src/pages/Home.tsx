@@ -12,7 +12,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { useUser } from '../contexts/user'
 import StyledPaper from '../components/atoms/StyledPaper'
-import CustomDrawer from '../components/CustomDrawer'
+import CustomDrawer from '../components/CustomDrawer/index'
 
 const Home: FC = () => {
   const [editingHwId, setEditingHwId] = useState<string | null>(null)

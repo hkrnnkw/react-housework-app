@@ -1,22 +1,25 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs'
-import { House } from '../contexts/houses/constants'
 import {
-  XTimesPerDay,
-  X_TIMES_PER_DAY,
-  EveryXDays,
+  EveryXDaysType,
   EVERY_X_DAYS,
-  Task,
-  SpecificDate,
-  SpecificDayOfWeek,
+} from '../components/CustomDrawer/Frequency/EveryXDays'
+import {
+  SpecificDateType,
   SPECIFIC_DATE,
+} from '../components/CustomDrawer/Frequency/SpecificDate'
+import {
+  SpecificDayOfWeekType,
   SPECIFIC_DAY_OF_WEEK,
-  TEMPORARY,
-  Log,
-  HouseworkDetail,
-} from '../utils/types'
+} from '../components/CustomDrawer/Frequency/SpecificDayOfWeek'
+import {
+  XTimesPerDayType,
+  X_TIMES_PER_DAY,
+} from '../components/CustomDrawer/Frequency/XTimesPerDay'
+import { House } from '../contexts/houses/constants'
+import { Task, TEMPORARY, Log, HouseworkDetail } from '../utils/types'
 
-const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
+const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeekType): number => {
   switch (dayOfWeek) {
     case 'Sunday':
       return 0
@@ -37,7 +40,9 @@ const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeek): number => {
   }
 }
 
-const japaneseLocalizeDayOfWeek = (dayOfWeek: SpecificDayOfWeek): string => {
+const japaneseLocalizeDayOfWeek = (
+  dayOfWeek: SpecificDayOfWeekType
+): string => {
   switch (dayOfWeek) {
     case 'Sunday':
       return '日'
@@ -64,21 +69,21 @@ export const makeFrequencyText = (
 ): string => {
   switch (frequencyType) {
     case X_TIMES_PER_DAY: {
-      const { x } = frequency as XTimesPerDay
+      const { x } = frequency as XTimesPerDayType
       return `1日に${x}回`
     }
     case EVERY_X_DAYS: {
-      const { x } = frequency as EveryXDays
+      const { x } = frequency as EveryXDaysType
       return `${x}日ごと`
     }
     case SPECIFIC_DAY_OF_WEEK: {
-      const specificDaysOfWeek = frequency as SpecificDayOfWeek[]
+      const specificDaysOfWeek = frequency as SpecificDayOfWeekType[]
       return specificDaysOfWeek
         .map((dow) => japaneseLocalizeDayOfWeek(dow))
         .join(', ')
     }
     case SPECIFIC_DATE: {
-      const specificDates = frequency as SpecificDate[]
+      const specificDates = frequency as SpecificDateType[]
       return specificDates.map(({ month, day }) => `${month}/${day}`).join(', ')
     }
     case TEMPORARY: {
@@ -117,12 +122,12 @@ export const createLogs = (
     }
     switch (frequencyType) {
       case X_TIMES_PER_DAY: {
-        const { x } = frequency as XTimesPerDay
+        const { x } = frequency as XTimesPerDayType
         addTasks(x)
         break
       }
       case EVERY_X_DAYS: {
-        const { x } = frequency as EveryXDays
+        const { x } = frequency as EveryXDaysType
         const span = x - 1
         const max = span * 2
         const maxDate = currentDate.add(span, 'day')
@@ -139,14 +144,14 @@ export const createLogs = (
         break
       }
       case SPECIFIC_DAY_OF_WEEK: {
-        const specificDaysOfWeek = frequency as SpecificDayOfWeek[]
+        const specificDaysOfWeek = frequency as SpecificDayOfWeekType[]
         specificDaysOfWeek.forEach((dow) => {
           if (convertDayOfWeekToNum(dow) === currentDate.day()) addTasks()
         })
         break
       }
       case SPECIFIC_DATE: {
-        const specificDates = frequency as SpecificDate[]
+        const specificDates = frequency as SpecificDateType[]
         specificDates.forEach(({ month, day }) => {
           const mm = currentDate.month() + 1
           const dd = currentDate.date()

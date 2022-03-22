@@ -1,12 +1,9 @@
+import { EVERY_X_DAYS } from '../components/CustomDrawer/Frequency/EveryXDays'
+import { SPECIFIC_DATE } from '../components/CustomDrawer/Frequency/SpecificDate'
+import { SPECIFIC_DAY_OF_WEEK } from '../components/CustomDrawer/Frequency/SpecificDayOfWeek'
+import { X_TIMES_PER_DAY } from '../components/CustomDrawer/Frequency/XTimesPerDay'
 import { House } from '../contexts/houses/constants'
-import {
-  Category,
-  X_TIMES_PER_DAY,
-  EVERY_X_DAYS,
-  SPECIFIC_DATE,
-  SPECIFIC_DAY_OF_WEEK,
-  TEMPORARY,
-} from '../utils/types'
+import { Category, TEMPORARY } from '../utils/types'
 
 const c000 = 'c000'
 const c001 = 'c001'

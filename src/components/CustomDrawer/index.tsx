@@ -7,7 +7,7 @@ import {
   SwipeableDrawer,
 } from '@mui/material'
 import { useHouse } from '../../contexts/houses'
-import { makeFrequencyText } from '../../handlers/logsHandler'
+import Frequency from './Frequency'
 
 type Props = {
   houseworkId: string | null
@@ -23,7 +23,6 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
   const { title, description, memberId, points, frequency, frequencyType } =
     housework[houseworkId]
   const memberText = members[memberId ?? '']?.displayName ?? '未設定'
-  const frequencyText = makeFrequencyText(frequency, frequencyType)
 
   return (
     <SwipeableDrawer
@@ -52,9 +51,7 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton>
-            <ListItemText primary="頻度" secondary={frequencyText} />
-          </ListItemButton>
+          <Frequency frequency={frequency} frequencyType={frequencyType} />
         </ListItem>
       </List>
     </SwipeableDrawer>
