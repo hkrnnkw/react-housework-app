@@ -3,7 +3,7 @@ import { FormControl, InputLabel } from '@mui/material'
 import { HouseworkDetail, TEMPORARY } from '../../../utils/types'
 import SpecificDate, { SpecificDateType, SPECIFIC_DATE } from './SpecificDate'
 import SpecificDayOfWeek, {
-  SpecificDayOfWeekType,
+  DayOfWeekType,
   SPECIFIC_DAY_OF_WEEK,
 } from './SpecificDayOfWeek'
 import XTimesPerDay, { XTimesPerDayType, X_TIMES_PER_DAY } from './XTimesPerDay'
@@ -40,7 +40,7 @@ const Frequency: FC<Props> = ({ frequency, frequencyType }) => {
     case SPECIFIC_DAY_OF_WEEK: {
       return (
         <CustomFormControl>
-          <SpecificDayOfWeek frequency={frequency as SpecificDayOfWeekType[]} />
+          <SpecificDayOfWeek frequency={frequency as DayOfWeekType[]} />
         </CustomFormControl>
       )
     }

@@ -7,7 +7,7 @@ import {
   SPECIFIC_DATE,
 } from '../components/CustomDrawer/Frequency/SpecificDate'
 import {
-  SpecificDayOfWeekType,
+  DayOfWeekType,
   SPECIFIC_DAY_OF_WEEK,
 } from '../components/CustomDrawer/Frequency/SpecificDayOfWeek'
 import {
@@ -32,7 +32,7 @@ export type HouseworkDetail = Task & {
   frequency:
     | XTimesPerDayType
     | EveryXDaysType
-    | SpecificDayOfWeekType[]
+    | DayOfWeekType[]
     | SpecificDateType[]
     | typeof TEMPORARY
     | null

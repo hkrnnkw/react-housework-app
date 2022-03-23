@@ -9,7 +9,7 @@ import {
   SPECIFIC_DATE,
 } from '../components/CustomDrawer/Frequency/SpecificDate'
 import {
-  SpecificDayOfWeekType,
+  DayOfWeekType,
   SPECIFIC_DAY_OF_WEEK,
 } from '../components/CustomDrawer/Frequency/SpecificDayOfWeek'
 import {
@@ -19,7 +19,7 @@ import {
 import { House } from '../contexts/houses/constants'
 import { Task, TEMPORARY, Log, HouseworkDetail } from '../utils/types'
 
-const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeekType): number => {
+const convertDayOfWeekToNum = (dayOfWeek: DayOfWeekType): number => {
   switch (dayOfWeek) {
     case 'Sunday':
       return 0
@@ -40,30 +40,7 @@ const convertDayOfWeekToNum = (dayOfWeek: SpecificDayOfWeekType): number => {
   }
 }
 
-const japaneseLocalizeDayOfWeek = (
-  dayOfWeek: SpecificDayOfWeekType
-): string => {
-  switch (dayOfWeek) {
-    case 'Sunday':
-      return '日'
-    case 'Monday':
-      return '月'
-    case 'Tuesday':
-      return '火'
-    case 'Wednesday':
-      return '水'
-    case 'Thursday':
-      return '木'
-    case 'Friday':
-      return '金'
-    case 'Saturday':
-      return '土'
-    default:
-      return ''
-  }
-}
-
-export const makeFrequencyText = (
+const makeFrequencyText = (
   frequency: HouseworkDetail['frequency'],
   frequencyType: HouseworkDetail['frequencyType']
 ): string => {
@@ -75,12 +52,6 @@ export const makeFrequencyText = (
     case EVERY_X_DAYS: {
       const { x } = frequency as EveryXDaysType
       return `${x}日ごと`
-    }
-    case SPECIFIC_DAY_OF_WEEK: {
-      const specificDaysOfWeek = frequency as SpecificDayOfWeekType[]
-      return specificDaysOfWeek
-        .map((dow) => japaneseLocalizeDayOfWeek(dow))
-        .join(', ')
     }
     case SPECIFIC_DATE: {
       const specificDates = frequency as SpecificDateType[]
@@ -144,7 +115,7 @@ export const createLogs = (
         break
       }
       case SPECIFIC_DAY_OF_WEEK: {
-        const specificDaysOfWeek = frequency as SpecificDayOfWeekType[]
+        const specificDaysOfWeek = frequency as DayOfWeekType[]
         specificDaysOfWeek.forEach((dow) => {
           if (convertDayOfWeekToNum(dow) === currentDate.day()) addTasks()
         })
