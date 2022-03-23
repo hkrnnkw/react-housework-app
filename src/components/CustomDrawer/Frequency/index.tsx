@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { FormControl, InputLabel } from '@mui/material'
+import { FormControl, InputLabel, Typography } from '@mui/material'
 import { HouseworkDetail, TEMPORARY } from '../../../utils/types'
 import SpecificDate, { SpecificDateType, SPECIFIC_DATE } from './SpecificDate'
 import SpecificDayOfWeek, {
@@ -52,7 +52,11 @@ const Frequency: FC<Props> = ({ frequency, frequencyType }) => {
       )
     }
     case TEMPORARY: {
-      return null
+      return (
+        <CustomFormControl>
+          <Typography>不定期</Typography>
+        </CustomFormControl>
+      )
     }
     default: {
       return null
