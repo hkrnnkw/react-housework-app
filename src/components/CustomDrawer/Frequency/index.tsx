@@ -1,5 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import React, { FC } from 'react'
 import { FormControl, InputLabel, Typography } from '@mui/material'
+import { css } from '@emotion/react'
 import { HouseworkDetail, TEMPORARY } from '../../../utils/types'
 import SpecificDate, { SpecificDateType, SPECIFIC_DATE } from './SpecificDate'
 import SpecificDayOfWeek, {
@@ -10,7 +12,7 @@ import XTimesPerDay, { XTimesPerDayType, X_TIMES_PER_DAY } from './XTimesPerDay'
 import EveryXDays, { EveryXDaysType, EVERY_X_DAYS } from './EveryXDays'
 
 const CustomFormControl: FC = ({ children }) => (
-  <FormControl fullWidth>
+  <FormControl fullWidth css={formControl}>
     <InputLabel id="demo-multiple-chip-label">頻度</InputLabel>
     {children}
   </FormControl>
@@ -65,3 +67,7 @@ const Frequency: FC<Props> = ({ frequency, frequencyType }) => {
 }
 
 export default Frequency
+
+const formControl = css`
+  padding: 8px 16px;
+`

@@ -45,10 +45,6 @@ const makeFrequencyText = (
   frequencyType: HouseworkDetail['frequencyType']
 ): string => {
   switch (frequencyType) {
-    case X_TIMES_PER_DAY: {
-      const { x } = frequency as XTimesPerDayType
-      return `1日に${x}回`
-    }
     case EVERY_X_DAYS: {
       const { x } = frequency as EveryXDaysType
       return `${x}日ごと`
