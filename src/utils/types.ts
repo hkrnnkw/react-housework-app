@@ -14,6 +14,7 @@ import {
   XTimesPerDayType,
   X_TIMES_PER_DAY,
 } from '../components/CustomDrawer/Frequency/XTimesPerDay'
+import { TEMPORARY } from '../components/CustomDrawer/Frequency/Temporary'
 
 export type Task = {
   memberId: string | null
@@ -24,8 +25,6 @@ export type Task = {
 export type Log = {
   [date: string]: Task[]
 }
-
-export const TEMPORARY = 'Temporary'
 
 export type HouseworkDetail = Task & {
   points: 1 | 2 | 3 | 4 | 5

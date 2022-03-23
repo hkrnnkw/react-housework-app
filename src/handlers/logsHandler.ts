@@ -16,8 +16,9 @@ import {
   XTimesPerDayType,
   X_TIMES_PER_DAY,
 } from '../components/CustomDrawer/Frequency/XTimesPerDay'
+import { TEMPORARY } from '../components/CustomDrawer/Frequency/Temporary'
 import { House } from '../contexts/houses/constants'
-import { Task, TEMPORARY, Log, HouseworkDetail } from '../utils/types'
+import { Task, Log, HouseworkDetail } from '../utils/types'
 
 const convertDayOfWeekToNum = (dayOfWeek: DayOfWeekType): number => {
   switch (dayOfWeek) {
@@ -52,9 +53,6 @@ const makeFrequencyText = (
     case SPECIFIC_DATE: {
       const specificDates = frequency as SpecificDateType[]
       return specificDates.map(({ month, day }) => `${month}/${day}`).join(', ')
-    }
-    case TEMPORARY: {
-      return '不定期'
     }
     default: {
       return ''

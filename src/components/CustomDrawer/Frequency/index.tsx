@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import React, { FC } from 'react'
-import { FormControl, InputLabel, Typography } from '@mui/material'
+import { FormControl, InputLabel } from '@mui/material'
 import { css } from '@emotion/react'
-import { HouseworkDetail, TEMPORARY } from '../../../utils/types'
+import { HouseworkDetail } from '../../../utils/types'
 import SpecificDate, { SpecificDateType, SPECIFIC_DATE } from './SpecificDate'
 import SpecificDayOfWeek, {
   DayOfWeekType,
@@ -10,6 +10,7 @@ import SpecificDayOfWeek, {
 } from './SpecificDayOfWeek'
 import XTimesPerDay, { XTimesPerDayType, X_TIMES_PER_DAY } from './XTimesPerDay'
 import EveryXDays, { EveryXDaysType, EVERY_X_DAYS } from './EveryXDays'
+import Temporary, { TEMPORARY } from './Temporary'
 
 const CustomFormControl: FC = ({ children }) => (
   <FormControl fullWidth css={formControl}>
@@ -56,7 +57,7 @@ const Frequency: FC<Props> = ({ frequency, frequencyType }) => {
     case TEMPORARY: {
       return (
         <CustomFormControl>
-          <Typography>不定期</Typography>
+          <Temporary />
         </CustomFormControl>
       )
     }
