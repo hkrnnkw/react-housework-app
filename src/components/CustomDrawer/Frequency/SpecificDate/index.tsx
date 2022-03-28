@@ -13,11 +13,10 @@ export type SpecificDateType = {
 export const SPECIFIC_DATE = 'SpecificDate'
 
 type Props = {
-  currentDate: string
   frequency: SpecificDateType[]
 }
 
-const SpecificDate: FC<Props> = ({ currentDate, frequency }) => {
+const SpecificDate: FC<Props> = ({ frequency }) => {
   const [specificDates, setspecificDates] =
     useState<(SpecificDateType | null)[]>(frequency)
 

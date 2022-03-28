@@ -20,12 +20,11 @@ const CustomFormControl: FC = ({ children }) => (
 )
 
 type Props = {
-  currentDate: string
   frequency: HouseworkDetail['frequency']
   frequencyType: HouseworkDetail['frequencyType']
 }
 
-const Frequency: FC<Props> = ({ currentDate, frequency, frequencyType }) => {
+const Frequency: FC<Props> = ({ frequency, frequencyType }) => {
   switch (frequencyType) {
     case X_TIMES_PER_DAY: {
       return (
@@ -51,10 +50,7 @@ const Frequency: FC<Props> = ({ currentDate, frequency, frequencyType }) => {
     case SPECIFIC_DATE: {
       return (
         <CustomFormControl>
-          <SpecificDate
-            currentDate={currentDate}
-            frequency={frequency as SpecificDateType[]}
-          />
+          <SpecificDate frequency={frequency as SpecificDateType[]} />
         </CustomFormControl>
       )
     }

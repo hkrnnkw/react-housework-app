@@ -15,7 +15,7 @@ type Props = {
 }
 
 const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
-  const { currentDate, currentHouse, houses } = useHouse()
+  const { currentHouse, houses } = useHouse()
   if (!houseworkId || !currentHouse || !houses) return null
 
   const { id: currentHouseId, members } = currentHouse
@@ -51,11 +51,7 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <Frequency
-            currentDate={currentDate}
-            frequency={frequency}
-            frequencyType={frequencyType}
-          />
+          <Frequency frequency={frequency} frequencyType={frequencyType} />
         </ListItem>
       </List>
     </SwipeableDrawer>
