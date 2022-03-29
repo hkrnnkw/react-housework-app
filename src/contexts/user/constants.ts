@@ -1,14 +1,4 @@
-type Auth = {
-  emailVerified: boolean
-  refreshToken: string
-}
-
-export type Member = {
-  displayName: string | null
-  email: string | null
-  photoURL: string | null
-  uid: string
-}
+import { Auth, Member } from '../../lib/type'
 
 export type State = Auth & Member
 

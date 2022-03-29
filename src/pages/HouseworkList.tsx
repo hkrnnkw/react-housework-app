@@ -8,7 +8,7 @@ import {
   ListItemText,
 } from '@mui/material'
 import StyledPaper from '../components/atoms/StyledPaper'
-import paths from '../utils/paths'
+import paths from '../lib/path'
 import { useHouse } from '../contexts/houses'
 
 const HouseworkList: React.FC = () => {

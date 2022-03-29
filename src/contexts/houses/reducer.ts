@@ -1,14 +1,8 @@
 import dayjs from 'dayjs'
-import {
-  State,
-  HouseActionType,
-  HOUSE_ACTIONS,
-  House,
-  DirectionType,
-} from './constants'
+import { State, HouseActionType, HOUSE_ACTIONS } from './constants'
 import { State as UserState } from '../user/constants'
 import { createLogs } from '../../handlers/logsHandler'
-import { Log } from '../../utils/types'
+import { DirectionType, House, Log } from '../../lib/type'
 
 export const actions = {
   setHouses: (houses: House[]): HouseActionType => ({

@@ -2,12 +2,9 @@ import React from 'react'
 import { IconButton, Typography } from '@mui/material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import {
-  DirectionType,
-  DIRECTION_TYPE_ENUM,
-  useDispatchHouse,
-  useHouse,
-} from '../contexts/houses'
+import { useDispatchHouse, useHouse } from '../contexts/houses'
+import { DirectionType } from '../lib/type'
+import { DIRECTION_TYPE_ENUM } from '../lib/constant'
 
 const DateDisplay: React.FC = () => {
   const { currentDate } = useHouse()

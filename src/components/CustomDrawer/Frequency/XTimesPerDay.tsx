@@ -2,11 +2,7 @@
 import React, { FC, useState } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { css } from '@emotion/react'
-
-export type XTimesPerDayType = {
-  x: number
-}
-export const X_TIMES_PER_DAY = 'XTimesPerDay'
+import { XTimesPerDayType } from '../../../lib/type'
 
 const numArray = new Array(10).fill(1) as number[]
 

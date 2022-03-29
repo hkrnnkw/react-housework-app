@@ -2,8 +2,7 @@ import React, { FC } from 'react'
 import { TextField } from '@mui/material'
 import { MobileDatePicker } from '@mui/lab'
 import dayjs from 'dayjs'
-// eslint-disable-next-line import/no-cycle
-import { SpecificDateType } from '.'
+import { SpecificDateType } from '../../../../lib/type'
 
 type Props = {
   index: number

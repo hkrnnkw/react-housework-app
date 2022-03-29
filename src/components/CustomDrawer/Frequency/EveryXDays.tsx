@@ -2,11 +2,7 @@
 import React, { FC, useState } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { css } from '@emotion/react'
-
-export type EveryXDaysType = {
-  x: number
-}
-export const EVERY_X_DAYS = 'EveryXDays'
+import { EveryXDaysType } from '../../../lib/type'
 
 const numArray = new Array(90).fill(1) as number[]
 

@@ -3,14 +3,8 @@ import { Button, Stack } from '@mui/material'
 import { LocalizationProvider } from '@mui/lab'
 import DateAdapter from '@mui/lab/AdapterDayjs'
 import dayjs from 'dayjs'
-// eslint-disable-next-line import/no-cycle
 import Calendar from './Calendar'
-
-export type SpecificDateType = {
-  month: number
-  day: number
-}
-export const SPECIFIC_DATE = 'SpecificDate'
+import { SpecificDateType } from '../../../../lib/type'
 
 type Props = {
   frequency: SpecificDateType[]

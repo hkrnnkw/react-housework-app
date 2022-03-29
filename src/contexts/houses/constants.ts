@@ -1,23 +1,6 @@
 import dayjs from 'dayjs'
-import { Category, HouseworkDetail, Log } from '../../utils/types'
+import { DirectionType, House, Log } from '../../lib/type'
 import { State as UserState } from '../user/constants'
-
-export const DIRECTION_TYPE_ENUM = {
-  PREV: -1,
-  NEXT: 1,
-} as const
-export type DirectionType =
-  typeof DIRECTION_TYPE_ENUM[keyof typeof DIRECTION_TYPE_ENUM]
-
-export type House = {
-  id: string
-  logs: Log
-  memberIds: string[]
-  housework: {
-    [id: string]: HouseworkDetail
-  }
-  categories: Category
-}
 
 export type State = {
   houses: {

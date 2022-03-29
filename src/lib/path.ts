@@ -7,6 +7,6 @@ const paths = {
   // 異常系
   errorOccurred: '/erroroccurred',
   userNotFound: '/usernotfound',
-}
+} as const
 
 export default paths

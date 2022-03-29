@@ -8,7 +8,7 @@ import {
 import { AppBar, IconButton, Link, Toolbar } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import SettingsIcon from '@mui/icons-material/Settings'
-import paths from './utils/paths'
+import paths from './lib/path'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './routes/PrivateRoute'

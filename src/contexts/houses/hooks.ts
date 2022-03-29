@@ -8,7 +8,7 @@ import {
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
-import { Task, Log } from '../../utils/types'
+import { Task, Log } from '../../lib/type'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {

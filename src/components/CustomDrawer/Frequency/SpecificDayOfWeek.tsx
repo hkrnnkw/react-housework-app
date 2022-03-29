@@ -9,19 +9,8 @@ import {
   Theme,
   useTheme,
 } from '@mui/material'
-
-const DAY_OF_WEEK_ENUM = {
-  SUN: 'Sunday',
-  MON: 'Monday',
-  TUE: 'Tuesday',
-  WED: 'Wednesday',
-  THU: 'Thursday',
-  FRI: 'Friday',
-  SAT: 'Saturday',
-} as const
-export type DayOfWeekType =
-  typeof DAY_OF_WEEK_ENUM[keyof typeof DAY_OF_WEEK_ENUM]
-export const SPECIFIC_DAY_OF_WEEK = 'SpecificDayOfWeek'
+import { DayOfWeekType } from '../../../lib/type'
+import { DAY_OF_WEEK_ENUM } from '../../../lib/constant'
 
 const japaneseLocalizeDayOfWeek = (dayOfWeek: DayOfWeekType): string => {
   switch (dayOfWeek) {

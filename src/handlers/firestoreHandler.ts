@@ -10,9 +10,8 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore'
-import { Log } from '../utils/types'
+import { House, Log } from '../lib/type'
 import { defaultCategories, defaultHousework } from '../constants/defaults'
-import { House } from '../contexts/houses/constants'
 import { State as UserState } from '../contexts/user/constants'
 
 export const setUserToFirestore = async (user: UserState): Promise<void> => {
