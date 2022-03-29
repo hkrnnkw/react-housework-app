@@ -1,11 +1,11 @@
-import { Category, House } from '../lib/type'
 import {
+  TEMPORARY,
   EVERY_X_DAYS,
+  X_TIMES_PER_DAY,
   SPECIFIC_DATE,
   SPECIFIC_DAY_OF_WEEK,
-  TEMPORARY,
-  X_TIMES_PER_DAY,
-} from '../lib/constant'
+} from './constant'
+import { Category, House } from './type'
 
 const c000 = 'c000'
 const c001 = 'c001'
@@ -31,7 +31,7 @@ export const defaultCategories: Category = {
   [c008]: '季節ごと',
   [c009]: '猫ちゃん',
   [c010]: 'ごみ',
-}
+} as const
 
 const hw000 = 'hw000'
 const hw001 = 'hw001'

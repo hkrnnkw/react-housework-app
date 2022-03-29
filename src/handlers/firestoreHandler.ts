@@ -11,7 +11,7 @@ import {
   where,
 } from 'firebase/firestore'
 import { House, Log } from '../lib/type'
-import { defaultCategories, defaultHousework } from '../constants/defaults'
+import { defaultCategories, defaultHousework } from '../lib/housework'
 import { State as UserState } from '../contexts/user/constants'
 
 export const setUserToFirestore = async (user: UserState): Promise<void> => {
