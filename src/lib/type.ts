@@ -1,12 +1,4 @@
-import {
-  DAY_OF_WEEK_ENUM,
-  DIRECTION_TYPE_ENUM,
-  EVERY_X_DAYS,
-  SPECIFIC_DATE,
-  SPECIFIC_DAY_OF_WEEK,
-  TEMPORARY,
-  X_TIMES_PER_DAY,
-} from './constant'
+import { DAY_OF_WEEK_ENUM, DIRECTION_TYPE_ENUM } from './constant'
 
 export type Auth = {
   emailVerified: boolean
@@ -37,15 +29,15 @@ export type SpecificDateType = {
   day: number
 }
 
-export type EveryXDaysType = {
-  x: number
-}
-
 export type DayOfWeekType =
   typeof DAY_OF_WEEK_ENUM[keyof typeof DAY_OF_WEEK_ENUM]
 
-export type XTimesPerDayType = {
-  x: number
+export type FrequencyType = {
+  xTimesPerDay?: number
+  everyXDays?: number
+  daysOfWeek?: DayOfWeekType[]
+  specificDates?: SpecificDateType[]
+  temporary?: boolean
 }
 
 export type Task = {
@@ -58,22 +50,9 @@ export type Log = {
   [date: string]: Task[]
 }
 
-export type HouseworkDetail = Task & {
+type HouseworkDetail = Task & {
   points: 1 | 2 | 3 | 4 | 5
-  frequency:
-    | XTimesPerDayType
-    | EveryXDaysType
-    | DayOfWeekType[]
-    | SpecificDateType[]
-    | typeof TEMPORARY
-    | null
-  frequencyType:
-    | typeof X_TIMES_PER_DAY
-    | typeof EVERY_X_DAYS
-    | typeof SPECIFIC_DAY_OF_WEEK
-    | typeof SPECIFIC_DATE
-    | typeof TEMPORARY
-    | null
+  frequency: FrequencyType
   categoryId: string
   title: string
   description?: string

@@ -9,7 +9,7 @@ import {
   Theme,
   useTheme,
 } from '@mui/material'
-import { DayOfWeekType } from '../../../lib/type'
+import { DayOfWeekType, FrequencyType } from '../../../lib/type'
 import { DAY_OF_WEEK_ENUM } from '../../../lib/constant'
 
 const japaneseLocalizeDayOfWeek = (dayOfWeek: DayOfWeekType): string => {
@@ -56,12 +56,12 @@ const getStyles = (
 })
 
 type Props = {
-  frequency: DayOfWeekType[]
+  frequency: FrequencyType['daysOfWeek']
 }
 
 const SpecificDayOfWeek: FC<Props> = ({ frequency }) => {
   const theme = useTheme()
-  const [dayOfWeek, setDayOfWeek] = useState<string[]>(frequency)
+  const [dayOfWeek, setDayOfWeek] = useState<string[]>(frequency ?? [])
   const japaneseLocalized = dayOfWeek.map((day) =>
     japaneseLocalizeDayOfWeek(day as DayOfWeekType)
   )

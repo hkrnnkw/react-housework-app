@@ -2,16 +2,16 @@
 import React, { FC, useState } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { css } from '@emotion/react'
-import { EveryXDaysType } from '../../../lib/type'
+import { FrequencyType } from '../../../lib/type'
 
 const numArray = new Array(90).fill(1) as number[]
 
 type Props = {
-  frequency: EveryXDaysType
+  frequency: FrequencyType['everyXDays']
 }
 
-const EveryXDays: FC<Props> = ({ frequency: { x } }) => {
-  const [xDays, setXDays] = useState(x.toString())
+const EveryXDays: FC<Props> = ({ frequency }) => {
+  const [xDays, setXDays] = useState(frequency?.toString())
 
   const handleChange = (event: SelectChangeEvent) => {
     setXDays(event.target.value)

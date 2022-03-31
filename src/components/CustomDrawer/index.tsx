@@ -1,11 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import React, { FC } from 'react'
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  SwipeableDrawer,
-} from '@mui/material'
+import { css } from '@emotion/react'
+import { List, ListItem, ListItemText, SwipeableDrawer } from '@mui/material'
 import { useHouse } from '../../contexts/houses'
 import Frequency from './Frequency'
 
@@ -20,7 +16,7 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
 
   const { id: currentHouseId, members } = currentHouse
   const { housework } = houses[currentHouseId]
-  const { title, description, memberId, points, frequency, frequencyType } =
+  const { title, description, memberId, points, frequency } =
     housework[houseworkId]
   const memberText = members[memberId ?? '']?.displayName ?? '未設定'
 
@@ -32,26 +28,21 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
       onOpen={() => toggleDrawer(houseworkId)}
     >
       <List>
-        <ListItem>
-          <ListItemButton>
-            <ListItemText
-              primary={title}
-              secondary={description ?? '説明がありません'}
-            />
-          </ListItemButton>
+        <ListItem css={listItem}>
+          <ListItemText
+            primary={title}
+            secondary={description ?? '説明がありません'}
+          />
         </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemText primary="担当" secondary={memberText} />
-          </ListItemButton>
+        <ListItem css={listItem}>
+          <ListItemText primary="担当" secondary={memberText} />
         </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemText primary="ポイント" secondary={points} />
-          </ListItemButton>
+        <ListItem css={listItem}>
+          <ListItemText primary="ポイント" secondary={points} />
         </ListItem>
-        <ListItem>
-          <Frequency frequency={frequency} frequencyType={frequencyType} />
+        <ListItem css={listItem}>
+          <ListItemText primary="頻度" />
+          <Frequency frequency={frequency} />
         </ListItem>
       </List>
     </SwipeableDrawer>
@@ -59,3 +50,9 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
 }
 
 export default CustomDrawer
+
+const listItem = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`

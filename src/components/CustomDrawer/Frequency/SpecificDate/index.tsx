@@ -4,15 +4,16 @@ import { LocalizationProvider } from '@mui/lab'
 import DateAdapter from '@mui/lab/AdapterDayjs'
 import dayjs from 'dayjs'
 import Calendar from './Calendar'
-import { SpecificDateType } from '../../../../lib/type'
+import { FrequencyType, SpecificDateType } from '../../../../lib/type'
 
 type Props = {
-  frequency: SpecificDateType[]
+  frequency: FrequencyType['specificDates']
 }
 
 const SpecificDate: FC<Props> = ({ frequency }) => {
-  const [specificDates, setspecificDates] =
-    useState<(SpecificDateType | null)[]>(frequency)
+  const [specificDates, setspecificDates] = useState<
+    (SpecificDateType | null)[]
+  >(frequency ?? [])
 
   const handleAdd = () => {
     const newDates = [...specificDates]

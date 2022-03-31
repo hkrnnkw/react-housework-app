@@ -1,21 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs'
-import {
-  X_TIMES_PER_DAY,
-  EVERY_X_DAYS,
-  SPECIFIC_DAY_OF_WEEK,
-  SPECIFIC_DATE,
-  TEMPORARY,
-} from '../lib/constant'
-import {
-  DayOfWeekType,
-  EveryXDaysType,
-  House,
-  Log,
-  SpecificDateType,
-  Task,
-  XTimesPerDayType,
-} from '../lib/type'
+import { DayOfWeekType, House, Log, Task } from '../lib/type'
 
 const convertDayOfWeekToNum = (dayOfWeek: DayOfWeekType): number => {
   switch (dayOfWeek) {
@@ -53,7 +38,7 @@ export const createLogs = (
   if (!logs[currentDateStr]) Object.assign(logs, { [currentDateStr]: [] })
 
   Object.entries(housework).forEach(([houseworkId, val]) => {
-    const { frequency, frequencyType, memberId } = val
+    const { frequency, memberId } = val
     const addTasks = (times = 1) => {
       const alreadyAdded = logs[currentDateStr].filter(
         (t) => t.houseworkId === houseworkId
@@ -63,51 +48,36 @@ export const createLogs = (
         logs[currentDateStr].push(todoTask)
       }
     }
-    switch (frequencyType) {
-      case X_TIMES_PER_DAY: {
-        const { x } = frequency as XTimesPerDayType
-        addTasks(x)
-        break
-      }
-      case EVERY_X_DAYS: {
-        const { x } = frequency as EveryXDaysType
-        const span = x - 1
-        const max = span * 2
-        const maxDate = currentDate.add(span, 'day')
-        for (let i = 0; i <= max; i += 1) {
-          const dt = maxDate.subtract(i, 'day').format('YYYY/MM/DD')
-          if (logs[dt]) {
-            const alreadyAdded = logs[dt].find(
-              (t) => t.houseworkId === houseworkId
-            )
-            if (alreadyAdded) break
-          }
-          if (i === max) addTasks()
+    const { xTimesPerDay, everyXDays, daysOfWeek, specificDates } = frequency
+    if (xTimesPerDay !== undefined) {
+      addTasks(xTimesPerDay)
+    }
+    if (everyXDays !== undefined) {
+      const span = everyXDays - 1
+      const max = span * 2
+      const maxDate = currentDate.add(span, 'day')
+      for (let i = 0; i <= max; i += 1) {
+        const dt = maxDate.subtract(i, 'day').format('YYYY/MM/DD')
+        if (logs[dt]) {
+          const alreadyAdded = logs[dt].find(
+            (t) => t.houseworkId === houseworkId
+          )
+          if (alreadyAdded) break
         }
-        break
+        if (i === max) addTasks()
       }
-      case SPECIFIC_DAY_OF_WEEK: {
-        const specificDaysOfWeek = frequency as DayOfWeekType[]
-        specificDaysOfWeek.forEach((dow) => {
-          if (convertDayOfWeekToNum(dow) === currentDate.day()) addTasks()
-        })
-        break
-      }
-      case SPECIFIC_DATE: {
-        const specificDates = frequency as SpecificDateType[]
-        specificDates.forEach(({ month, day }) => {
-          const mm = currentDate.month() + 1
-          const dd = currentDate.date()
-          if (month === mm && day === dd) addTasks()
-        })
-        break
-      }
-      case TEMPORARY: {
-        break
-      }
-      default: {
-        break
-      }
+    }
+    if (daysOfWeek !== undefined) {
+      daysOfWeek.forEach((dow) => {
+        if (convertDayOfWeekToNum(dow) === currentDate.day()) addTasks()
+      })
+    }
+    if (specificDates !== undefined) {
+      specificDates.forEach(({ month, day }) => {
+        const mm = currentDate.month() + 1
+        const dd = currentDate.date()
+        if (month === mm && day === dd) addTasks()
+      })
     }
   })
   return logs
