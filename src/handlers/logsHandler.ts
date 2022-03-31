@@ -73,10 +73,11 @@ export const createLogs = (
       })
     }
     if (specificDates !== undefined) {
-      specificDates.forEach(({ month, day }) => {
+      specificDates.forEach((date) => {
+        if (date === null) return
         const mm = currentDate.month() + 1
         const dd = currentDate.date()
-        if (month === mm && day === dd) addTasks()
+        if (date.month === mm && date.day === dd) addTasks()
       })
     }
   })

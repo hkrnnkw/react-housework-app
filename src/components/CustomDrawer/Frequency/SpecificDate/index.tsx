@@ -11,9 +11,7 @@ type Props = {
 }
 
 const SpecificDate: FC<Props> = ({ frequency }) => {
-  const [specificDates, setspecificDates] = useState<
-    (SpecificDateType | null)[]
-  >(frequency ?? [])
+  const [specificDates, setspecificDates] = useState(frequency ?? [])
 
   const handleAdd = () => {
     const newDates = [...specificDates]

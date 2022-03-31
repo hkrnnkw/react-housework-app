@@ -6,7 +6,7 @@ import { SpecificDateType } from '../../../../lib/type'
 
 type Props = {
   index: number
-  specificDates: (SpecificDateType | null)[]
+  specificDates: SpecificDateType[]
   onChange: (value: dayjs.Dayjs | null, index: number) => void
 }
 
