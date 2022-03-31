@@ -27,8 +27,8 @@ const SpecificDate: FC<Props> = ({ frequency }) => {
       return
     }
     const specificDate: SpecificDateType = {
-      month: newValue.month() + 1,
-      day: newValue.date(),
+      mm: newValue.month() + 1,
+      dd: newValue.date(),
     }
     newDates.splice(index, 1, specificDate)
     setspecificDates(newDates)
@@ -40,7 +40,7 @@ const SpecificDate: FC<Props> = ({ frequency }) => {
         <Button onClick={() => handleAdd()}>追加する</Button>
         {specificDates.map((sd, i) => (
           <Calendar
-            key={sd ? `${sd.month}/${sd.day}` : 'empty'}
+            key={sd ? `${sd.mm}/${sd.dd}` : 'empty'}
             index={i}
             specificDates={specificDates}
             onChange={handleChange}

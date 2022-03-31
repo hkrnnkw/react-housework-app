@@ -77,7 +77,7 @@ export const createLogs = (
         if (date === null) return
         const mm = currentDate.month() + 1
         const dd = currentDate.date()
-        if (date.month === mm && date.day === dd) addTasks()
+        if (date.mm === mm && date.dd === dd) addTasks()
       })
     }
   })

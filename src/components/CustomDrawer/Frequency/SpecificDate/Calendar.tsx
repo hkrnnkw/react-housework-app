@@ -15,8 +15,8 @@ const Calendar: FC<Props> = ({ index, specificDates, onChange }) => {
     const copiedDates = [...specificDates]
     const specificDate = copiedDates[index]
     if (specificDate === null) return null
-    const { month, day } = specificDate
-    return dayjs(`${dayjs().year()}/${month}/${day}`)
+    const { mm, dd } = specificDate
+    return dayjs(`${dayjs().year()}/${mm}/${dd}`)
   }
 
   const isDateDisabled = (dayjsInstance: dayjs.Dayjs): boolean => {
@@ -26,14 +26,14 @@ const Calendar: FC<Props> = ({ index, specificDates, onChange }) => {
     const theDate = dayjsInstance.date()
 
     // about the currently selected date
-    if (theMonth === indexed[0]?.month && theDate === indexed[0]?.day) {
+    if (theMonth === indexed[0]?.mm && theDate === indexed[0]?.dd) {
       return dayjsInstance.year() !== dayjs().year()
     }
     // when adding or editing a specific date
     return (
       copiedDates.findIndex((sd) => {
         if (sd === null) return false
-        return theMonth === sd.month && theDate === sd.day
+        return theMonth === sd.mm && theDate === sd.dd
       }) >= 0
     )
   }

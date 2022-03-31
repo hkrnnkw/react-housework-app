@@ -25,8 +25,8 @@ export type DirectionType =
   typeof DIRECTION_TYPE_ENUM[keyof typeof DIRECTION_TYPE_ENUM]
 
 export type SpecificDateType = {
-  month: number
-  day: number
+  mm: number
+  dd: number
 } | null
 
 export type DayOfWeekType =

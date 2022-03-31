@@ -178,7 +178,7 @@ export const defaultHousework: House['housework'] = {
     houseworkId: hw005,
     points: 3,
     frequency: {
-      specificDates: [{ month: 1, day: 3 }],
+      specificDates: [{ mm: 1, dd: 3 }],
     },
     categoryId: c001,
     title: '洗濯機のフィルタのホコリを取る',
@@ -503,8 +503,8 @@ export const defaultHousework: House['housework'] = {
     points: 2,
     frequency: {
       specificDates: [
-        { month: 5, day: 1 },
-        { month: 11, day: 1 },
+        { mm: 5, dd: 1 },
+        { mm: 11, dd: 1 },
       ],
     },
     categoryId: c005,
@@ -587,10 +587,10 @@ export const defaultHousework: House['housework'] = {
     points: 3,
     frequency: {
       specificDates: [
-        { month: 1, day: 31 },
-        { month: 4, day: 30 },
-        { month: 7, day: 31 },
-        { month: 10, day: 31 },
+        { mm: 1, dd: 31 },
+        { mm: 4, dd: 30 },
+        { mm: 7, dd: 31 },
+        { mm: 10, dd: 31 },
       ],
     },
     categoryId: c006,
@@ -704,8 +704,8 @@ export const defaultHousework: House['housework'] = {
     points: 5,
     frequency: {
       specificDates: [
-        { month: 2, day: 1 },
-        { month: 8, day: 1 },
+        { mm: 2, dd: 1 },
+        { mm: 8, dd: 1 },
       ],
     },
     categoryId: c008,
