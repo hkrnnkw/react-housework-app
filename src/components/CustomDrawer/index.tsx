@@ -55,4 +55,5 @@ const listItem = css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 8px 32px;
 `
