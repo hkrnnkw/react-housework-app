@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import React, { FC } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 import {
   Checkbox,
   FormControl,
   ListItemButton,
   ListItemIcon,
+  Radio,
 } from '@mui/material'
 import { css } from '@emotion/react'
 import SpecificDate from './SpecificDate'
@@ -14,22 +15,26 @@ import EveryXDays from './EveryXDays'
 import Temporary from './Temporary'
 import { FrequencyType } from '../../../lib/type'
 
+type FrequencyKey = keyof Omit<FrequencyType, 'temporary'>
+
 type FrequencyItemProps = {
-  defaultChecked: boolean
-  frequencyKey: keyof FrequencyType
+  isChecked: boolean
+  frequencyKey: FrequencyKey
+  onClick: (frequencyKey: FrequencyKey) => void
 }
 
 const FrequencyItem: FC<FrequencyItemProps> = ({
-  defaultChecked,
+  isChecked,
   frequencyKey,
+  onClick,
   children,
 }) => (
   <FormControl fullWidth css={formControl}>
-    <ListItemButton onClick={() => console.log('temp log', frequencyKey)}>
+    <ListItemButton onClick={() => onClick(frequencyKey)}>
       <ListItemIcon>
         <Checkbox
           edge="start"
-          defaultChecked={defaultChecked}
+          checked={isChecked}
           inputProps={{ 'aria-labelledby': frequencyKey }}
         />
       </ListItemIcon>
@@ -43,34 +48,83 @@ type Props = {
 }
 
 const Frequency: FC<Props> = ({ frequency }) => {
-  const { xTimesPerDay, everyXDays, daysOfWeek, specificDates } = frequency
+  const { xTimesPerDay, everyXDays, daysOfWeek, specificDates, temporary } =
+    frequency
+  const [radioOn, setRadioOn] = useState(temporary ?? false)
+  const [checkedStates, setCheckedStates] = useState({
+    xTimesPerDay: !radioOn && xTimesPerDay !== undefined,
+    everyXDays: !radioOn && everyXDays !== undefined,
+    daysOfWeek: !radioOn && daysOfWeek !== undefined,
+    specificDates: !radioOn && specificDates !== undefined,
+  })
+
+  const handleCheckboxChange = (frequencyKey: FrequencyKey) => {
+    const newCheckedStates = { ...checkedStates }
+    newCheckedStates[frequencyKey] = !newCheckedStates[frequencyKey]
+    setCheckedStates(newCheckedStates)
+    const {
+      xTimesPerDay: condA,
+      everyXDays: condB,
+      daysOfWeek: condC,
+      specificDates: condD,
+    } = newCheckedStates
+    if (condA || condB || condC || condD) setRadioOn(false)
+  }
+
+  const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setRadioOn(event.target.checked)
+    setCheckedStates({
+      xTimesPerDay: false,
+      everyXDays: false,
+      daysOfWeek: false,
+      specificDates: false,
+    })
+  }
+
   return (
     <>
       <FrequencyItem
-        defaultChecked={xTimesPerDay !== undefined}
+        isChecked={checkedStates.xTimesPerDay}
         frequencyKey="xTimesPerDay"
+        onClick={handleCheckboxChange}
       >
         <XTimesPerDay frequency={xTimesPerDay} />
       </FrequencyItem>
       <FrequencyItem
-        defaultChecked={everyXDays !== undefined}
+        isChecked={checkedStates.everyXDays}
         frequencyKey="everyXDays"
+        onClick={handleCheckboxChange}
       >
         <EveryXDays frequency={everyXDays} />
       </FrequencyItem>
       <FrequencyItem
-        defaultChecked={daysOfWeek !== undefined}
+        isChecked={checkedStates.daysOfWeek}
         frequencyKey="daysOfWeek"
+        onClick={handleCheckboxChange}
       >
         <SpecificDayOfWeek frequency={daysOfWeek} />
       </FrequencyItem>
       <FrequencyItem
-        defaultChecked={specificDates !== undefined}
+        isChecked={checkedStates.specificDates}
         frequencyKey="specificDates"
+        onClick={handleCheckboxChange}
       >
         <SpecificDate frequency={specificDates} />
       </FrequencyItem>
-      <Temporary />
+      <FormControl fullWidth css={formControl}>
+        <ListItemButton>
+          <ListItemIcon>
+            <Radio
+              checked={radioOn}
+              onChange={(e) => handleRadioChange(e)}
+              value="a"
+              name="radio-buttons"
+              inputProps={{ 'aria-label': 'A' }}
+            />
+          </ListItemIcon>
+          <Temporary />
+        </ListItemButton>
+      </FormControl>
     </>
   )
 }
