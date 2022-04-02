@@ -28,16 +28,14 @@ const FrequencyItem: FC<FrequencyItemProps> = ({
   children,
 }) => (
   <FormControl fullWidth css={formControl}>
-    <ListItemButton onClick={() => onClick(frequencyKey)}>
-      <ListItemIcon>
-        <Checkbox
-          edge="start"
-          checked={isChecked}
-          inputProps={{ 'aria-labelledby': frequencyKey }}
-        />
-      </ListItemIcon>
-      {children}
-    </ListItemButton>
+    <ListItemIcon onClick={() => onClick(frequencyKey)}>
+      <Checkbox
+        edge="start"
+        checked={isChecked}
+        inputProps={{ 'aria-labelledby': frequencyKey }}
+      />
+    </ListItemIcon>
+    {children}
   </FormControl>
 )
 
@@ -130,5 +128,6 @@ const Frequency: FC<Props> = ({ frequency }) => {
 export default Frequency
 
 const formControl = css`
-  padding: 8px 16px;
+  flex-direction: row;
+  padding: 8px 0px;
 `
