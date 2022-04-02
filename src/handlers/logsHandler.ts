@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs'
-import { DayOfWeekType, House, Log, Task } from '../lib/type'
+import { DayOfWeekType, House, Task } from '../lib/type'
 
 const convertDayOfWeekToNum = (dayOfWeek: DayOfWeekType): number => {
   switch (dayOfWeek) {
@@ -25,9 +25,9 @@ const convertDayOfWeekToNum = (dayOfWeek: DayOfWeekType): number => {
 
 export const createLogs = (
   housework: House['housework'],
-  logs: Log = {},
+  logs: House['logs'] = {},
   currentDateStr: string
-): Log => {
+): House['logs'] => {
   const currentDate = dayjs(currentDateStr)
     .hour(0)
     .minute(0)

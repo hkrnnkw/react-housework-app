@@ -14,7 +14,9 @@ export type Member = {
 
 export type House = {
   id: string
-  logs: Log
+  logs: {
+    [date: string]: Task[]
+  }
   memberIds: string[]
   housework: {
     [id: string]: HouseworkDetail
@@ -44,10 +46,6 @@ export type Task = {
   memberId: string | null
   houseworkId: string
   isCompleted?: boolean
-}
-
-export type Log = {
-  [date: string]: Task[]
 }
 
 type HouseworkDetail = Task & {

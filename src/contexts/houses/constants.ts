@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { DirectionType, House, Log } from '../../lib/type'
+import { DirectionType, House } from '../../lib/type'
 import { State as UserState } from '../user/constants'
 
 export type State = {
@@ -43,5 +43,5 @@ export type HouseActionType =
     }
   | {
       type: typeof HOUSE_ACTIONS.UPDATE_CURRENT_LOGS
-      payload: Log
+      payload: House['logs']
     }

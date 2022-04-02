@@ -8,7 +8,7 @@ import {
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
-import { Task, Log } from '../../lib/type'
+import { House, Task } from '../../lib/type'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {
@@ -43,7 +43,7 @@ const useHouseForContext = () => {
     const { currentHouse, currentDate, houses } = state
     if (!currentHouse || !houses) return
 
-    const logs: Log = { ...houses[currentHouse.id].logs }
+    const logs: House['logs'] = { ...houses[currentHouse.id].logs }
     const tasks = [...(logs[currentDate] ?? [])]
     const i = tasks.findIndex(
       (t) => t.houseworkId === houseworkId && t.isCompleted === prevStatus
