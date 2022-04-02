@@ -42,6 +42,8 @@ export type FrequencyType = {
   temporary?: boolean
 }
 
+export type FrequencyKey = keyof Omit<FrequencyType, 'temporary'>
+
 export type Task = {
   memberId: string | null
   houseworkId: string

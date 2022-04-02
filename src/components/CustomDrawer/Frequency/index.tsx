@@ -13,9 +13,7 @@ import SpecificDayOfWeek from './SpecificDayOfWeek'
 import XTimesPerDay from './XTimesPerDay'
 import EveryXDays from './EveryXDays'
 import Temporary from './Temporary'
-import { FrequencyType } from '../../../lib/type'
-
-type FrequencyKey = keyof Omit<FrequencyType, 'temporary'>
+import { FrequencyKey, FrequencyType } from '../../../lib/type'
 
 type FrequencyItemProps = {
   isChecked: boolean
