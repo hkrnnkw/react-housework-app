@@ -2,20 +2,22 @@
 import React, { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { css } from '@emotion/react'
-import { FrequencyType } from '../../../lib/type'
-import { useDispatchHouse } from '../../../contexts/houses'
+import { useDispatchHouse, useHouse } from '../../../contexts/houses'
 
 const numArray = new Array(10).fill(1) as number[]
 
 type Props = {
   houseworkId: string
-  frequency: FrequencyType['xTimesPerDay']
 }
 
-const XTimesPerDay: FC<Props> = ({ houseworkId, frequency }) => {
+const XTimesPerDay: FC<Props> = ({ houseworkId }) => {
   const { changeHouseworkFrequency } = useDispatchHouse()
+  const { currentHouse, houses } = useHouse()
+  if (!currentHouse || !houses) return null
 
-  const xTime = frequency?.toString() ?? undefined
+  const { housework } = houses[currentHouse.id]
+  const { xTimesPerDay } = housework[houseworkId].frequency
+  const xTime = xTimesPerDay?.toString() ?? undefined
 
   const handleChange = async (event: SelectChangeEvent) => {
     const { value } = event.target

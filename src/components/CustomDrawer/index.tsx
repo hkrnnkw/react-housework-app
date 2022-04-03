@@ -3,7 +3,12 @@ import React, { FC } from 'react'
 import { css } from '@emotion/react'
 import { List, ListItem, ListItemText, SwipeableDrawer } from '@mui/material'
 import { useHouse } from '../../contexts/houses'
-import Frequency from './Frequency'
+import FrequencyItem from './Frequency/FrequencyItem'
+import SpecificDate from './Frequency/SpecificDate'
+import SpecificDayOfWeek from './Frequency/SpecificDayOfWeek'
+import XTimesPerDay from './Frequency/XTimesPerDay'
+import EveryXDays from './Frequency/EveryXDays'
+import Temporary from './Frequency/Temporary'
 
 type Props = {
   houseworkId: string | null
@@ -16,8 +21,7 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
 
   const { id: currentHouseId, members } = currentHouse
   const { housework } = houses[currentHouseId]
-  const { title, description, memberId, points, frequency } =
-    housework[houseworkId]
+  const { title, description, memberId, points } = housework[houseworkId]
   const memberText = members[memberId ?? '']?.displayName ?? '未設定'
 
   return (
@@ -42,7 +46,21 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
         </ListItem>
         <ListItem css={listItem}>
           <ListItemText primary="頻度" />
-          <Frequency houseworkId={houseworkId} frequency={frequency} />
+          <FrequencyItem frequencyKey="xTimesPerDay" houseworkId={houseworkId}>
+            <XTimesPerDay houseworkId={houseworkId} />
+          </FrequencyItem>
+          <FrequencyItem frequencyKey="everyXDays" houseworkId={houseworkId}>
+            {/* <EveryXDays frequency={everyXDays} /> */}
+          </FrequencyItem>
+          <FrequencyItem frequencyKey="daysOfWeek" houseworkId={houseworkId}>
+            {/* <SpecificDayOfWeek frequency={daysOfWeek} /> */}
+          </FrequencyItem>
+          <FrequencyItem frequencyKey="specificDates" houseworkId={houseworkId}>
+            {/* <SpecificDate frequency={specificDates} /> */}
+          </FrequencyItem>
+          <FrequencyItem frequencyKey="temporary" houseworkId={houseworkId}>
+            <Temporary />
+          </FrequencyItem>
         </ListItem>
       </List>
     </SwipeableDrawer>
