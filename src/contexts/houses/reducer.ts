@@ -21,6 +21,10 @@ export const actions = {
     type: HOUSE_ACTIONS.UPDATE_CURRENT_LOGS,
     payload: logs,
   }),
+  updateCurrentHousework: (housework: House['housework']): HouseActionType => ({
+    type: HOUSE_ACTIONS.UPDATE_CURRENT_HOUSEWORK,
+    payload: housework,
+  }),
 } as const
 
 export const reducer = (state: State, action: HouseActionType): State => {
@@ -65,6 +69,18 @@ export const reducer = (state: State, action: HouseActionType): State => {
 
       const updates: House = { ...houses[currentHouse.id] }
       updates.logs = action.payload
+      const updatedHouses: State['houses'] = {
+        ...houses,
+        [currentHouse.id]: updates,
+      }
+      return { ...state, houses: updatedHouses }
+    }
+    case HOUSE_ACTIONS.UPDATE_CURRENT_HOUSEWORK: {
+      const { houses, currentHouse } = state
+      if (!houses || !currentHouse) return state
+
+      const updates: House = { ...houses[currentHouse.id] }
+      updates.housework = action.payload
       const updatedHouses: State['houses'] = {
         ...houses,
         [currentHouse.id]: updates,

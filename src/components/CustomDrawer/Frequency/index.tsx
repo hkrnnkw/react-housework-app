@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { FC } from 'react'
 import {
   Checkbox,
   FormControl,
@@ -14,96 +14,81 @@ import XTimesPerDay from './XTimesPerDay'
 import EveryXDays from './EveryXDays'
 import Temporary from './Temporary'
 import { FrequencyKey, FrequencyType } from '../../../lib/type'
+import { useDispatchHouse } from '../../../contexts/houses'
 
 type FrequencyItemProps = {
   isChecked: boolean
   frequencyKey: FrequencyKey
-  onClick: (frequencyKey: FrequencyKey) => void
+  houseworkId: string
 }
 
 const FrequencyItem: FC<FrequencyItemProps> = ({
   isChecked,
   frequencyKey,
-  onClick,
+  houseworkId,
   children,
-}) => (
-  <FormControl fullWidth css={formControl}>
-    <ListItemIcon onClick={() => onClick(frequencyKey)}>
-      <Checkbox
-        edge="start"
-        checked={isChecked}
-        inputProps={{ 'aria-labelledby': frequencyKey }}
-      />
-    </ListItemIcon>
-    {children}
-  </FormControl>
-)
+}) => {
+  const { changeHouseworkFrequency } = useDispatchHouse()
+
+  const handleClick = async () => {
+    await changeHouseworkFrequency(houseworkId, frequencyKey)
+  }
+
+  return (
+    <FormControl fullWidth css={formControl}>
+      <ListItemIcon onClick={() => handleClick()}>
+        <Checkbox
+          edge="start"
+          checked={isChecked}
+          inputProps={{ 'aria-labelledby': frequencyKey }}
+        />
+      </ListItemIcon>
+      {children}
+    </FormControl>
+  )
+}
 
 type Props = {
+  houseworkId: string
   frequency: FrequencyType
 }
 
-const Frequency: FC<Props> = ({ frequency }) => {
+const Frequency: FC<Props> = ({ houseworkId, frequency }) => {
+  const { switchTemporaryStatus } = useDispatchHouse()
   const { xTimesPerDay, everyXDays, daysOfWeek, specificDates, temporary } =
     frequency
-  const [radioOn, setRadioOn] = useState(temporary ?? false)
-  const [checkedStates, setCheckedStates] = useState({
-    xTimesPerDay: !radioOn && xTimesPerDay !== undefined,
-    everyXDays: !radioOn && everyXDays !== undefined,
-    daysOfWeek: !radioOn && daysOfWeek !== undefined,
-    specificDates: !radioOn && specificDates !== undefined,
-  })
 
-  const handleCheckboxChange = (frequencyKey: FrequencyKey) => {
-    const newCheckedStates = { ...checkedStates }
-    newCheckedStates[frequencyKey] = !newCheckedStates[frequencyKey]
-    setCheckedStates(newCheckedStates)
-    const {
-      xTimesPerDay: condA,
-      everyXDays: condB,
-      daysOfWeek: condC,
-      specificDates: condD,
-    } = newCheckedStates
-    if (condA || condB || condC || condD) setRadioOn(false)
-  }
-
-  const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setRadioOn(event.target.checked)
-    setCheckedStates({
-      xTimesPerDay: false,
-      everyXDays: false,
-      daysOfWeek: false,
-      specificDates: false,
-    })
+  const handleRadioChange = async () => {
+    await switchTemporaryStatus(houseworkId)
   }
 
   return (
     <>
       <FrequencyItem
-        isChecked={checkedStates.xTimesPerDay}
+        isChecked={!temporary && xTimesPerDay !== undefined}
         frequencyKey="xTimesPerDay"
-        onClick={handleCheckboxChange}
+        houseworkId={houseworkId}
       >
-        <XTimesPerDay frequency={xTimesPerDay} />
+        <XTimesPerDay houseworkId={houseworkId} frequency={xTimesPerDay} />
       </FrequencyItem>
       <FrequencyItem
-        isChecked={checkedStates.everyXDays}
+        isChecked={!temporary && everyXDays !== undefined}
         frequencyKey="everyXDays"
-        onClick={handleCheckboxChange}
+        houseworkId={houseworkId}
       >
         <EveryXDays frequency={everyXDays} />
       </FrequencyItem>
       <FrequencyItem
-        isChecked={checkedStates.daysOfWeek}
+        isChecked={!temporary && daysOfWeek !== undefined}
         frequencyKey="daysOfWeek"
-        onClick={handleCheckboxChange}
+        houseworkId={houseworkId}
       >
         <SpecificDayOfWeek frequency={daysOfWeek} />
       </FrequencyItem>
       <FrequencyItem
-        isChecked={checkedStates.specificDates}
+        isChecked={!temporary && specificDates !== undefined}
         frequencyKey="specificDates"
-        onClick={handleCheckboxChange}
+        houseworkId={houseworkId}
       >
         <SpecificDate frequency={specificDates} />
       </FrequencyItem>
@@ -111,8 +96,8 @@ const Frequency: FC<Props> = ({ frequency }) => {
         <ListItemButton>
           <ListItemIcon>
             <Radio
-              checked={radioOn}
-              onChange={(e) => handleRadioChange(e)}
+              checked={temporary}
+              onChange={() => handleRadioChange()}
               value="a"
               name="radio-buttons"
               inputProps={{ 'aria-label': 'A' }}

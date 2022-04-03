@@ -26,6 +26,7 @@ export const HOUSE_ACTIONS = {
   CHANGE_CURRENT_HOUSE: 'HouseActions:changeCurrentHouse',
   CHANGE_DATE: 'HouseActions:changeDate',
   UPDATE_CURRENT_LOGS: 'HouseActions:updateCurrentLogs',
+  UPDATE_CURRENT_HOUSEWORK: 'updateCurrentHousework',
 } as const
 
 export type HouseActionType =
@@ -44,4 +45,8 @@ export type HouseActionType =
   | {
       type: typeof HOUSE_ACTIONS.UPDATE_CURRENT_LOGS
       payload: House['logs']
+    }
+  | {
+      type: typeof HOUSE_ACTIONS.UPDATE_CURRENT_HOUSEWORK
+      payload: House['housework']
     }

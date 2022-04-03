@@ -62,3 +62,12 @@ export const setLogToFirestore = async (
   const houseRef = doc(db, 'houses', houseId)
   await setDoc(houseRef, { logs }, { merge: true })
 }
+
+export const setHouseworkToFirestore = async (
+  houseId: string,
+  housework: House['housework']
+): Promise<void> => {
+  const db = getFirestore()
+  const houseRef = doc(db, 'houses', houseId)
+  await setDoc(houseRef, { housework }, { merge: true })
+}

@@ -42,7 +42,7 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
         </ListItem>
         <ListItem css={listItem}>
           <ListItemText primary="頻度" />
-          <Frequency frequency={frequency} />
+          <Frequency houseworkId={houseworkId} frequency={frequency} />
         </ListItem>
       </List>
     </SwipeableDrawer>

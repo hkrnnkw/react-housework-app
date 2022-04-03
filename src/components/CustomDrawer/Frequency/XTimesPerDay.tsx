@@ -1,20 +1,25 @@
 /** @jsxImportSource @emotion/react */
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { css } from '@emotion/react'
 import { FrequencyType } from '../../../lib/type'
+import { useDispatchHouse } from '../../../contexts/houses'
 
 const numArray = new Array(10).fill(1) as number[]
 
 type Props = {
+  houseworkId: string
   frequency: FrequencyType['xTimesPerDay']
 }
 
-const XTimesPerDay: FC<Props> = ({ frequency }) => {
-  const [xTime, setXTime] = useState(frequency?.toString())
+const XTimesPerDay: FC<Props> = ({ houseworkId, frequency }) => {
+  const { changeHouseworkFrequency } = useDispatchHouse()
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setXTime(event.target.value)
+  const xTime = frequency?.toString() ?? undefined
+
+  const handleChange = async (event: SelectChangeEvent) => {
+    const { value } = event.target
+    await changeHouseworkFrequency(houseworkId, 'xTimesPerDay', value)
   }
 
   return (

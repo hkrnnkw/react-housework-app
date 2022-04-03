@@ -5,10 +5,11 @@ import {
   createHouseToFirestore,
   getHousesFromFirestore,
   getUserFromFirestore,
+  setHouseworkToFirestore,
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
-import { House, Task } from '../../lib/type'
+import { FrequencyKey, House, Task } from '../../lib/type'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {
@@ -65,6 +66,57 @@ const useHouseForContext = () => {
     }
   }
 
+  const changeHouseworkFrequency = async (
+    houseworkId: string,
+    frequencyKey: FrequencyKey,
+    value?: string
+  ) => {
+    const { currentHouse, houses } = state
+    if (!currentHouse || !houses) return
+
+    const { housework } = { ...houses[currentHouse.id] }
+    const { frequency } = housework[houseworkId]
+
+    switch (frequencyKey) {
+      case 'xTimesPerDay': {
+        if (value) {
+          frequency.xTimesPerDay = Number(value)
+        } else if (!frequency.xTimesPerDay) {
+          frequency.xTimesPerDay = 1
+        }
+        break
+      }
+      default:
+        break
+    }
+    frequency.temporary = false
+
+    try {
+      dispatch(actions.updateCurrentHousework(housework))
+      await setHouseworkToFirestore(currentHouse.id, housework)
+    } catch (e) {
+      const { housework: backup } = houses[currentHouse.id]
+      dispatch(actions.updateCurrentHousework(backup))
+    }
+  }
+
+  const switchTemporaryStatus = async (houseworkId: string) => {
+    const { currentHouse, houses } = state
+    if (!currentHouse || !houses) return
+
+    const { housework } = { ...houses[currentHouse.id] }
+    const { frequency } = housework[houseworkId]
+    frequency.temporary = !frequency.temporary
+
+    try {
+      dispatch(actions.updateCurrentHousework(housework))
+      await setHouseworkToFirestore(currentHouse.id, housework)
+    } catch (e) {
+      const { housework: backup } = houses[currentHouse.id]
+      dispatch(actions.updateCurrentHousework(backup))
+    }
+  }
+
   const changeDate = (...args: Parameters<typeof actions.changeDate>) => {
     dispatch(actions.changeDate(...args))
   }
@@ -74,6 +126,8 @@ const useHouseForContext = () => {
     initHouses,
     changeCurrentHouse,
     switchTaskStatus,
+    changeHouseworkFrequency,
+    switchTemporaryStatus,
     changeDate,
   } as const
 }
