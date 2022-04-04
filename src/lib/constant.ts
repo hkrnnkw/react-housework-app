@@ -4,13 +4,13 @@ export const DIRECTION_TYPE_ENUM = {
 } as const
 
 export const DAY_OF_WEEK_ENUM = {
-  SUN: 'Sunday',
-  MON: 'Monday',
-  TUE: 'Tuesday',
-  WED: 'Wednesday',
-  THU: 'Thursday',
-  FRI: 'Friday',
-  SAT: 'Saturday',
+  0: 'Sunday',
+  1: 'Monday',
+  2: 'Tuesday',
+  3: 'Wednesday',
+  4: 'Thursday',
+  5: 'Friday',
+  6: 'Saturday',
 } as const
 
 export const TEMPORARY = 'Temporary'

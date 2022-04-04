@@ -11,6 +11,7 @@ import {
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
 import { DayOfWeekType, House, SpecificDateType, Task } from '../../lib/type'
+import { DAY_OF_WEEK_ENUM } from '../../lib/constant'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {
@@ -123,8 +124,7 @@ const useHouseForContext = () => {
       frequency.daysOfWeek = value
     } else if (!frequency.daysOfWeek) {
       const today = dayjs()
-      // @todo: convert today.day() to DayOfWeekType
-      const day = 'Sunday'
+      const day = DAY_OF_WEEK_ENUM[today.day() as keyof typeof DAY_OF_WEEK_ENUM]
       frequency.daysOfWeek = [day]
     }
     frequency.temporary = false
