@@ -20,7 +20,6 @@ const SpecificDate: FC<Props> = ({ houseworkId }) => {
 
   const handleAdd = async () => {
     const newDates = [...specificDates]
-    if (newDates.includes(null)) return
     await changeSpecificDate(houseworkId, [null, ...newDates])
   }
 
@@ -42,7 +41,12 @@ const SpecificDate: FC<Props> = ({ houseworkId }) => {
   return (
     <LocalizationProvider dateAdapter={DateAdapter}>
       <Stack spacing={2}>
-        <Button onClick={() => handleAdd()}>追加する</Button>
+        <Button
+          onClick={() => handleAdd()}
+          disabled={specificDates.includes(null)}
+        >
+          追加する
+        </Button>
         {specificDates.map((sd, i) => (
           <Calendar
             key={sd ? `${sd.mm}/${sd.dd}` : 'empty'}
