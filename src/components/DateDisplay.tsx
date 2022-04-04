@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 import { IconButton, Typography } from '@mui/material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -6,7 +6,7 @@ import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { DirectionType } from '../lib/type'
 import { DIRECTION_TYPE_ENUM } from '../lib/constant'
 
-const DateDisplay: React.FC = () => {
+const DateDisplay: FC = () => {
   const { currentDate } = useHouse()
   const { changeDate } = useDispatchHouse()
 

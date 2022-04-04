@@ -1,4 +1,4 @@
-import React, { useContext, createContext, ReactChild } from 'react'
+import { useContext, createContext, ReactChild } from 'react'
 import { State, initialState } from './constants'
 import useHouseForContext from './hooks'
 

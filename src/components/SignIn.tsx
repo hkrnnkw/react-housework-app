@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Button, Typography } from '@mui/material'
 import StyledPaper from './atoms/StyledPaper'
 import { useDispatchUser } from '../contexts/user'

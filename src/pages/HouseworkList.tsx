@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 import { Link as RouterLink, Outlet } from 'react-router-dom'
 import {
   Link,
@@ -11,7 +11,7 @@ import StyledPaper from '../components/atoms/StyledPaper'
 import paths from '../lib/path'
 import { useHouse } from '../contexts/houses'
 
-const HouseworkList: React.FC = () => {
+const HouseworkList: FC = () => {
   const { currentHouse, houses } = useHouse()
 
   if (!currentHouse || !houses) return null

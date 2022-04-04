@@ -1,8 +1,8 @@
-import React from 'react'
+import { FC } from 'react'
 import { useLocation } from 'react-router-dom'
 import StyledPaper from '../components/atoms/StyledPaper'
 
-const HouseworkItem: React.FC = () => {
+const HouseworkItem: FC = () => {
   const { id } = useLocation().state as { id: string }
 
   return (

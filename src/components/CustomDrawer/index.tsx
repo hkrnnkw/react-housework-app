@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { css } from '@emotion/react'
 import { List, ListItem, ListItemText, SwipeableDrawer } from '@mui/material'
 import { useHouse } from '../../contexts/houses'

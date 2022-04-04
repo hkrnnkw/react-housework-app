@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Checkbox, FormControl, ListItemIcon, Radio } from '@mui/material'
 import { css } from '@emotion/react'
 import { FrequencyType } from '../../../lib/type'

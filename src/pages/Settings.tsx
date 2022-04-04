@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 import { Link as RouterLink, Outlet } from 'react-router-dom'
 import {
   Link,
@@ -11,7 +11,7 @@ import StyledPaper from '../components/atoms/StyledPaper'
 import paths from '../lib/path'
 import { useDispatchUser } from '../contexts/user'
 
-const Settings: React.FC = () => {
+const Settings: FC = () => {
   const { signOut } = useDispatchUser()
 
   return (

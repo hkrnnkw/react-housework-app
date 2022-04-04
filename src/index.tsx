@@ -1,4 +1,4 @@
-import React from 'react'
+import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
@@ -9,9 +9,9 @@ import { HouseProvider } from './contexts/houses'
 ReactDOM.render(
   <UserProvider>
     <HouseProvider>
-      <React.StrictMode>
+      <StrictMode>
         <App />
-      </React.StrictMode>
+      </StrictMode>
     </HouseProvider>
   </UserProvider>,
   document.getElementById('root')
