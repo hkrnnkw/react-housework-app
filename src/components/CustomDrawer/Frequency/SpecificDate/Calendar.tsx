@@ -1,6 +1,8 @@
+/** @jsxImportSource @emotion/react */
 import { FC } from 'react'
 import { TextField } from '@mui/material'
 import { MobileDatePicker } from '@mui/lab'
+import { css } from '@emotion/react'
 import dayjs from 'dayjs'
 import { SpecificDateType } from '../../../../lib/type'
 
@@ -43,7 +45,7 @@ const Calendar: FC<Props> = ({ index, specificDates, onChange }) => {
       value={getValue()}
       onChange={(newValue) => onChange(newValue, index)}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      renderInput={(params) => <TextField {...params} />}
+      renderInput={(params) => <TextField {...params} css={textfield} />}
       clearable
       shouldDisableDate={(date) => isDateDisabled(date)}
     />
@@ -51,3 +53,7 @@ const Calendar: FC<Props> = ({ index, specificDates, onChange }) => {
 }
 
 export default Calendar
+
+const textfield = css`
+  width: 100%;
+`

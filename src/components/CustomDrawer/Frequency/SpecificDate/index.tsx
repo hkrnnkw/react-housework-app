@@ -1,5 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import { FC } from 'react'
 import { Button, Stack } from '@mui/material'
+import { css } from '@emotion/react'
 import { LocalizationProvider } from '@mui/lab'
 import DateAdapter from '@mui/lab/AdapterDayjs'
 import dayjs from 'dayjs'
@@ -40,10 +42,11 @@ const SpecificDate: FC<Props> = ({ houseworkId }) => {
 
   return (
     <LocalizationProvider dateAdapter={DateAdapter}>
-      <Stack spacing={2}>
+      <Stack spacing={2} css={container}>
         <Button
           onClick={() => handleAdd()}
           disabled={specificDates.includes(null)}
+          css={button}
         >
           追加する
         </Button>
@@ -61,3 +64,16 @@ const SpecificDate: FC<Props> = ({ houseworkId }) => {
 }
 
 export default SpecificDate
+
+const container = css`
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 1.3rem;
+`
+
+const button = css`
+  width: 100%;
+`

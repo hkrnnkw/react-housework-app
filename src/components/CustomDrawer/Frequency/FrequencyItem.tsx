@@ -45,7 +45,7 @@ const FrequencyItem: FC<Props> = ({ frequencyKey, houseworkId, children }) => {
 
   if (frequencyKey === 'temporary') {
     return (
-      <FormControl fullWidth css={formControl}>
+      <FormControl fullWidth css={formControl} className="temporary">
         <ListItemIcon>
           <Radio
             edge="start"
@@ -65,7 +65,7 @@ const FrequencyItem: FC<Props> = ({ frequencyKey, houseworkId, children }) => {
     !frequency.temporary && frequency[frequencyKey] !== undefined
 
   return (
-    <FormControl fullWidth css={formControl}>
+    <FormControl fullWidth css={formControl} className={frequencyKey}>
       <ListItemIcon onClick={() => handleChangeFrequency()}>
         <Checkbox
           edge="start"
@@ -83,4 +83,8 @@ export default FrequencyItem
 const formControl = css`
   flex-direction: row;
   padding: 8px 0px;
+  align-items: center;
+  &.specificDates {
+    align-items: flex-start;
+  }
 `

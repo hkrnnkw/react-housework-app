@@ -48,7 +48,7 @@ const EveryXDays: FC<Props> = ({ houseworkId }) => {
 export default EveryXDays
 
 const container = css`
-  width: inherit;
+  width: 100%;
   display: inline-flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -57,5 +57,5 @@ const container = css`
 `
 
 const select = css`
-  width: 30%;
+  width: 40%;
 `

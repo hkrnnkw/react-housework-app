@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { FC } from 'react'
 import {
   Box,
@@ -9,6 +10,7 @@ import {
   Theme,
   useTheme,
 } from '@mui/material'
+import { css } from '@emotion/react'
 import { DAY_OF_WEEK_ENUM } from '../../../lib/constant'
 import { useDispatchHouse } from '../../../contexts/houses'
 import { DayOfWeekType, House } from '../../../lib/type'
@@ -72,6 +74,7 @@ const SpecificDayOfWeek: FC<Props> = ({ houseworkId }) => {
         </Box>
       )}
       MenuProps={MenuProps}
+      css={container}
     >
       {Object.values(DAY_OF_WEEK_ENUM).map((day) => (
         <MenuItem
@@ -87,3 +90,12 @@ const SpecificDayOfWeek: FC<Props> = ({ houseworkId }) => {
 }
 
 export default SpecificDayOfWeek
+
+const container = css`
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 1.3rem;
+`
