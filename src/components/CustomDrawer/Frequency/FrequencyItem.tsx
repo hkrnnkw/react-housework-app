@@ -11,24 +11,46 @@ type Props = {
 }
 
 const FrequencyItem: FC<Props> = ({ frequencyKey, houseworkId, children }) => {
-  const { changeHouseworkFrequency, switchTemporaryStatus } = useDispatchHouse()
+  const {
+    changeXTimesPerDay,
+    changeEveryXDays,
+    changeDaysOfWeek,
+    changeSpecificDate,
+    switchTemporaryStatus,
+  } = useDispatchHouse()
   const { currentHouse, houses } = useHouse()
   if (!currentHouse || !houses) return null
 
   const { frequency } = houses[currentHouse.id].housework[houseworkId]
 
-  if (frequencyKey === 'temporary') {
-    const handleRadioChange = async () => {
-      await switchTemporaryStatus(houseworkId)
+  const handleChangeFrequency = async () => {
+    switch (frequencyKey) {
+      case 'xTimesPerDay':
+        await changeXTimesPerDay(houseworkId)
+        break
+      case 'everyXDays':
+        await changeEveryXDays(houseworkId)
+        break
+      case 'daysOfWeek':
+        await changeDaysOfWeek(houseworkId)
+        break
+      case 'specificDates':
+        await changeSpecificDate(houseworkId)
+        break
+      default:
+        await switchTemporaryStatus(houseworkId)
+        break
     }
+  }
 
+  if (frequencyKey === 'temporary') {
     return (
       <FormControl fullWidth css={formControl}>
         <ListItemIcon>
           <Radio
             edge="start"
             checked={frequency.temporary}
-            onChange={() => handleRadioChange()}
+            onChange={() => handleChangeFrequency()}
             value="temporary"
             name="radio-of-temporary"
             inputProps={{ 'aria-label': 'temporary' }}
@@ -42,13 +64,9 @@ const FrequencyItem: FC<Props> = ({ frequencyKey, houseworkId, children }) => {
   const isChecked =
     !frequency.temporary && frequency[frequencyKey] !== undefined
 
-  const handleClick = async () => {
-    await changeHouseworkFrequency(houseworkId, frequencyKey)
-  }
-
   return (
     <FormControl fullWidth css={formControl}>
-      <ListItemIcon onClick={() => handleClick()}>
+      <ListItemIcon onClick={() => handleChangeFrequency()}>
         <Checkbox
           edge="start"
           checked={isChecked}

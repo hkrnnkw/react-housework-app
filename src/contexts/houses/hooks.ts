@@ -1,4 +1,5 @@
 import { useReducer } from 'react'
+import dayjs from 'dayjs'
 import { initialState } from './constants'
 import { actions, reducer } from './reducer'
 import {
@@ -9,7 +10,7 @@ import {
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
-import { FrequencyKey, House, Task } from '../../lib/type'
+import { DayOfWeekType, House, SpecificDateType, Task } from '../../lib/type'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {
@@ -66,30 +67,18 @@ const useHouseForContext = () => {
     }
   }
 
-  const changeHouseworkFrequency = async (
-    houseworkId: string,
-    frequencyKey: FrequencyKey,
-    value?: string
-  ) => {
+  const getCurrentHouseValue = (key?: keyof House) => {
     const { currentHouse, houses } = state
-    if (!currentHouse || !houses) return
+    if (!currentHouse || !houses) throw new Error('No house')
 
-    const { housework } = { ...houses[currentHouse.id] }
-    const { frequency } = housework[houseworkId]
+    const allValues: House = { ...houses[currentHouse.id] }
+    if (key === undefined) return allValues
+    return allValues[key]
+  }
 
-    switch (frequencyKey) {
-      case 'xTimesPerDay': {
-        if (value) {
-          frequency.xTimesPerDay = Number(value)
-        } else if (!frequency.xTimesPerDay) {
-          frequency.xTimesPerDay = 1
-        }
-        break
-      }
-      default:
-        break
-    }
-    frequency.temporary = false
+  const updateCurrentHousework = async (housework: House['housework']) => {
+    const { currentHouse, houses } = state
+    if (!currentHouse || !houses) throw new Error('No house')
 
     try {
       dispatch(actions.updateCurrentHousework(housework))
@@ -100,21 +89,68 @@ const useHouseForContext = () => {
     }
   }
 
-  const switchTemporaryStatus = async (houseworkId: string) => {
-    const { currentHouse, houses } = state
-    if (!currentHouse || !houses) return
+  const changeXTimesPerDay = async (houseworkId: string, value?: string) => {
+    const housework = getCurrentHouseValue('housework') as House['housework']
+    const { frequency } = housework[houseworkId]
+    if (value) {
+      frequency.xTimesPerDay = Number(value)
+    } else if (!frequency.xTimesPerDay) {
+      frequency.xTimesPerDay = 1
+    }
+    frequency.temporary = false
+    await updateCurrentHousework(housework)
+  }
 
-    const { housework } = { ...houses[currentHouse.id] }
+  const changeEveryXDays = async (houseworkId: string, value?: string) => {
+    const housework = getCurrentHouseValue('housework') as House['housework']
+    const { frequency } = housework[houseworkId]
+    if (value) {
+      frequency.everyXDays = Number(value)
+    } else if (!frequency.everyXDays) {
+      frequency.everyXDays = 1
+    }
+    frequency.temporary = false
+    await updateCurrentHousework(housework)
+  }
+
+  const changeDaysOfWeek = async (
+    houseworkId: string,
+    value?: DayOfWeekType[]
+  ) => {
+    const housework = getCurrentHouseValue('housework') as House['housework']
+    const { frequency } = housework[houseworkId]
+    if (value) {
+      frequency.daysOfWeek = value
+    } else if (!frequency.daysOfWeek) {
+      const today = dayjs()
+      // @todo: convert today.day() to DayOfWeekType
+      const day = 'Sunday'
+      frequency.daysOfWeek = [day]
+    }
+    frequency.temporary = false
+    await updateCurrentHousework(housework)
+  }
+
+  const changeSpecificDate = async (
+    houseworkId: string,
+    value?: SpecificDateType[]
+  ) => {
+    const housework = getCurrentHouseValue('housework') as House['housework']
+    const { frequency } = housework[houseworkId]
+    if (value) {
+      frequency.specificDates = value
+    } else if (!frequency.specificDates) {
+      frequency.specificDates = [null]
+    }
+    frequency.temporary = false
+    await updateCurrentHousework(housework)
+  }
+
+  const switchTemporaryStatus = async (houseworkId: string) => {
+    const housework = getCurrentHouseValue('housework') as House['housework']
     const { frequency } = housework[houseworkId]
     frequency.temporary = !frequency.temporary
-
-    try {
-      dispatch(actions.updateCurrentHousework(housework))
-      await setHouseworkToFirestore(currentHouse.id, housework)
-    } catch (e) {
-      const { housework: backup } = houses[currentHouse.id]
-      dispatch(actions.updateCurrentHousework(backup))
-    }
+    await updateCurrentHousework(housework)
   }
 
   const changeDate = (...args: Parameters<typeof actions.changeDate>) => {
@@ -126,7 +162,11 @@ const useHouseForContext = () => {
     initHouses,
     changeCurrentHouse,
     switchTaskStatus,
-    changeHouseworkFrequency,
+    getCurrentHouseValue,
+    changeXTimesPerDay,
+    changeEveryXDays,
+    changeDaysOfWeek,
+    changeSpecificDate,
     switchTemporaryStatus,
     changeDate,
   } as const

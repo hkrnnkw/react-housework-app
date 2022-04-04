@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import {
   Box,
   Chip,
@@ -9,29 +9,9 @@ import {
   Theme,
   useTheme,
 } from '@mui/material'
-import { DayOfWeekType, FrequencyType } from '../../../lib/type'
 import { DAY_OF_WEEK_ENUM } from '../../../lib/constant'
-
-const japaneseLocalizeDayOfWeek = (dayOfWeek: DayOfWeekType): string => {
-  switch (dayOfWeek) {
-    case 'Sunday':
-      return '日'
-    case 'Monday':
-      return '月'
-    case 'Tuesday':
-      return '火'
-    case 'Wednesday':
-      return '水'
-    case 'Thursday':
-      return '木'
-    case 'Friday':
-      return '金'
-    case 'Saturday':
-      return '土'
-    default:
-      return ''
-  }
-}
+import { useDispatchHouse } from '../../../contexts/houses'
+import { DayOfWeekType, House } from '../../../lib/type'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -56,20 +36,24 @@ const getStyles = (
 })
 
 type Props = {
-  frequency: FrequencyType['daysOfWeek']
+  houseworkId: string
 }
 
-const SpecificDayOfWeek: FC<Props> = ({ frequency }) => {
+const SpecificDayOfWeek: FC<Props> = ({ houseworkId }) => {
   const theme = useTheme()
-  const [dayOfWeek, setDayOfWeek] = useState<string[]>(frequency ?? [])
-  const japaneseLocalized = dayOfWeek.map((day) =>
-    japaneseLocalizeDayOfWeek(day as DayOfWeekType)
-  )
+  const { changeDaysOfWeek, getCurrentHouseValue } = useDispatchHouse()
 
-  const handleChange = (event: SelectChangeEvent<typeof dayOfWeek>) => {
-    const { target } = event
-    const { value } = target
-    setDayOfWeek(typeof value === 'string' ? value.split(',') : value)
+  const housework = getCurrentHouseValue('housework') as House['housework']
+  const { frequency } = housework[houseworkId]
+  const daysOfWeek = frequency.daysOfWeek ?? []
+
+  const handleChange = async (event: SelectChangeEvent<typeof daysOfWeek>) => {
+    const { value } = event.target
+    if (typeof value === 'string') {
+      await changeDaysOfWeek(houseworkId, value.split(',') as DayOfWeekType[])
+      return
+    }
+    await changeDaysOfWeek(houseworkId, value)
   }
 
   return (
@@ -77,7 +61,7 @@ const SpecificDayOfWeek: FC<Props> = ({ frequency }) => {
       labelId="multiple-day-label"
       id="multiple-day"
       multiple
-      value={japaneseLocalized}
+      value={daysOfWeek}
       onChange={handleChange}
       input={<OutlinedInput id="select-multiple-day" label="dayOfWeek" />}
       renderValue={(selected) => (
@@ -93,9 +77,9 @@ const SpecificDayOfWeek: FC<Props> = ({ frequency }) => {
         <MenuItem
           key={day}
           value={day}
-          style={getStyles(day, dayOfWeek, theme)}
+          style={getStyles(day, daysOfWeek, theme)}
         >
-          {japaneseLocalizeDayOfWeek(day)}
+          {day}
         </MenuItem>
       ))}
     </Select>

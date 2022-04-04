@@ -1,20 +1,25 @@
 /** @jsxImportSource @emotion/react */
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { css } from '@emotion/react'
-import { FrequencyType } from '../../../lib/type'
+import { useDispatchHouse } from '../../../contexts/houses'
+import { House } from '../../../lib/type'
 
 const numArray = new Array(90).fill(1) as number[]
 
 type Props = {
-  frequency: FrequencyType['everyXDays']
+  houseworkId: string
 }
 
-const EveryXDays: FC<Props> = ({ frequency }) => {
-  const [xDays, setXDays] = useState(frequency?.toString())
+const EveryXDays: FC<Props> = ({ houseworkId }) => {
+  const { changeEveryXDays, getCurrentHouseValue } = useDispatchHouse()
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setXDays(event.target.value)
+  const housework = getCurrentHouseValue('housework') as House['housework']
+  const { everyXDays } = housework[houseworkId].frequency
+  const xDays = everyXDays?.toString() ?? undefined
+
+  const handleChange = async (event: SelectChangeEvent) => {
+    await changeEveryXDays(houseworkId, event.target.value)
   }
 
   return (
@@ -35,7 +40,7 @@ const EveryXDays: FC<Props> = ({ frequency }) => {
           )
         })}
       </Select>
-      <Typography>日ごと</Typography>
+      <Typography>日ごとに1回</Typography>
     </div>
   )
 }

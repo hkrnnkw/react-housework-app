@@ -50,13 +50,13 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
             <XTimesPerDay houseworkId={houseworkId} />
           </FrequencyItem>
           <FrequencyItem frequencyKey="everyXDays" houseworkId={houseworkId}>
-            {/* <EveryXDays frequency={everyXDays} /> */}
+            <EveryXDays houseworkId={houseworkId} />
           </FrequencyItem>
           <FrequencyItem frequencyKey="daysOfWeek" houseworkId={houseworkId}>
-            {/* <SpecificDayOfWeek frequency={daysOfWeek} /> */}
+            <SpecificDayOfWeek houseworkId={houseworkId} />
           </FrequencyItem>
           <FrequencyItem frequencyKey="specificDates" houseworkId={houseworkId}>
-            {/* <SpecificDate frequency={specificDates} /> */}
+            <SpecificDate houseworkId={houseworkId} />
           </FrequencyItem>
           <FrequencyItem frequencyKey="temporary" houseworkId={houseworkId}>
             <Temporary />

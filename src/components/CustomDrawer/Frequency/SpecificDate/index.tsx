@@ -1,29 +1,34 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { Button, Stack } from '@mui/material'
 import { LocalizationProvider } from '@mui/lab'
 import DateAdapter from '@mui/lab/AdapterDayjs'
 import dayjs from 'dayjs'
 import Calendar from './Calendar'
-import { FrequencyType, SpecificDateType } from '../../../../lib/type'
+import { House, SpecificDateType } from '../../../../lib/type'
+import { useDispatchHouse } from '../../../../contexts/houses'
 
 type Props = {
-  frequency: FrequencyType['specificDates']
+  houseworkId: string
 }
 
-const SpecificDate: FC<Props> = ({ frequency }) => {
-  const [specificDates, setspecificDates] = useState(frequency ?? [])
+const SpecificDate: FC<Props> = ({ houseworkId }) => {
+  const { changeSpecificDate, getCurrentHouseValue } = useDispatchHouse()
 
-  const handleAdd = () => {
+  const housework = getCurrentHouseValue('housework') as House['housework']
+  const { frequency } = housework[houseworkId]
+  const specificDates = frequency.specificDates ?? []
+
+  const handleAdd = async () => {
     const newDates = [...specificDates]
     if (newDates.includes(null)) return
-    setspecificDates([null, ...newDates])
+    await changeSpecificDate(houseworkId, [null, ...newDates])
   }
 
-  const handleChange = (newValue: dayjs.Dayjs | null, index: number) => {
+  const handleChange = async (newValue: dayjs.Dayjs | null, index: number) => {
     const newDates = [...specificDates]
     if (newValue === null) {
       newDates.splice(index, 1)
-      setspecificDates(newDates)
+      await changeSpecificDate(houseworkId, newDates)
       return
     }
     const specificDate: SpecificDateType = {
@@ -31,7 +36,7 @@ const SpecificDate: FC<Props> = ({ frequency }) => {
       dd: newValue.date(),
     }
     newDates.splice(index, 1, specificDate)
-    setspecificDates(newDates)
+    await changeSpecificDate(houseworkId, newDates)
   }
 
   return (
