@@ -49,7 +49,7 @@ const FrequencyItem: FC<Props> = ({ frequencyKey, houseworkId, children }) => {
         <ListItemIcon>
           <Radio
             edge="start"
-            checked={frequency.temporary}
+            checked={frequency.temporary ?? false}
             onChange={() => handleChangeFrequency()}
             value="temporary"
             name="radio-of-temporary"

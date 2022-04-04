@@ -16,7 +16,7 @@ const XTimesPerDay: FC<Props> = ({ houseworkId }) => {
 
   const housework = getCurrentHouseValue('housework') as House['housework']
   const { xTimesPerDay } = housework[houseworkId].frequency
-  const xTime = xTimesPerDay?.toString() ?? undefined
+  const xTime = xTimesPerDay?.toString() ?? ''
 
   const handleChange = async (event: SelectChangeEvent) => {
     await changeXTimesPerDay(houseworkId, event.target.value)
