@@ -37,15 +37,24 @@ const useHouseForContext = () => {
     dispatch(actions.changeCurrentHouse(houseId, members))
   }
 
+  const getCurrentHouseValue = (key?: keyof House) => {
+    const { currentHouse, houses } = state
+    if (!currentHouse || !houses) throw new Error('No house')
+
+    const allValues: House = { ...houses[currentHouse.id] }
+    if (key === undefined) return allValues
+    return allValues[key]
+  }
+
   const switchTaskStatus = async (
     uid: string,
     houseworkId: string,
     prevStatus: boolean
   ) => {
-    const { currentHouse, currentDate, houses } = state
-    if (!currentHouse || !houses) return
+    const { currentHouse, currentDate } = state
+    if (!currentHouse) return
 
-    const logs: House['logs'] = { ...houses[currentHouse.id].logs }
+    const logs = getCurrentHouseValue('logs') as House['logs']
     const tasks = [...(logs[currentDate] ?? [])]
     const i = tasks.findIndex(
       (t) => t.houseworkId === houseworkId && t.isCompleted === prevStatus
@@ -65,15 +74,6 @@ const useHouseForContext = () => {
       logs[currentDate] = [...tasks]
       dispatch(actions.updateCurrentLogs(logs))
     }
-  }
-
-  const getCurrentHouseValue = (key?: keyof House) => {
-    const { currentHouse, houses } = state
-    if (!currentHouse || !houses) throw new Error('No house')
-
-    const allValues: House = { ...houses[currentHouse.id] }
-    if (key === undefined) return allValues
-    return allValues[key]
   }
 
   const updateCurrentHousework = async (housework: House['housework']) => {
@@ -161,8 +161,8 @@ const useHouseForContext = () => {
     state,
     initHouses,
     changeCurrentHouse,
-    switchTaskStatus,
     getCurrentHouseValue,
+    switchTaskStatus,
     changeXTimesPerDay,
     changeEveryXDays,
     changeDaysOfWeek,
