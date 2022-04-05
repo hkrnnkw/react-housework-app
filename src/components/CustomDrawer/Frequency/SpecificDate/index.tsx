@@ -6,27 +6,24 @@ import { LocalizationProvider } from '@mui/lab'
 import DateAdapter from '@mui/lab/AdapterDayjs'
 import dayjs from 'dayjs'
 import Calendar from './Calendar'
-import { House, SpecificDateType } from '../../../../lib/type'
+import { FrequencyType, SpecificDateType } from '../../../../lib/type'
 import { useDispatchHouse } from '../../../../contexts/houses'
 
 type Props = {
+  frequency: FrequencyType['specificDates']
   houseworkId: string
 }
 
-const SpecificDate: FC<Props> = ({ houseworkId }) => {
-  const { changeSpecificDate, getCurrentHouseValue } = useDispatchHouse()
-
-  const housework = getCurrentHouseValue('housework') as House['housework']
-  const { frequency } = housework[houseworkId]
-  const specificDates = frequency.specificDates ?? []
+const SpecificDate: FC<Props> = ({ frequency = [], houseworkId }) => {
+  const { changeSpecificDate } = useDispatchHouse()
 
   const handleAdd = async () => {
-    const newDates = [...specificDates]
+    const newDates = [...frequency]
     await changeSpecificDate(houseworkId, [null, ...newDates])
   }
 
   const handleChange = async (newValue: dayjs.Dayjs | null, index: number) => {
-    const newDates = [...specificDates]
+    const newDates = [...frequency]
     if (newValue === null) {
       newDates.splice(index, 1)
       await changeSpecificDate(houseworkId, newDates)
@@ -45,16 +42,16 @@ const SpecificDate: FC<Props> = ({ houseworkId }) => {
       <Stack spacing={2} css={container}>
         <Button
           onClick={() => handleAdd()}
-          disabled={specificDates.includes(null)}
+          disabled={frequency.includes(null)}
           css={button}
         >
           追加する
         </Button>
-        {specificDates.map((sd, i) => (
+        {frequency.map((sd, i) => (
           <Calendar
             key={sd ? `${sd.mm}/${sd.dd}` : 'empty'}
             index={i}
-            specificDates={specificDates}
+            specificDates={frequency}
             onChange={handleChange}
           />
         ))}

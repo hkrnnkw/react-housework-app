@@ -21,7 +21,9 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
 
   const { id: currentHouseId, members } = currentHouse
   const { housework } = houses[currentHouseId]
-  const { title, description, memberId, points } = housework[houseworkId]
+  const { title, description, memberId, points, frequency } =
+    housework[houseworkId]
+  const { xTimesPerDay, everyXDays, daysOfWeek, specificDates } = frequency
   const memberText = members[memberId ?? '']?.displayName ?? '未設定'
 
   return (
@@ -47,16 +49,19 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
         <ListItem css={listItem}>
           <ListItemText primary="頻度" />
           <FrequencyItem frequencyKey="xTimesPerDay" houseworkId={houseworkId}>
-            <XTimesPerDay houseworkId={houseworkId} />
+            <XTimesPerDay frequency={xTimesPerDay} houseworkId={houseworkId} />
           </FrequencyItem>
           <FrequencyItem frequencyKey="everyXDays" houseworkId={houseworkId}>
-            <EveryXDays houseworkId={houseworkId} />
+            <EveryXDays frequency={everyXDays} houseworkId={houseworkId} />
           </FrequencyItem>
           <FrequencyItem frequencyKey="daysOfWeek" houseworkId={houseworkId}>
-            <SpecificDayOfWeek houseworkId={houseworkId} />
+            <SpecificDayOfWeek
+              frequency={daysOfWeek}
+              houseworkId={houseworkId}
+            />
           </FrequencyItem>
           <FrequencyItem frequencyKey="specificDates" houseworkId={houseworkId}>
-            <SpecificDate houseworkId={houseworkId} />
+            <SpecificDate frequency={specificDates} houseworkId={houseworkId} />
           </FrequencyItem>
           <FrequencyItem frequencyKey="temporary" houseworkId={houseworkId}>
             <Temporary />

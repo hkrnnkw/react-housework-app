@@ -161,7 +161,6 @@ const useHouseForContext = () => {
     state,
     initHouses,
     changeCurrentHouse,
-    getCurrentHouseValue,
     switchTaskStatus,
     changeXTimesPerDay,
     changeEveryXDays,

@@ -13,7 +13,7 @@ import {
 import { css } from '@emotion/react'
 import { DAY_OF_WEEK_ENUM } from '../../../lib/constant'
 import { useDispatchHouse } from '../../../contexts/houses'
-import { DayOfWeekType, House } from '../../../lib/type'
+import { DayOfWeekType, FrequencyType } from '../../../lib/type'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -38,18 +38,15 @@ const getStyles = (
 })
 
 type Props = {
+  frequency: FrequencyType['daysOfWeek']
   houseworkId: string
 }
 
-const SpecificDayOfWeek: FC<Props> = ({ houseworkId }) => {
+const SpecificDayOfWeek: FC<Props> = ({ frequency = [], houseworkId }) => {
   const theme = useTheme()
-  const { changeDaysOfWeek, getCurrentHouseValue } = useDispatchHouse()
+  const { changeDaysOfWeek } = useDispatchHouse()
 
-  const housework = getCurrentHouseValue('housework') as House['housework']
-  const { frequency } = housework[houseworkId]
-  const daysOfWeek = frequency.daysOfWeek ?? []
-
-  const handleChange = async (event: SelectChangeEvent<typeof daysOfWeek>) => {
+  const handleChange = async (event: SelectChangeEvent<typeof frequency>) => {
     const { value } = event.target
     if (typeof value === 'string') {
       await changeDaysOfWeek(houseworkId, value.split(',') as DayOfWeekType[])
@@ -63,7 +60,7 @@ const SpecificDayOfWeek: FC<Props> = ({ houseworkId }) => {
       labelId="multiple-day-label"
       id="multiple-day"
       multiple
-      value={daysOfWeek}
+      value={frequency}
       onChange={handleChange}
       input={<OutlinedInput id="select-multiple-day" label="dayOfWeek" />}
       renderValue={(selected) => (
@@ -80,7 +77,7 @@ const SpecificDayOfWeek: FC<Props> = ({ houseworkId }) => {
         <MenuItem
           key={day}
           value={day}
-          style={getStyles(day, daysOfWeek, theme)}
+          style={getStyles(day, frequency, theme)}
         >
           {day}
         </MenuItem>
