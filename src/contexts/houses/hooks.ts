@@ -10,7 +10,13 @@ import {
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
-import { DayOfWeekType, House, SpecificDateType, Task } from '../../lib/type'
+import {
+  DayOfWeekType,
+  FrequencyType,
+  House,
+  SpecificDateType,
+  Task,
+} from '../../lib/type'
 import { DAY_OF_WEEK_ENUM } from '../../lib/constant'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -77,6 +83,15 @@ const useHouseForContext = () => {
     }
   }
 
+  const isTemporarySet = (frequency: FrequencyType): boolean => {
+    const { xTimesPerDay, everyXDays, daysOfWeek, specificDates } = frequency
+    if (xTimesPerDay !== undefined) return false
+    if (everyXDays !== undefined) return false
+    if (daysOfWeek !== undefined) return false
+    if (specificDates !== undefined) return false
+    return true
+  }
+
   const updateCurrentHousework = async (housework: House['housework']) => {
     const { currentHouse, houses } = state
     if (!currentHouse || !houses) throw new Error('No house')
@@ -97,8 +112,10 @@ const useHouseForContext = () => {
       frequency.xTimesPerDay = Number(value)
     } else if (!frequency.xTimesPerDay) {
       frequency.xTimesPerDay = 1
+    } else if (!frequency.temporary) {
+      frequency.xTimesPerDay = undefined
     }
-    frequency.temporary = false
+    frequency.temporary = isTemporarySet({ ...frequency })
     await updateCurrentHousework(housework)
   }
 
@@ -109,8 +126,10 @@ const useHouseForContext = () => {
       frequency.everyXDays = Number(value)
     } else if (!frequency.everyXDays) {
       frequency.everyXDays = 1
+    } else if (!frequency.temporary) {
+      frequency.everyXDays = undefined
     }
-    frequency.temporary = false
+    frequency.temporary = isTemporarySet({ ...frequency })
     await updateCurrentHousework(housework)
   }
 
@@ -126,8 +145,10 @@ const useHouseForContext = () => {
       const today = dayjs()
       const day = DAY_OF_WEEK_ENUM[today.day() as keyof typeof DAY_OF_WEEK_ENUM]
       frequency.daysOfWeek = [day]
+    } else if (!frequency.temporary) {
+      frequency.daysOfWeek = undefined
     }
-    frequency.temporary = false
+    frequency.temporary = isTemporarySet({ ...frequency })
     await updateCurrentHousework(housework)
   }
 
@@ -141,8 +162,10 @@ const useHouseForContext = () => {
       frequency.specificDates = value
     } else if (!frequency.specificDates) {
       frequency.specificDates = [null]
+    } else if (!frequency.temporary) {
+      frequency.specificDates = undefined
     }
-    frequency.temporary = false
+    frequency.temporary = isTemporarySet({ ...frequency })
     await updateCurrentHousework(housework)
   }
 
