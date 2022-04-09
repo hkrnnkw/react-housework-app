@@ -55,6 +55,7 @@ const useHouseForContext = () => {
 
   const switchTaskStatus = async (
     uid: string,
+    categoryId: string,
     houseworkId: string,
     prevStatus: boolean
   ) => {
@@ -63,13 +64,25 @@ const useHouseForContext = () => {
 
     const logs = getCurrentHouseValue('logs') as House['logs']
     const tasks = [...(logs[currentDate] ?? [])]
-    const i = tasks.findIndex(
-      (t) => t.houseworkId === houseworkId && t.isCompleted === prevStatus
-    )
+    const i = tasks.findIndex((t) => {
+      if (t.categoryId !== categoryId) return false
+      if (t.houseworkId !== houseworkId) return false
+      return t.isCompleted === prevStatus
+    })
     if (i === -1) return
 
-    const done: Task = { memberId: uid, houseworkId, isCompleted: true }
-    const undo: Task = { memberId: null, houseworkId, isCompleted: false }
+    const done: Task = {
+      memberId: uid,
+      categoryId,
+      houseworkId,
+      isCompleted: true,
+    }
+    const undo: Task = {
+      memberId: null,
+      categoryId,
+      houseworkId,
+      isCompleted: false,
+    }
 
     try {
       tasks[i] = prevStatus ? undo : done
@@ -105,9 +118,13 @@ const useHouseForContext = () => {
     }
   }
 
-  const changeXTimesPerDay = async (houseworkId: string, value?: string) => {
+  const changeXTimesPerDay = async (
+    categoryId: string,
+    houseworkId: string,
+    value?: string
+  ) => {
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const { frequency } = housework[houseworkId]
+    const { frequency } = housework[`${categoryId}-${houseworkId}`]
     if (value) {
       frequency.xTimesPerDay = Number(value)
     } else if (!frequency.xTimesPerDay) {
@@ -119,9 +136,13 @@ const useHouseForContext = () => {
     await updateCurrentHousework(housework)
   }
 
-  const changeEveryXDays = async (houseworkId: string, value?: string) => {
+  const changeEveryXDays = async (
+    categoryId: string,
+    houseworkId: string,
+    value?: string
+  ) => {
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const { frequency } = housework[houseworkId]
+    const { frequency } = housework[`${categoryId}-${houseworkId}`]
     if (value) {
       frequency.everyXDays = Number(value)
     } else if (!frequency.everyXDays) {
@@ -134,11 +155,12 @@ const useHouseForContext = () => {
   }
 
   const changeDaysOfWeek = async (
+    categoryId: string,
     houseworkId: string,
     value?: DayOfWeekType[]
   ) => {
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const { frequency } = housework[houseworkId]
+    const { frequency } = housework[`${categoryId}-${houseworkId}`]
     if (value) {
       frequency.daysOfWeek = value
     } else if (!frequency.daysOfWeek) {
@@ -153,11 +175,12 @@ const useHouseForContext = () => {
   }
 
   const changeSpecificDate = async (
+    categoryId: string,
     houseworkId: string,
     value?: SpecificDateType[]
   ) => {
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const { frequency } = housework[houseworkId]
+    const { frequency } = housework[`${categoryId}-${houseworkId}`]
     if (value) {
       frequency.specificDates = value
     } else if (!frequency.specificDates) {
@@ -169,9 +192,12 @@ const useHouseForContext = () => {
     await updateCurrentHousework(housework)
   }
 
-  const switchTemporaryStatus = async (houseworkId: string) => {
+  const switchTemporaryStatus = async (
+    categoryId: string,
+    houseworkId: string
+  ) => {
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const { frequency } = housework[houseworkId]
+    const { frequency } = housework[`${categoryId}-${houseworkId}`]
     frequency.temporary = !frequency.temporary
     await updateCurrentHousework(housework)
   }

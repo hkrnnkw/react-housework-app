@@ -9,15 +9,16 @@ const numArray = new Array(10).fill(1) as number[]
 
 type Props = {
   frequency: FrequencyType['xTimesPerDay']
+  categoryId: string
   houseworkId: string
 }
 
-const XTimesPerDay: FC<Props> = ({ frequency, houseworkId }) => {
+const XTimesPerDay: FC<Props> = ({ frequency, categoryId, houseworkId }) => {
   const { changeXTimesPerDay } = useDispatchHouse()
   const xTime = frequency?.toString() ?? ''
 
   const handleChange = async (event: SelectChangeEvent) => {
-    await changeXTimesPerDay(houseworkId, event.target.value)
+    await changeXTimesPerDay(categoryId, houseworkId, event.target.value)
   }
 
   return (

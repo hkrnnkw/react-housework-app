@@ -44,14 +44,14 @@ export type FrequencyType = {
 
 export type Task = {
   memberId: string | null
+  categoryId: string
   houseworkId: string
   isCompleted?: boolean
 }
 
-type HouseworkDetail = Task & {
+export type HouseworkDetail = Task & {
   points: 1 | 2 | 3 | 4 | 5
   frequency: FrequencyType
-  categoryId: string
   title: string
   description?: string
 }

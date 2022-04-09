@@ -37,14 +37,19 @@ export const createLogs = (
   if (currentDate.isBefore(today)) return logs
   if (!logs[currentDateStr]) Object.assign(logs, { [currentDateStr]: [] })
 
-  Object.entries(housework).forEach(([houseworkId, val]) => {
-    const { frequency, memberId } = val
+  Object.values(housework).forEach((value) => {
+    const { categoryId, houseworkId, frequency, memberId } = value
     const addTasks = (times = 1) => {
       const alreadyAdded = logs[currentDateStr].filter(
-        (t) => t.houseworkId === houseworkId
+        (t) => t.categoryId === categoryId && t.houseworkId === houseworkId
       )
       for (let i = 0; i < times - alreadyAdded.length; i += 1) {
-        const todoTask: Task = { memberId, houseworkId, isCompleted: false }
+        const todoTask: Task = {
+          memberId,
+          categoryId,
+          houseworkId,
+          isCompleted: false,
+        }
         logs[currentDateStr].push(todoTask)
       }
     }
@@ -60,7 +65,7 @@ export const createLogs = (
         const dt = maxDate.subtract(i, 'day').format('YYYY/MM/DD')
         if (logs[dt]) {
           const alreadyAdded = logs[dt].find(
-            (t) => t.houseworkId === houseworkId
+            (t) => t.categoryId === categoryId && t.houseworkId === houseworkId
           )
           if (alreadyAdded) break
         }

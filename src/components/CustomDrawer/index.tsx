@@ -2,36 +2,34 @@
 import { FC } from 'react'
 import { css } from '@emotion/react'
 import { List, ListItem, ListItemText, SwipeableDrawer } from '@mui/material'
-import { useHouse } from '../../contexts/houses'
 import FrequencyItem from './Frequency/FrequencyItem'
 import SpecificDate from './Frequency/SpecificDate'
 import SpecificDayOfWeek from './Frequency/SpecificDayOfWeek'
 import XTimesPerDay from './Frequency/XTimesPerDay'
 import EveryXDays from './Frequency/EveryXDays'
 import Temporary from './Frequency/Temporary'
+import { FrequencyType, HouseworkDetail } from '../../lib/type'
+import { State as UserState } from '../../contexts/user/constants'
 
 type Props = {
-  houseworkId: string | null
-  toggleDrawer: (houseworkId: string | null) => void
+  member: UserState | null
+  housework: HouseworkDetail
+  toggleDrawer: (categoryId: string | null, houseworkId: string | null) => void
 }
 
-const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
-  const { currentHouse, houses } = useHouse()
-  if (!houseworkId || !currentHouse || !houses) return null
-
-  const { id: currentHouseId, members } = currentHouse
-  const { housework } = houses[currentHouseId]
-  const { title, description, memberId, points, frequency } =
-    housework[houseworkId]
-  const { xTimesPerDay, everyXDays, daysOfWeek, specificDates } = frequency
-  const memberText = members[memberId ?? '']?.displayName ?? '未設定'
+const CustomDrawer: FC<Props> = ({ member, housework, toggleDrawer }) => {
+  const { categoryId, houseworkId, title, description, points, frequency } =
+    housework
+  const { xTimesPerDay, everyXDays, daysOfWeek, specificDates, temporary } =
+    frequency
+  const memberText = member?.displayName ?? '未設定'
 
   return (
     <SwipeableDrawer
       anchor="bottom"
-      open={houseworkId !== null}
-      onClose={() => toggleDrawer(null)}
-      onOpen={() => toggleDrawer(houseworkId)}
+      open={categoryId !== null && houseworkId !== null}
+      onClose={() => toggleDrawer(null, null)}
+      onOpen={() => toggleDrawer(categoryId, houseworkId)}
     >
       <List>
         <ListItem css={listItem}>
@@ -49,19 +47,32 @@ const CustomDrawer: FC<Props> = ({ houseworkId, toggleDrawer }) => {
         <ListItem css={listItem}>
           <ListItemText primary="頻度" />
           <FrequencyItem frequencyKey="xTimesPerDay" houseworkId={houseworkId}>
-            <XTimesPerDay frequency={xTimesPerDay} houseworkId={houseworkId} />
+            <XTimesPerDay
+              frequency={xTimesPerDay}
+              categoryId={categoryId}
+              houseworkId={houseworkId}
+            />
           </FrequencyItem>
           <FrequencyItem frequencyKey="everyXDays" houseworkId={houseworkId}>
-            <EveryXDays frequency={everyXDays} houseworkId={houseworkId} />
+            <EveryXDays
+              frequency={everyXDays}
+              categoryId={categoryId}
+              houseworkId={houseworkId}
+            />
           </FrequencyItem>
           <FrequencyItem frequencyKey="daysOfWeek" houseworkId={houseworkId}>
             <SpecificDayOfWeek
               frequency={daysOfWeek}
+              categoryId={categoryId}
               houseworkId={houseworkId}
             />
           </FrequencyItem>
           <FrequencyItem frequencyKey="specificDates" houseworkId={houseworkId}>
-            <SpecificDate frequency={specificDates} houseworkId={houseworkId} />
+            <SpecificDate
+              frequency={specificDates}
+              categoryId={categoryId}
+              houseworkId={houseworkId}
+            />
           </FrequencyItem>
           <FrequencyItem frequencyKey="temporary" houseworkId={houseworkId}>
             <Temporary />
