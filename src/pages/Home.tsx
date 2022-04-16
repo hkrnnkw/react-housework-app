@@ -13,6 +13,10 @@ import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { useUser } from '../contexts/user'
 import StyledPaper from '../components/atoms/StyledPaper'
 import CustomDrawer from '../components/CustomDrawer/index'
+import { State as UserState } from '../contexts/user/constants'
+
+const makeId = (categoryId: string, houseworkId: string) =>
+  `${categoryId}-${houseworkId}`
 
 const Home: FC = () => {
   const [editingHwId, setEditingHwId] = useState<string | null>(null)
@@ -31,16 +35,10 @@ const Home: FC = () => {
   const { logs, housework } = houses[currentHouseId]
   const tasks = [...(logs[currentDate] ?? [])]
 
-  const getMember = () => {
-    if (!editingHwId) return null
-    const { memberId } = housework[editingHwId]
+  const getMember = (memberId: string | null): UserState | null => {
     if (!memberId) return null
     return members[memberId] ?? null
   }
-  const member = getMember()
-
-  const makeId = (categoryId: string, houseworkId: string) =>
-    `${categoryId}-${houseworkId}`
 
   const toggleDrawer = (
     categoryId: string | null,
@@ -101,9 +99,7 @@ const Home: FC = () => {
                   <ListItemText
                     id={id}
                     primary={housework[id].title}
-                    secondary={
-                      memberId ? members[memberId].displayName ?? '' : ''
-                    }
+                    secondary={getMember(memberId)?.displayName ?? ''}
                   />
                 </ListItemButton>
               </ListItem>
@@ -113,7 +109,7 @@ const Home: FC = () => {
       </List>
       {editingHwId !== null && (
         <CustomDrawer
-          member={member}
+          member={getMember(housework[editingHwId].memberId)}
           housework={housework[editingHwId]}
           toggleDrawer={toggleDrawer}
         />
