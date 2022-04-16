@@ -40,14 +40,10 @@ const getStyles = (
 type Props = {
   frequency: FrequencyType['values']['daysOfWeek']
   categoryId: string
-  houseworkId: string
+  taskId: string
 }
 
-const SpecificDayOfWeek: FC<Props> = ({
-  frequency,
-  categoryId,
-  houseworkId,
-}) => {
+const SpecificDayOfWeek: FC<Props> = ({ frequency, categoryId, taskId }) => {
   const theme = useTheme()
   const { changeFrequencyValue, initDaysOfWeek } = useDispatchHouse()
   const daysOfWeek = frequency ?? initDaysOfWeek()
@@ -56,10 +52,10 @@ const SpecificDayOfWeek: FC<Props> = ({
     const { value } = event.target
     if (typeof value === 'string') {
       const splitted = value.split(',') as DayOfWeekType[]
-      await changeFrequencyValue(categoryId, houseworkId, splitted)
+      await changeFrequencyValue(categoryId, taskId, splitted)
       return
     }
-    await changeFrequencyValue(categoryId, houseworkId, value)
+    await changeFrequencyValue(categoryId, taskId, value)
   }
 
   return (

@@ -17,10 +17,10 @@ import { useDispatchHouse } from '../../../contexts/houses'
 type Props = {
   categoryId: string
   frequency: FrequencyType
-  houseworkId: string
+  taskId: string
 }
 
-const FrequencyItem: FC<Props> = ({ categoryId, frequency, houseworkId }) => {
+const FrequencyItem: FC<Props> = ({ categoryId, frequency, taskId }) => {
   const { TIMES_PER_DAYS, DAYS_OF_WEEK, SPECIFIC_DATES } = FREQUENCY_ENUM
   const { key, values } = frequency
   const { temporary, timesPerDays, daysOfWeek, specificDates } = values
@@ -30,7 +30,7 @@ const FrequencyItem: FC<Props> = ({ categoryId, frequency, houseworkId }) => {
       <TimesPerDays
         frequency={timesPerDays}
         categoryId={categoryId}
-        houseworkId={houseworkId}
+        taskId={taskId}
       />
     )
   }
@@ -39,7 +39,7 @@ const FrequencyItem: FC<Props> = ({ categoryId, frequency, houseworkId }) => {
       <SpecificDayOfWeek
         frequency={daysOfWeek}
         categoryId={categoryId}
-        houseworkId={houseworkId}
+        taskId={taskId}
       />
     )
   }
@@ -48,19 +48,19 @@ const FrequencyItem: FC<Props> = ({ categoryId, frequency, houseworkId }) => {
       <SpecificDate
         frequency={specificDates}
         categoryId={categoryId}
-        houseworkId={houseworkId}
+        taskId={taskId}
       />
     )
   }
   return temporary
 }
 
-const Frequency: FC<Props> = ({ categoryId, frequency, houseworkId }) => {
+const Frequency: FC<Props> = ({ categoryId, frequency, taskId }) => {
   const { changeFrequencyKey } = useDispatchHouse()
 
   const handleChangeFrequency = async (event: SelectChangeEvent) => {
     const newKey = event.target.value as FrequencyType['key']
-    await changeFrequencyKey(categoryId, houseworkId, newKey)
+    await changeFrequencyKey(categoryId, taskId, newKey)
   }
 
   return (
@@ -82,7 +82,7 @@ const Frequency: FC<Props> = ({ categoryId, frequency, houseworkId }) => {
       <FrequencyItem
         categoryId={categoryId}
         frequency={frequency}
-        houseworkId={houseworkId}
+        taskId={taskId}
       />
     </>
   )

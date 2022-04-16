@@ -50,7 +50,7 @@ const useHouseForContext = () => {
   const switchTaskStatus = async (
     uid: string,
     categoryId: string,
-    houseworkId: string,
+    taskId: string,
     prevStatus: boolean
   ) => {
     const { currentHouse, currentDate } = state
@@ -60,7 +60,7 @@ const useHouseForContext = () => {
     const tasks = [...(logs[currentDate] ?? [])]
     const i = tasks.findIndex((t) => {
       if (t.categoryId !== categoryId) return false
-      if (t.houseworkId !== houseworkId) return false
+      if (t.taskId !== taskId) return false
       return t.isCompleted === prevStatus
     })
     if (i === -1) return
@@ -68,13 +68,13 @@ const useHouseForContext = () => {
     const done: Task = {
       memberId: uid,
       categoryId,
-      houseworkId,
+      taskId,
       isCompleted: true,
     }
     const undo: Task = {
       memberId: null,
       categoryId,
-      houseworkId,
+      taskId,
       isCompleted: false,
     }
 
@@ -138,11 +138,11 @@ const useHouseForContext = () => {
 
   const changeFrequencyKey = async (
     categoryId: string,
-    houseworkId: string,
+    taskId: string,
     key: FrequencyType['key']
   ) => {
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const id = `${categoryId}-${houseworkId}`
+    const id = `${categoryId}-${taskId}`
     const { frequency, ...others } = housework[id]
     const { values } = frequency
     if (!values[key] && key !== FREQUENCY_ENUM.TEMPORARY) {
@@ -156,7 +156,7 @@ const useHouseForContext = () => {
 
   const changeFrequencyValue = async (
     categoryId: string,
-    houseworkId: string,
+    taskId: string,
     value: FrequencyType['values'][
       | 'temporary'
       | 'timesPerDays'
@@ -164,7 +164,7 @@ const useHouseForContext = () => {
       | 'specificDates']
   ) => {
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const id = `${categoryId}-${houseworkId}`
+    const id = `${categoryId}-${taskId}`
     const {
       frequency: { key, values },
       ...others

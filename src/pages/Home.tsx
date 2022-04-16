@@ -15,8 +15,7 @@ import StyledPaper from '../components/atoms/StyledPaper'
 import CustomDrawer from '../components/CustomDrawer/index'
 import { State as UserState } from '../contexts/user/constants'
 
-const makeId = (categoryId: string, houseworkId: string) =>
-  `${categoryId}-${houseworkId}`
+const makeId = (categoryId: string, taskId: string) => `${categoryId}-${taskId}`
 
 const Home: FC = () => {
   const [editingHwId, setEditingHwId] = useState<string | null>(null)
@@ -40,12 +39,9 @@ const Home: FC = () => {
     return members[memberId] ?? null
   }
 
-  const toggleDrawer = (
-    categoryId: string | null,
-    houseworkId: string | null
-  ) => {
-    if (categoryId && houseworkId) {
-      const id = makeId(categoryId, houseworkId)
+  const toggleDrawer = (categoryId: string | null, taskId: string | null) => {
+    if (categoryId && taskId) {
+      const id = makeId(categoryId, taskId)
       setEditingHwId(id)
       return
     }
@@ -54,18 +50,18 @@ const Home: FC = () => {
 
   const handleTaskComplete = async (
     categoryId: string,
-    houseworkId: string,
+    taskId: string,
     prevStatus: boolean
   ) => {
-    await switchTaskStatus(uid, categoryId, houseworkId, prevStatus)
+    await switchTaskStatus(uid, categoryId, taskId, prevStatus)
   }
 
   return (
     <StyledPaper>
       <List>
         {tasks.map(
-          ({ categoryId, houseworkId, memberId, isCompleted = false }, i) => {
-            const id = makeId(categoryId, houseworkId)
+          ({ categoryId, taskId, memberId, isCompleted = false }, i) => {
+            const id = makeId(categoryId, taskId)
             const key = `${id}-${i}`
             return (
               <ListItem
@@ -74,7 +70,7 @@ const Home: FC = () => {
                   <IconButton
                     edge="end"
                     aria-label="more"
-                    onClick={() => toggleDrawer(categoryId, houseworkId)}
+                    onClick={() => toggleDrawer(categoryId, taskId)}
                   >
                     <MoreHorizIcon />
                   </IconButton>
@@ -86,7 +82,7 @@ const Home: FC = () => {
               >
                 <ListItemButton
                   onClick={() =>
-                    handleTaskComplete(categoryId, houseworkId, isCompleted)
+                    handleTaskComplete(categoryId, taskId, isCompleted)
                   }
                 >
                   <ListItemIcon>

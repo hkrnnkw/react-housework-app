@@ -56,7 +56,7 @@ export type FrequencyType = {
 export type Task = {
   memberId: string | null
   categoryId: string
-  houseworkId: string
+  taskId: string
   isCompleted?: boolean
 }
 

@@ -10,22 +10,22 @@ import { useHouse } from '../../contexts/houses'
 type Props = {
   member: UserState | null
   housework: HouseworkDetail
-  toggleDrawer: (categoryId: string | null, houseworkId: string | null) => void
+  toggleDrawer: (categoryId: string | null, taskId: string | null) => void
 }
 
 const CustomDrawer: FC<Props> = ({ member, housework, toggleDrawer }) => {
   const { currentHouse } = useHouse()
   if (!currentHouse) return null
 
-  const { categoryId, houseworkId, title, description, points, frequency } =
+  const { categoryId, taskId, title, description, points, frequency } =
     housework
 
   return (
     <SwipeableDrawer
       anchor="bottom"
-      open={categoryId !== null && houseworkId !== null}
+      open={categoryId !== null && taskId !== null}
       onClose={() => toggleDrawer(null, null)}
-      onOpen={() => toggleDrawer(categoryId, houseworkId)}
+      onOpen={() => toggleDrawer(categoryId, taskId)}
     >
       <List>
         <ListItem css={listItem}>
@@ -47,7 +47,7 @@ const CustomDrawer: FC<Props> = ({ member, housework, toggleDrawer }) => {
           <Frequency
             categoryId={categoryId}
             frequency={frequency}
-            houseworkId={houseworkId}
+            taskId={taskId}
           />
         </ListItem>
       </List>
