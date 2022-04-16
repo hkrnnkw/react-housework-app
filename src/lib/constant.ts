@@ -13,4 +13,9 @@ export const DAY_OF_WEEK_ENUM = {
   6: 'Saturday',
 } as const
 
-export const TEMPORARY = 'Temporary'
+export const FREQUENCY_ENUM = {
+  TEMPORARY: 'temporary',
+  TIMES_PER_DAYS: 'timesPerDays',
+  DAYS_OF_WEEK: 'daysOfWeek',
+  SPECIFIC_DATES: 'specificDates',
+} as const

@@ -1,4 +1,8 @@
-import { DAY_OF_WEEK_ENUM, DIRECTION_TYPE_ENUM } from './constant'
+import {
+  DAY_OF_WEEK_ENUM,
+  DIRECTION_TYPE_ENUM,
+  FREQUENCY_ENUM,
+} from './constant'
 
 export type Auth = {
   emailVerified: boolean
@@ -26,6 +30,11 @@ export type House = {
 export type DirectionType =
   typeof DIRECTION_TYPE_ENUM[keyof typeof DIRECTION_TYPE_ENUM]
 
+type TimesPerDaysType = {
+  times: number
+  days: number
+}
+
 export type SpecificDateType = {
   mm: number
   dd: number
@@ -35,11 +44,13 @@ export type DayOfWeekType =
   typeof DAY_OF_WEEK_ENUM[keyof typeof DAY_OF_WEEK_ENUM]
 
 export type FrequencyType = {
-  xTimesPerDay?: number
-  everyXDays?: number
-  daysOfWeek?: DayOfWeekType[]
-  specificDates?: SpecificDateType[]
-  temporary?: boolean
+  key: typeof FREQUENCY_ENUM[keyof typeof FREQUENCY_ENUM]
+  values: {
+    readonly temporary: null
+    timesPerDays?: TimesPerDaysType
+    daysOfWeek?: DayOfWeekType[]
+    specificDates?: SpecificDateType[]
+  }
 }
 
 export type Task = {

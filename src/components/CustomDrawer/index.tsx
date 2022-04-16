@@ -2,14 +2,10 @@
 import { FC } from 'react'
 import { css } from '@emotion/react'
 import { List, ListItem, ListItemText, SwipeableDrawer } from '@mui/material'
-import FrequencyItem from './Frequency/FrequencyItem'
-import SpecificDate from './Frequency/SpecificDate'
-import SpecificDayOfWeek from './Frequency/SpecificDayOfWeek'
-import XTimesPerDay from './Frequency/XTimesPerDay'
-import EveryXDays from './Frequency/EveryXDays'
-import Temporary from './Frequency/Temporary'
-import { FrequencyType, HouseworkDetail } from '../../lib/type'
+import { HouseworkDetail } from '../../lib/type'
 import { State as UserState } from '../../contexts/user/constants'
+import Frequency from './Frequency'
+import { useHouse } from '../../contexts/houses'
 
 type Props = {
   member: UserState | null
@@ -18,11 +14,11 @@ type Props = {
 }
 
 const CustomDrawer: FC<Props> = ({ member, housework, toggleDrawer }) => {
+  const { currentHouse } = useHouse()
+  if (!currentHouse) return null
+
   const { categoryId, houseworkId, title, description, points, frequency } =
     housework
-  const { xTimesPerDay, everyXDays, daysOfWeek, specificDates, temporary } =
-    frequency
-  const memberText = member?.displayName ?? '未設定'
 
   return (
     <SwipeableDrawer
@@ -39,44 +35,20 @@ const CustomDrawer: FC<Props> = ({ member, housework, toggleDrawer }) => {
           />
         </ListItem>
         <ListItem css={listItem}>
-          <ListItemText primary="担当" secondary={memberText} />
+          <ListItemText
+            primary="担当"
+            secondary={member?.displayName ?? '未設定'}
+          />
         </ListItem>
         <ListItem css={listItem}>
           <ListItemText primary="ポイント" secondary={points} />
         </ListItem>
         <ListItem css={listItem}>
-          <ListItemText primary="頻度" />
-          <FrequencyItem frequencyKey="xTimesPerDay" houseworkId={houseworkId}>
-            <XTimesPerDay
-              frequency={xTimesPerDay}
-              categoryId={categoryId}
-              houseworkId={houseworkId}
-            />
-          </FrequencyItem>
-          <FrequencyItem frequencyKey="everyXDays" houseworkId={houseworkId}>
-            <EveryXDays
-              frequency={everyXDays}
-              categoryId={categoryId}
-              houseworkId={houseworkId}
-            />
-          </FrequencyItem>
-          <FrequencyItem frequencyKey="daysOfWeek" houseworkId={houseworkId}>
-            <SpecificDayOfWeek
-              frequency={daysOfWeek}
-              categoryId={categoryId}
-              houseworkId={houseworkId}
-            />
-          </FrequencyItem>
-          <FrequencyItem frequencyKey="specificDates" houseworkId={houseworkId}>
-            <SpecificDate
-              frequency={specificDates}
-              categoryId={categoryId}
-              houseworkId={houseworkId}
-            />
-          </FrequencyItem>
-          <FrequencyItem frequencyKey="temporary" houseworkId={houseworkId}>
-            <Temporary />
-          </FrequencyItem>
+          <Frequency
+            categoryId={categoryId}
+            frequency={frequency}
+            houseworkId={houseworkId}
+          />
         </ListItem>
       </List>
     </SwipeableDrawer>

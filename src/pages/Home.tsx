@@ -13,10 +13,9 @@ import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { useUser } from '../contexts/user'
 import StyledPaper from '../components/atoms/StyledPaper'
 import CustomDrawer from '../components/CustomDrawer/index'
-import { HouseworkDetail } from '../lib/type'
 
 const Home: FC = () => {
-  const [editingHw, setEditingHw] = useState<HouseworkDetail | null>(null)
+  const [editingHwId, setEditingHwId] = useState<string | null>(null)
   const { uid } = useUser()
   const { initHouses, switchTaskStatus } = useDispatchHouse()
   const { currentDate, currentHouse, houses } = useHouse()
@@ -31,7 +30,14 @@ const Home: FC = () => {
   const { id: currentHouseId, members } = currentHouse
   const { logs, housework } = houses[currentHouseId]
   const tasks = [...(logs[currentDate] ?? [])]
-  const member = editingHw?.memberId ? members[editingHw.memberId] : null
+
+  const getMember = () => {
+    if (!editingHwId) return null
+    const { memberId } = housework[editingHwId]
+    if (!memberId) return null
+    return members[memberId] ?? null
+  }
+  const member = getMember()
 
   const makeId = (categoryId: string, houseworkId: string) =>
     `${categoryId}-${houseworkId}`
@@ -42,10 +48,10 @@ const Home: FC = () => {
   ) => {
     if (categoryId && houseworkId) {
       const id = makeId(categoryId, houseworkId)
-      setEditingHw(housework[id])
+      setEditingHwId(id)
       return
     }
-    setEditingHw(null)
+    setEditingHwId(null)
   }
 
   const handleTaskComplete = async (
@@ -105,10 +111,10 @@ const Home: FC = () => {
           }
         )}
       </List>
-      {editingHw !== null && (
+      {editingHwId !== null && (
         <CustomDrawer
           member={member}
-          housework={editingHw}
+          housework={housework[editingHwId]}
           toggleDrawer={toggleDrawer}
         />
       )}

@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs'
+import { FREQUENCY_ENUM } from '../lib/constant'
 import { DayOfWeekType, House, Task } from '../lib/type'
 
 const convertDayOfWeekToNum = (dayOfWeek: DayOfWeekType): number => {
@@ -28,6 +29,8 @@ export const createLogs = (
   logs: House['logs'] = {},
   currentDateStr: string
 ): House['logs'] => {
+  const { TEMPORARY, TIMES_PER_DAYS, DAYS_OF_WEEK, SPECIFIC_DATES } =
+    FREQUENCY_ENUM
   const currentDate = dayjs(currentDateStr)
     .hour(0)
     .minute(0)
@@ -53,12 +56,12 @@ export const createLogs = (
         logs[currentDateStr].push(todoTask)
       }
     }
-    const { xTimesPerDay, everyXDays, daysOfWeek, specificDates } = frequency
-    if (xTimesPerDay !== undefined) {
-      addTasks(xTimesPerDay)
-    }
-    if (everyXDays !== undefined) {
-      const span = everyXDays - 1
+    const { key, values } = frequency
+    const { timesPerDays, daysOfWeek, specificDates } = values
+    if (key === TEMPORARY) return
+    if (key === TIMES_PER_DAYS && !!timesPerDays) {
+      const { times, days } = timesPerDays
+      const span = days - 1
       const max = span * 2
       const maxDate = currentDate.add(span, 'day')
       for (let i = 0; i <= max; i += 1) {
@@ -69,15 +72,13 @@ export const createLogs = (
           )
           if (alreadyAdded) break
         }
-        if (i === max) addTasks()
+        if (i === max) addTasks(times)
       }
-    }
-    if (daysOfWeek !== undefined) {
+    } else if (key === DAYS_OF_WEEK && !!daysOfWeek) {
       daysOfWeek.forEach((dow) => {
         if (convertDayOfWeekToNum(dow) === currentDate.day()) addTasks()
       })
-    }
-    if (specificDates !== undefined) {
+    } else if (key === SPECIFIC_DATES && !!specificDates) {
       specificDates.forEach((date) => {
         if (date === null) return
         const mm = currentDate.month() + 1

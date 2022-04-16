@@ -38,27 +38,28 @@ const getStyles = (
 })
 
 type Props = {
-  frequency: FrequencyType['daysOfWeek']
+  frequency: FrequencyType['values']['daysOfWeek']
   categoryId: string
   houseworkId: string
 }
 
 const SpecificDayOfWeek: FC<Props> = ({
-  frequency = [],
+  frequency,
   categoryId,
   houseworkId,
 }) => {
   const theme = useTheme()
-  const { changeDaysOfWeek } = useDispatchHouse()
+  const { changeFrequencyValue, initDaysOfWeek } = useDispatchHouse()
+  const daysOfWeek = frequency ?? initDaysOfWeek()
 
-  const handleChange = async (event: SelectChangeEvent<typeof frequency>) => {
+  const handleChange = async (event: SelectChangeEvent<typeof daysOfWeek>) => {
     const { value } = event.target
     if (typeof value === 'string') {
       const splitted = value.split(',') as DayOfWeekType[]
-      await changeDaysOfWeek(categoryId, houseworkId, splitted)
+      await changeFrequencyValue(categoryId, houseworkId, splitted)
       return
     }
-    await changeDaysOfWeek(categoryId, houseworkId, value)
+    await changeFrequencyValue(categoryId, houseworkId, value)
   }
 
   return (
@@ -66,7 +67,7 @@ const SpecificDayOfWeek: FC<Props> = ({
       labelId="multiple-day-label"
       id="multiple-day"
       multiple
-      value={frequency}
+      value={daysOfWeek}
       onChange={handleChange}
       input={<OutlinedInput id="select-multiple-day" label="dayOfWeek" />}
       renderValue={(selected) => (
@@ -77,13 +78,13 @@ const SpecificDayOfWeek: FC<Props> = ({
         </Box>
       )}
       MenuProps={MenuProps}
-      css={container}
+      css={select}
     >
       {Object.values(DAY_OF_WEEK_ENUM).map((day) => (
         <MenuItem
           key={day}
           value={day}
-          style={getStyles(day, frequency, theme)}
+          style={getStyles(day, daysOfWeek, theme)}
         >
           {day}
         </MenuItem>
@@ -94,11 +95,12 @@ const SpecificDayOfWeek: FC<Props> = ({
 
 export default SpecificDayOfWeek
 
-const container = css`
+const select = css`
   width: 100%;
   display: inline-flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
   column-gap: 1.3rem;
+  padding: 8px 0px;
 `

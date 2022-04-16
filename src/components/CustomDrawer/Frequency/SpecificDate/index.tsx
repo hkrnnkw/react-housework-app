@@ -10,28 +10,25 @@ import { FrequencyType, SpecificDateType } from '../../../../lib/type'
 import { useDispatchHouse } from '../../../../contexts/houses'
 
 type Props = {
-  frequency: FrequencyType['specificDates']
+  frequency: FrequencyType['values']['specificDates']
   categoryId: string
   houseworkId: string
 }
 
-const SpecificDate: FC<Props> = ({
-  frequency = [],
-  categoryId,
-  houseworkId,
-}) => {
-  const { changeSpecificDate } = useDispatchHouse()
+const SpecificDate: FC<Props> = ({ frequency, categoryId, houseworkId }) => {
+  const { changeFrequencyValue, initSpecificDates } = useDispatchHouse()
+  const specificDates = frequency ?? initSpecificDates()
 
   const handleAdd = async () => {
-    const newDates = [...frequency]
-    await changeSpecificDate(categoryId, houseworkId, [null, ...newDates])
+    const newDates = [...specificDates]
+    await changeFrequencyValue(categoryId, houseworkId, [null, ...newDates])
   }
 
   const handleChange = async (newValue: dayjs.Dayjs | null, index: number) => {
-    const newDates = [...frequency]
+    const newDates = [...specificDates]
     if (newValue === null) {
       newDates.splice(index, 1)
-      await changeSpecificDate(categoryId, houseworkId, newDates)
+      await changeFrequencyValue(categoryId, houseworkId, newDates)
       return
     }
     const specificDate: SpecificDateType = {
@@ -39,7 +36,7 @@ const SpecificDate: FC<Props> = ({
       dd: newValue.date(),
     }
     newDates.splice(index, 1, specificDate)
-    await changeSpecificDate(categoryId, houseworkId, newDates)
+    await changeFrequencyValue(categoryId, houseworkId, newDates)
   }
 
   return (
@@ -47,16 +44,16 @@ const SpecificDate: FC<Props> = ({
       <Stack spacing={2} css={container}>
         <Button
           onClick={() => handleAdd()}
-          disabled={frequency.includes(null)}
+          disabled={specificDates.includes(null)}
           css={button}
         >
           追加する
         </Button>
-        {frequency.map((sd, i) => (
+        {specificDates.map((sd, i) => (
           <Calendar
             key={sd ? `${sd.mm}/${sd.dd}` : 'empty'}
             index={i}
-            specificDates={frequency}
+            specificDates={specificDates}
             onChange={handleChange}
           />
         ))}
