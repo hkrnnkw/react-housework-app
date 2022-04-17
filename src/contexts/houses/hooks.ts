@@ -142,16 +142,19 @@ const useHouseForContext = () => {
   ) => {
     const { categoryId, taskId } = houseworkId
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const { frequency, ...others } = housework[categoryId][taskId]
+    const { frequency, ...others } = housework[categoryId].taskDetails[taskId]
     const { values } = frequency
     if (!values[key] && key !== FREQUENCY_ENUM.TEMPORARY) {
       const init = { ...values, [key]: getInitialFrequencyValue(key) }
-      housework[categoryId][taskId] = {
+      housework[categoryId].taskDetails[taskId] = {
         frequency: { key, values: init },
         ...others,
       }
     } else {
-      housework[categoryId][taskId] = { frequency: { key, values }, ...others }
+      housework[categoryId].taskDetails[taskId] = {
+        frequency: { key, values },
+        ...others,
+      }
     }
     await updateCurrentHousework(housework)
   }
@@ -166,10 +169,10 @@ const useHouseForContext = () => {
       | 'specificDates']
   ) => {
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const { frequency, ...others } = housework[categoryId][taskId]
+    const { frequency, ...others } = housework[categoryId].taskDetails[taskId]
     const { key, values } = frequency
     const newValues: FrequencyType['values'] = { ...values, [key]: value }
-    housework[categoryId][taskId] = {
+    housework[categoryId].taskDetails[taskId] = {
       frequency: { key, values: newValues },
       ...others,
     }

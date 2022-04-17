@@ -21,19 +21,19 @@ const HouseworkList: FC = () => {
     <StyledPaper>
       <Outlet />
       <List>
-        {Object.entries(housework).map(([key, value]) => (
+        {Object.entries(housework).map(([categoryId, { taskDetails }]) => (
           <Link
-            key={key}
+            key={categoryId}
             component={RouterLink}
-            to={`${paths.settings}${paths.houseworkList}/${key}`}
-            state={{ id: key }}
+            to={`${paths.settings}${paths.houseworkList}/${categoryId}`}
+            state={{ id: categoryId }}
           >
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemText
-                  id={key}
-                  primary={value.title}
-                  secondary={value.points}
+                  id={categoryId}
+                  primary={taskDetails.title}
+                  secondary={taskDetails.points}
                 />
               </ListItemButton>
             </ListItem>

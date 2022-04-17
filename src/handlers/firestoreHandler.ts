@@ -11,7 +11,7 @@ import {
   where,
 } from 'firebase/firestore'
 import { House } from '../lib/type'
-import { defaultCategories, defaultHousework } from '../lib/housework'
+import defaultHousework from '../lib/housework'
 import { State as UserState } from '../contexts/user/constants'
 
 export const setUserToFirestore = async (user: UserState): Promise<void> => {
@@ -38,7 +38,6 @@ export const createHouseToFirestore = async (uid: string): Promise<House> => {
     logs: {},
     housework: defaultHousework,
     memberIds: [uid],
-    categories: defaultCategories,
   }
   await setDoc(newHouseRef, newHouse, { merge: true })
   return newHouse

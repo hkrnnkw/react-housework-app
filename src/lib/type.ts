@@ -24,10 +24,12 @@ export type House = {
   memberIds: string[]
   housework: {
     [categoryId: string]: {
-      [taskId: string]: HouseworkDetail
+      category: string
+      taskDetails: {
+        [taskId: string]: HouseworkDetail
+      }
     }
   }
-  categories: Category
 }
 export type DirectionType =
   typeof DIRECTION_TYPE_ENUM[keyof typeof DIRECTION_TYPE_ENUM]
@@ -71,8 +73,4 @@ export type HouseworkDetail = {
   frequency: FrequencyType
   title: string
   description?: string
-}
-
-export type Category = {
-  [id: string]: string
 }

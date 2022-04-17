@@ -90,7 +90,7 @@ const Home: FC = () => {
                 </ListItemIcon>
                 <ListItemText
                   id={key}
-                  primary={housework[categoryId][taskId].title}
+                  primary={housework[categoryId].taskDetails[taskId].title}
                   secondary={getMember(memberId)?.displayName ?? ''}
                 />
               </ListItemButton>
@@ -102,9 +102,9 @@ const Home: FC = () => {
         <CustomDrawer
           houseworkId={editing}
           member={getMember(
-            housework[editing.categoryId][editing.taskId].memberId
+            housework[editing.categoryId].taskDetails[editing.taskId].memberId
           )}
-          housework={housework[editing.categoryId][editing.taskId]}
+          housework={housework[editing.categoryId].taskDetails[editing.taskId]}
           toggleDrawer={toggleDrawer}
         />
       )}

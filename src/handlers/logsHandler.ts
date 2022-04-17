@@ -60,7 +60,7 @@ export const createLogs = (
     }
   }
 
-  Object.entries(housework).forEach(([categoryId, taskDetails]) => {
+  Object.entries(housework).forEach(([categoryId, { taskDetails }]) => {
     Object.entries(taskDetails).forEach(([taskId, detail]) => {
       const { memberId, frequency } = detail
       const { key, values } = frequency
