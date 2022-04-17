@@ -96,6 +96,18 @@ const useHouseForContext = () => {
     }
   }
 
+  const changeMemberId = async (
+    houseworkId: HouseworkId,
+    memberId: HouseworkDetail['memberId']
+  ) => {
+    const { categoryId, taskId } = houseworkId
+    const housework = getCurrentHouseValue('housework') as House['housework']
+    const { memberId: old, ...others } =
+      housework[categoryId].taskDetails[taskId]
+    housework[categoryId].taskDetails[taskId] = { memberId, ...others }
+    await updateCurrentHousework(housework)
+  }
+
   const changePoint = async (
     houseworkId: HouseworkId,
     point: HouseworkDetail['point']
@@ -205,6 +217,7 @@ const useHouseForContext = () => {
     initHouses,
     changeCurrentHouse,
     switchTaskStatus,
+    changeMemberId,
     changePoint,
     initTimesPerDays,
     initDaysOfWeek,

@@ -101,9 +101,7 @@ const Home: FC = () => {
       {editing !== null && (
         <CustomDrawer
           houseworkId={editing}
-          member={getMember(
-            housework[editing.categoryId].taskDetails[editing.taskId].memberId
-          )}
+          members={Object.values(members)}
           housework={housework[editing.categoryId].taskDetails[editing.taskId]}
           toggleDrawer={toggleDrawer}
         />

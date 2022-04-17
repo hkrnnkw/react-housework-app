@@ -19,3 +19,5 @@ export type UserActionType = {
   type: typeof USER_ACTIONS.SET_USER_DATA
   payload: State
 }
+
+export const NOT_SET = '未設定'
