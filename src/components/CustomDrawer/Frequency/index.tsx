@@ -40,6 +40,8 @@ const FrequencyItem: FC<Props> = ({ houseworkId, frequency }) => {
 
 const Frequency: FC<Props> = ({ houseworkId, frequency }) => {
   const { changeFrequencyKey } = useDispatchHouse()
+  const { TEMPORARY, TIMES_PER_DAYS, DAYS_OF_WEEK, SPECIFIC_DATES } =
+    FREQUENCY_ENUM
 
   const handleChangeFrequency = async (event: SelectChangeEvent) => {
     const newKey = event.target.value as FrequencyType['key']
@@ -56,11 +58,18 @@ const Frequency: FC<Props> = ({ houseworkId, frequency }) => {
         onChange={handleChangeFrequency}
         css={select}
       >
-        {Object.values(FREQUENCY_ENUM).map((freq) => (
-          <MenuItem key={freq} value={freq}>
-            {freq}
-          </MenuItem>
-        ))}
+        <MenuItem key={TEMPORARY} value={TEMPORARY}>
+          指定なし
+        </MenuItem>
+        <MenuItem key={TIMES_PER_DAYS} value={TIMES_PER_DAYS}>
+          数日おき
+        </MenuItem>
+        <MenuItem key={DAYS_OF_WEEK} value={DAYS_OF_WEEK}>
+          特定の曜日
+        </MenuItem>
+        <MenuItem key={SPECIFIC_DATES} value={SPECIFIC_DATES}>
+          特定の日付
+        </MenuItem>
       </Select>
       <FrequencyItem houseworkId={houseworkId} frequency={frequency} />
     </>
