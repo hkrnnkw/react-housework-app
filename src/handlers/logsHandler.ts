@@ -40,52 +40,62 @@ export const createLogs = (
   if (currentDate.isBefore(today)) return logs
   if (!logs[currentDateStr]) Object.assign(logs, { [currentDateStr]: [] })
 
-  Object.values(housework).forEach((value) => {
-    const { categoryId, taskId, frequency, memberId } = value
-    const addTasks = (times = 1) => {
-      const alreadyAdded = logs[currentDateStr].filter(
-        (t) => t.categoryId === categoryId && t.taskId === taskId
-      )
-      for (let i = 0; i < times - alreadyAdded.length; i += 1) {
-        const todoTask: Task = {
-          memberId,
-          categoryId,
-          taskId,
-          isCompleted: false,
-        }
-        logs[currentDateStr].push(todoTask)
+  const addTasks = (
+    categoryId: string,
+    taskId: string,
+    memberId: string | null,
+    times = 1
+  ) => {
+    const alreadyAdded = logs[currentDateStr].filter(
+      (t) => t.categoryId === categoryId && t.taskId === taskId
+    )
+    for (let i = 0; i < times - alreadyAdded.length; i += 1) {
+      const todoTask: Task = {
+        memberId,
+        categoryId,
+        taskId,
+        isCompleted: false,
       }
+      logs[currentDateStr].push(todoTask)
     }
-    const { key, values } = frequency
-    const { timesPerDays, daysOfWeek, specificDates } = values
-    if (key === TEMPORARY) return
-    if (key === TIMES_PER_DAYS && !!timesPerDays) {
-      const { times, days } = timesPerDays
-      const span = days - 1
-      const max = span * 2
-      const maxDate = currentDate.add(span, 'day')
-      for (let i = 0; i <= max; i += 1) {
-        const dt = maxDate.subtract(i, 'day').format('YYYY/MM/DD')
-        if (logs[dt]) {
-          const alreadyAdded = logs[dt].find(
-            (t) => t.categoryId === categoryId && t.taskId === taskId
-          )
-          if (alreadyAdded) break
+  }
+
+  Object.entries(housework).forEach(([categoryId, taskDetails]) => {
+    Object.entries(taskDetails).forEach(([taskId, detail]) => {
+      const { memberId, frequency } = detail
+      const { key, values } = frequency
+      const { timesPerDays, daysOfWeek, specificDates } = values
+      if (key === TEMPORARY) return
+      if (key === TIMES_PER_DAYS && !!timesPerDays) {
+        const { times, days } = timesPerDays
+        const span = days - 1
+        const max = span * 2
+        const maxDate = currentDate.add(span, 'day')
+        for (let i = 0; i <= max; i += 1) {
+          const dt = maxDate.subtract(i, 'day').format('YYYY/MM/DD')
+          if (logs[dt]) {
+            const alreadyAdded = logs[dt].find(
+              (t) => t.categoryId === categoryId && t.taskId === taskId
+            )
+            if (alreadyAdded) break
+          }
+          if (i === max) addTasks(categoryId, taskId, memberId, times)
         }
-        if (i === max) addTasks(times)
+      } else if (key === DAYS_OF_WEEK && !!daysOfWeek) {
+        daysOfWeek.forEach((dow) => {
+          if (convertDayOfWeekToNum(dow) === currentDate.day())
+            addTasks(categoryId, taskId, memberId)
+        })
+      } else if (key === SPECIFIC_DATES && !!specificDates) {
+        specificDates.forEach((date) => {
+          if (date === null) return
+          const mm = currentDate.month() + 1
+          const dd = currentDate.date()
+          if (date.mm === mm && date.dd === dd)
+            addTasks(categoryId, taskId, memberId)
+        })
       }
-    } else if (key === DAYS_OF_WEEK && !!daysOfWeek) {
-      daysOfWeek.forEach((dow) => {
-        if (convertDayOfWeekToNum(dow) === currentDate.day()) addTasks()
-      })
-    } else if (key === SPECIFIC_DATES && !!specificDates) {
-      specificDates.forEach((date) => {
-        if (date === null) return
-        const mm = currentDate.month() + 1
-        const dd = currentDate.date()
-        if (date.mm === mm && date.dd === dd) addTasks()
-      })
-    }
+    })
   })
   return logs
 }

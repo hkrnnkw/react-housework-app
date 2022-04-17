@@ -23,7 +23,9 @@ export type House = {
   }
   memberIds: string[]
   housework: {
-    [id: string]: HouseworkDetail
+    [categoryId: string]: {
+      [taskId: string]: HouseworkDetail
+    }
   }
   categories: Category
 }
@@ -53,14 +55,18 @@ export type FrequencyType = {
   }
 }
 
-export type Task = {
-  memberId: string | null
+export type HouseworkId = {
   categoryId: string
   taskId: string
-  isCompleted?: boolean
 }
 
-export type HouseworkDetail = Task & {
+export type Task = HouseworkId & {
+  memberId: string | null
+  isCompleted: boolean
+}
+
+export type HouseworkDetail = {
+  memberId: string | null
   points: 1 | 2 | 3 | 4 | 5
   frequency: FrequencyType
   title: string

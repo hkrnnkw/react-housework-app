@@ -13,7 +13,7 @@ import {
 import { css } from '@emotion/react'
 import { DAY_OF_WEEK_ENUM } from '../../../lib/constant'
 import { useDispatchHouse } from '../../../contexts/houses'
-import { DayOfWeekType, FrequencyType } from '../../../lib/type'
+import { DayOfWeekType, FrequencyType, HouseworkId } from '../../../lib/type'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -39,14 +39,14 @@ const getStyles = (
 
 type Props = {
   frequency: FrequencyType['values']['daysOfWeek']
-  categoryId: string
-  taskId: string
+  houseworkId: HouseworkId
 }
 
-const SpecificDayOfWeek: FC<Props> = ({ frequency, categoryId, taskId }) => {
+const SpecificDayOfWeek: FC<Props> = ({ frequency, houseworkId }) => {
   const theme = useTheme()
   const { changeFrequencyValue, initDaysOfWeek } = useDispatchHouse()
   const daysOfWeek = frequency ?? initDaysOfWeek()
+  const { categoryId, taskId } = houseworkId
 
   const handleChange = async (event: SelectChangeEvent<typeof daysOfWeek>) => {
     const { value } = event.target

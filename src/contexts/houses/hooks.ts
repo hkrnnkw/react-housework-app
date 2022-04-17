@@ -10,7 +10,7 @@ import {
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
-import { FrequencyType, House, Task } from '../../lib/type'
+import { FrequencyType, House, HouseworkId, Task } from '../../lib/type'
 import { DAY_OF_WEEK_ENUM, FREQUENCY_ENUM } from '../../lib/constant'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -137,19 +137,21 @@ const useHouseForContext = () => {
   }
 
   const changeFrequencyKey = async (
-    categoryId: string,
-    taskId: string,
+    houseworkId: HouseworkId,
     key: FrequencyType['key']
   ) => {
+    const { categoryId, taskId } = houseworkId
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const id = `${categoryId}-${taskId}`
-    const { frequency, ...others } = housework[id]
+    const { frequency, ...others } = housework[categoryId][taskId]
     const { values } = frequency
     if (!values[key] && key !== FREQUENCY_ENUM.TEMPORARY) {
       const init = { ...values, [key]: getInitialFrequencyValue(key) }
-      housework[id] = { frequency: { key, values: init }, ...others }
+      housework[categoryId][taskId] = {
+        frequency: { key, values: init },
+        ...others,
+      }
     } else {
-      housework[id] = { frequency: { key, values }, ...others }
+      housework[categoryId][taskId] = { frequency: { key, values }, ...others }
     }
     await updateCurrentHousework(housework)
   }
@@ -164,13 +166,13 @@ const useHouseForContext = () => {
       | 'specificDates']
   ) => {
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const id = `${categoryId}-${taskId}`
-    const {
-      frequency: { key, values },
-      ...others
-    } = housework[id]
+    const { frequency, ...others } = housework[categoryId][taskId]
+    const { key, values } = frequency
     const newValues: FrequencyType['values'] = { ...values, [key]: value }
-    housework[id] = { frequency: { key, values: newValues }, ...others }
+    housework[categoryId][taskId] = {
+      frequency: { key, values: newValues },
+      ...others,
+    }
     await updateCurrentHousework(housework)
   }
 

@@ -2,30 +2,34 @@
 import { FC } from 'react'
 import { css } from '@emotion/react'
 import { List, ListItem, ListItemText, SwipeableDrawer } from '@mui/material'
-import { HouseworkDetail } from '../../lib/type'
+import { HouseworkDetail, HouseworkId } from '../../lib/type'
 import { State as UserState } from '../../contexts/user/constants'
 import Frequency from './Frequency'
 import { useHouse } from '../../contexts/houses'
 
 type Props = {
+  houseworkId: HouseworkId
   member: UserState | null
   housework: HouseworkDetail
-  toggleDrawer: (categoryId: string | null, taskId: string | null) => void
+  toggleDrawer: (houseworkId: HouseworkId | null) => void
 }
 
-const CustomDrawer: FC<Props> = ({ member, housework, toggleDrawer }) => {
+const CustomDrawer: FC<Props> = ({
+  houseworkId,
+  member,
+  housework,
+  toggleDrawer,
+}) => {
   const { currentHouse } = useHouse()
   if (!currentHouse) return null
-
-  const { categoryId, taskId, title, description, points, frequency } =
-    housework
+  const { title, description, points, frequency } = housework
 
   return (
     <SwipeableDrawer
       anchor="bottom"
-      open={categoryId !== null && taskId !== null}
-      onClose={() => toggleDrawer(null, null)}
-      onOpen={() => toggleDrawer(categoryId, taskId)}
+      open={houseworkId !== null}
+      onClose={() => toggleDrawer(null)}
+      onOpen={() => toggleDrawer(houseworkId)}
     >
       <List>
         <ListItem css={listItem}>
@@ -44,11 +48,7 @@ const CustomDrawer: FC<Props> = ({ member, housework, toggleDrawer }) => {
           <ListItemText primary="ポイント" secondary={points} />
         </ListItem>
         <ListItem css={listItem}>
-          <Frequency
-            categoryId={categoryId}
-            frequency={frequency}
-            taskId={taskId}
-          />
+          <Frequency houseworkId={houseworkId} frequency={frequency} />
         </ListItem>
       </List>
     </SwipeableDrawer>

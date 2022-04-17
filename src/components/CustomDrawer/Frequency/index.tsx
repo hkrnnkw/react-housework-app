@@ -7,7 +7,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material'
 import { css } from '@emotion/react'
-import { FrequencyType } from '../../../lib/type'
+import { FrequencyType, HouseworkId } from '../../../lib/type'
 import { FREQUENCY_ENUM } from '../../../lib/constant'
 import TimesPerDays from './TimesPerDays'
 import SpecificDayOfWeek from './SpecificDayOfWeek'
@@ -15,52 +15,35 @@ import SpecificDate from './SpecificDate'
 import { useDispatchHouse } from '../../../contexts/houses'
 
 type Props = {
-  categoryId: string
+  houseworkId: HouseworkId
   frequency: FrequencyType
-  taskId: string
 }
 
-const FrequencyItem: FC<Props> = ({ categoryId, frequency, taskId }) => {
+const FrequencyItem: FC<Props> = ({ houseworkId, frequency }) => {
   const { TIMES_PER_DAYS, DAYS_OF_WEEK, SPECIFIC_DATES } = FREQUENCY_ENUM
   const { key, values } = frequency
   const { temporary, timesPerDays, daysOfWeek, specificDates } = values
 
   if (key === TIMES_PER_DAYS) {
-    return (
-      <TimesPerDays
-        frequency={timesPerDays}
-        categoryId={categoryId}
-        taskId={taskId}
-      />
-    )
+    return <TimesPerDays frequency={timesPerDays} houseworkId={houseworkId} />
   }
   if (key === DAYS_OF_WEEK) {
     return (
-      <SpecificDayOfWeek
-        frequency={daysOfWeek}
-        categoryId={categoryId}
-        taskId={taskId}
-      />
+      <SpecificDayOfWeek frequency={daysOfWeek} houseworkId={houseworkId} />
     )
   }
   if (key === SPECIFIC_DATES) {
-    return (
-      <SpecificDate
-        frequency={specificDates}
-        categoryId={categoryId}
-        taskId={taskId}
-      />
-    )
+    return <SpecificDate frequency={specificDates} houseworkId={houseworkId} />
   }
   return temporary
 }
 
-const Frequency: FC<Props> = ({ categoryId, frequency, taskId }) => {
+const Frequency: FC<Props> = ({ houseworkId, frequency }) => {
   const { changeFrequencyKey } = useDispatchHouse()
 
   const handleChangeFrequency = async (event: SelectChangeEvent) => {
     const newKey = event.target.value as FrequencyType['key']
-    await changeFrequencyKey(categoryId, taskId, newKey)
+    await changeFrequencyKey(houseworkId, newKey)
   }
 
   return (
@@ -79,11 +62,7 @@ const Frequency: FC<Props> = ({ categoryId, frequency, taskId }) => {
           </MenuItem>
         ))}
       </Select>
-      <FrequencyItem
-        categoryId={categoryId}
-        frequency={frequency}
-        taskId={taskId}
-      />
+      <FrequencyItem houseworkId={houseworkId} frequency={frequency} />
     </>
   )
 }
