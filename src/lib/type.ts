@@ -1,8 +1,4 @@
-import {
-  DAY_OF_WEEK_ENUM,
-  DIRECTION_TYPE_ENUM,
-  FREQUENCY_ENUM,
-} from './constant'
+import { DAY_OF_WEEK_ENUM, DIRECTION_ENUM, FREQUENCY_ENUM } from './constant'
 
 export type Auth = {
   emailVerified: boolean
@@ -31,8 +27,7 @@ export type House = {
     }
   }
 }
-export type DirectionType =
-  typeof DIRECTION_TYPE_ENUM[keyof typeof DIRECTION_TYPE_ENUM]
+export type DirectionType = typeof DIRECTION_ENUM[keyof typeof DIRECTION_ENUM]
 
 type TimesPerDaysType = {
   times: number

@@ -1,4 +1,4 @@
-export const DIRECTION_TYPE_ENUM = {
+export const DIRECTION_ENUM = {
   PREV: -1,
   NEXT: 1,
 } as const

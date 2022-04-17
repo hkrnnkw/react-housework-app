@@ -4,7 +4,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { DirectionType } from '../lib/type'
-import { DIRECTION_TYPE_ENUM } from '../lib/constant'
+import { DIRECTION_ENUM } from '../lib/constant'
 
 const DateDisplay: FC = () => {
   const { currentDate } = useHouse()
@@ -20,7 +20,7 @@ const DateDisplay: FC = () => {
         color="primary"
         aria-label="left"
         component="span"
-        onClick={() => handleDateChange(DIRECTION_TYPE_ENUM.PREV)}
+        onClick={() => handleDateChange(DIRECTION_ENUM.PREV)}
       >
         <ChevronLeftIcon />
       </IconButton>
@@ -29,7 +29,7 @@ const DateDisplay: FC = () => {
         color="primary"
         aria-label="right"
         component="span"
-        onClick={() => handleDateChange(DIRECTION_TYPE_ENUM.NEXT)}
+        onClick={() => handleDateChange(DIRECTION_ENUM.NEXT)}
       >
         <ChevronRightIcon />
       </IconButton>
