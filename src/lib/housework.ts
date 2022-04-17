@@ -10,7 +10,7 @@ const defaultHousework: House['housework'] = {
     category: 'その他',
     taskDetails: {
       hw000: {
-        points: 3,
+        point: 3,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -21,7 +21,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -32,7 +32,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -43,7 +43,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -58,7 +58,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -73,7 +73,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw005: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -84,7 +84,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw006: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -95,7 +95,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw007: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -112,7 +112,7 @@ const defaultHousework: House['housework'] = {
     category: '洗濯',
     taskDetails: {
       hw000: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -127,7 +127,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -142,7 +142,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -157,7 +157,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -172,7 +172,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -187,7 +187,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw005: {
-        points: 3,
+        point: 3,
         frequency: {
           key: SPECIFIC_DATES,
           values: {
@@ -199,7 +199,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw006: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -210,7 +210,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw007: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -227,7 +227,7 @@ const defaultHousework: House['housework'] = {
     category: '洗面所',
     taskDetails: {
       hw000: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -242,7 +242,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -257,7 +257,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 3,
+        point: 3,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -272,7 +272,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 3,
+        point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -284,7 +284,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -305,7 +305,7 @@ const defaultHousework: House['housework'] = {
     category: 'お風呂場',
     taskDetails: {
       hw000: {
-        points: 3,
+        point: 3,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -316,7 +316,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -327,7 +327,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 3,
+        point: 3,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -338,7 +338,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 4,
+        point: 4,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -353,7 +353,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 3,
+        point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -365,7 +365,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw005: {
-        points: 3,
+        point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -377,7 +377,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw006: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -394,7 +394,7 @@ const defaultHousework: House['housework'] = {
     category: 'トイレ',
     taskDetails: {
       hw000: {
-        points: 5,
+        point: 5,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -409,7 +409,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -424,7 +424,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -435,7 +435,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -446,7 +446,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -467,7 +467,7 @@ const defaultHousework: House['housework'] = {
     category: 'キッチン',
     taskDetails: {
       hw000: {
-        points: 3,
+        point: 3,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -482,7 +482,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -493,7 +493,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -508,7 +508,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -523,7 +523,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -534,7 +534,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw005: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -549,7 +549,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw006: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -564,7 +564,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw007: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -579,7 +579,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw008: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -594,7 +594,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw009: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -609,7 +609,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw010: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -624,7 +624,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw011: {
-        points: 3,
+        point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -636,7 +636,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw012: {
-        points: 2,
+        point: 2,
         frequency: {
           key: SPECIFIC_DATES,
           values: {
@@ -651,7 +651,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw013: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -672,7 +672,7 @@ const defaultHousework: House['housework'] = {
     category: '料理',
     taskDetails: {
       hw000: {
-        points: 3,
+        point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -684,7 +684,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 1,
+        point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -696,7 +696,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 1,
+        point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -708,7 +708,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 3,
+        point: 3,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -723,7 +723,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -738,7 +738,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw005: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -753,7 +753,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw006: {
-        points: 3,
+        point: 3,
         frequency: {
           key: SPECIFIC_DATES,
           values: {
@@ -770,7 +770,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw007: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -785,7 +785,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw008: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -796,7 +796,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw009: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -817,7 +817,7 @@ const defaultHousework: House['housework'] = {
     category: '掃除',
     taskDetails: {
       hw000: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -832,7 +832,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -847,7 +847,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -862,7 +862,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -877,7 +877,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -898,7 +898,7 @@ const defaultHousework: House['housework'] = {
     category: '季節ごと',
     taskDetails: {
       hw000: {
-        points: 3,
+        point: 3,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -909,7 +909,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 5,
+        point: 5,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -920,7 +920,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 5,
+        point: 5,
         frequency: {
           key: SPECIFIC_DATES,
           values: {
@@ -941,7 +941,7 @@ const defaultHousework: House['housework'] = {
     category: '猫ちゃん',
     taskDetails: {
       hw000: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -956,7 +956,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -971,7 +971,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -982,7 +982,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 3,
+        point: 3,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -997,7 +997,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -1012,7 +1012,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw005: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -1027,7 +1027,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw006: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -1042,7 +1042,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw007: {
-        points: 2,
+        point: 2,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -1054,7 +1054,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw008: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -1069,7 +1069,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw009: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -1084,7 +1084,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw010: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -1099,7 +1099,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw011: {
-        points: 4,
+        point: 4,
         frequency: {
           key: TIMES_PER_DAYS,
           values: {
@@ -1120,7 +1120,7 @@ const defaultHousework: House['housework'] = {
     category: 'ごみ',
     taskDetails: {
       hw000: {
-        points: 2,
+        point: 2,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -1132,7 +1132,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw001: {
-        points: 1,
+        point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -1144,7 +1144,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw002: {
-        points: 1,
+        point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -1156,7 +1156,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw003: {
-        points: 1,
+        point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -1168,7 +1168,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw004: {
-        points: 1,
+        point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {
@@ -1180,7 +1180,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw005: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -1191,7 +1191,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw006: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -1202,7 +1202,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw007: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -1213,7 +1213,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw008: {
-        points: 1,
+        point: 1,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -1224,7 +1224,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw009: {
-        points: 2,
+        point: 2,
         frequency: {
           key: TEMPORARY,
           values: {
@@ -1235,7 +1235,7 @@ const defaultHousework: House['housework'] = {
         memberId: null,
       },
       hw010: {
-        points: 1,
+        point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
           values: {

@@ -10,7 +10,13 @@ import {
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
-import { FrequencyType, House, HouseworkId, Task } from '../../lib/type'
+import {
+  FrequencyType,
+  House,
+  HouseworkDetail,
+  HouseworkId,
+  Task,
+} from '../../lib/type'
 import { DAY_OF_WEEK_ENUM, FREQUENCY_ENUM } from '../../lib/constant'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -88,6 +94,17 @@ const useHouseForContext = () => {
       logs[currentDate] = [...tasks]
       dispatch(actions.updateCurrentLogs(logs))
     }
+  }
+
+  const changePoint = async (
+    houseworkId: HouseworkId,
+    point: HouseworkDetail['point']
+  ) => {
+    const { categoryId, taskId } = houseworkId
+    const housework = getCurrentHouseValue('housework') as House['housework']
+    const { point: old, ...others } = housework[categoryId].taskDetails[taskId]
+    housework[categoryId].taskDetails[taskId] = { point, ...others }
+    await updateCurrentHousework(housework)
   }
 
   const updateCurrentHousework = async (housework: House['housework']) => {
@@ -188,6 +205,7 @@ const useHouseForContext = () => {
     initHouses,
     changeCurrentHouse,
     switchTaskStatus,
+    changePoint,
     initTimesPerDays,
     initDaysOfWeek,
     initSpecificDates,

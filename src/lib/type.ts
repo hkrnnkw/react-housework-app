@@ -1,4 +1,9 @@
-import { DAY_OF_WEEK_ENUM, DIRECTION_ENUM, FREQUENCY_ENUM } from './constant'
+import {
+  DAY_OF_WEEK_ENUM,
+  DIRECTION_ENUM,
+  FREQUENCY_ENUM,
+  POINT_ENUM,
+} from './constant'
 
 export type Auth = {
   emailVerified: boolean
@@ -64,7 +69,7 @@ export type Task = HouseworkId & {
 
 export type HouseworkDetail = {
   memberId: string | null
-  points: 1 | 2 | 3 | 4 | 5
+  point: typeof POINT_ENUM[keyof typeof POINT_ENUM]
   frequency: FrequencyType
   title: string
   description?: string

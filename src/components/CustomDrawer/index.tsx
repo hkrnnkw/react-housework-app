@@ -6,6 +6,7 @@ import { HouseworkDetail, HouseworkId } from '../../lib/type'
 import { State as UserState } from '../../contexts/user/constants'
 import Frequency from './Frequency'
 import { useHouse } from '../../contexts/houses'
+import Point from './Point'
 
 type Props = {
   houseworkId: HouseworkId
@@ -22,7 +23,7 @@ const CustomDrawer: FC<Props> = ({
 }) => {
   const { currentHouse } = useHouse()
   if (!currentHouse) return null
-  const { title, description, points, frequency } = housework
+  const { title, description, point, frequency } = housework
 
   return (
     <SwipeableDrawer
@@ -45,7 +46,7 @@ const CustomDrawer: FC<Props> = ({
           />
         </ListItem>
         <ListItem css={listItem}>
-          <ListItemText primary="ポイント" secondary={points} />
+          <Point houseworkId={houseworkId} point={point} />
         </ListItem>
         <ListItem css={listItem}>
           <Frequency houseworkId={houseworkId} frequency={frequency} />
