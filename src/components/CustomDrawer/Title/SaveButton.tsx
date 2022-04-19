@@ -16,6 +16,6 @@ const SaveButton: FC<Props> = ({ handleClick }) => (
 export default SaveButton
 
 const button = css`
-  width: 48px;
+  width: 64px;
   height: 32px;
 `
