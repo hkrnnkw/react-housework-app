@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { FC } from 'react'
 import { css } from '@emotion/react'
-import { List, ListItem, ListItemText, SwipeableDrawer } from '@mui/material'
+import { List, ListItem, SwipeableDrawer } from '@mui/material'
 import { HouseworkDetail, HouseworkId } from '../../lib/type'
 import { State as UserState } from '../../contexts/user/constants'
 import Frequency from './Frequency'
 import { useHouse } from '../../contexts/houses'
 import Point from './Point'
 import Member from './Member'
+import Title from './Title'
 
 type Props = {
   houseworkId: HouseworkId
@@ -35,9 +36,10 @@ const CustomDrawer: FC<Props> = ({
     >
       <List>
         <ListItem css={listItem}>
-          <ListItemText
-            primary={title}
-            secondary={description ?? '説明がありません'}
+          <Title
+            houseworkId={houseworkId}
+            title={title}
+            description={description}
           />
         </ListItem>
         <ListItem css={listItem}>
