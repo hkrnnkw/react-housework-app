@@ -1,28 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs'
 import { FREQUENCY_ENUM } from '../lib/constant'
-import { DayOfWeekType, House, Task } from '../lib/type'
-
-const convertDayOfWeekToNum = (dayOfWeek: DayOfWeekType): number => {
-  switch (dayOfWeek) {
-    case 'Sunday':
-      return 0
-    case 'Monday':
-      return 1
-    case 'Tuesday':
-      return 2
-    case 'Wednesday':
-      return 3
-    case 'Thursday':
-      return 4
-    case 'Friday':
-      return 5
-    case 'Saturday':
-      return 6
-    default:
-      return 0
-  }
-}
+import { House, Task } from '../lib/type'
 
 export const createLogs = (
   housework: House['housework'],
@@ -83,8 +62,7 @@ export const createLogs = (
         }
       } else if (key === DAYS_OF_WEEK && !!daysOfWeek) {
         daysOfWeek.forEach((dow) => {
-          if (convertDayOfWeekToNum(dow) === currentDate.day())
-            addTasks(categoryId, taskId, memberId)
+          if (dow === currentDate.day()) addTasks(categoryId, taskId, memberId)
         })
       } else if (key === SPECIFIC_DATES && !!specificDates) {
         specificDates.forEach((date) => {

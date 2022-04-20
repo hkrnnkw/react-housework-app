@@ -11,9 +11,12 @@ import {
   useTheme,
 } from '@mui/material'
 import { css } from '@emotion/react'
-import { DAY_OF_WEEK_ENUM } from '../../../lib/constant'
+import {
+  DAY_OF_WEEK_ENUM,
+  JPN_LOCALIZED_DAY_OF_WEEK_ENUM,
+} from '../../../lib/constant'
 import { useDispatchHouse } from '../../../contexts/houses'
-import { DayOfWeekType, FrequencyType, HouseworkId } from '../../../lib/type'
+import { FrequencyType, HouseworkId } from '../../../lib/type'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -27,8 +30,8 @@ const MenuProps = {
 }
 
 const getStyles = (
-  day: string,
-  dayOfWeek: readonly string[],
+  day: number,
+  dayOfWeek: readonly number[],
   theme: Theme
 ) => ({
   fontWeight:
@@ -51,8 +54,9 @@ const SpecificDayOfWeek: FC<Props> = ({ frequency, houseworkId }) => {
   const handleChange = async (event: SelectChangeEvent<typeof daysOfWeek>) => {
     const { value } = event.target
     if (typeof value === 'string') {
-      const splitted = value.split(',') as DayOfWeekType[]
-      await changeFrequencyValue(categoryId, taskId, splitted)
+      const splitted = value.split(',')
+      const days = splitted.map((day) => DAY_OF_WEEK_ENUM[Number(day)])
+      await changeFrequencyValue(categoryId, taskId, days)
       return
     }
     await changeFrequencyValue(categoryId, taskId, value)
@@ -69,20 +73,20 @@ const SpecificDayOfWeek: FC<Props> = ({ frequency, houseworkId }) => {
       renderValue={(selected) => (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
           {selected.map((value) => (
-            <Chip key={value} label={value} />
+            <Chip key={value} label={JPN_LOCALIZED_DAY_OF_WEEK_ENUM[value]} />
           ))}
         </Box>
       )}
       MenuProps={MenuProps}
       css={select}
     >
-      {Object.values(DAY_OF_WEEK_ENUM).map((day) => (
+      {DAY_OF_WEEK_ENUM.map((day) => (
         <MenuItem
           key={day}
           value={day}
           style={getStyles(day, daysOfWeek, theme)}
         >
-          {day}
+          {JPN_LOCALIZED_DAY_OF_WEEK_ENUM[day]}
         </MenuItem>
       ))}
     </Select>

@@ -277,7 +277,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Monday'],
+            daysOfWeek: [1],
           },
         },
         title: '排水溝の掃除',
@@ -358,7 +358,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Monday', 'Thursday'],
+            daysOfWeek: [1, 4],
           },
         },
         title: '髪の毛を取る',
@@ -370,7 +370,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Monday', 'Thursday'],
+            daysOfWeek: [1, 4],
           },
         },
         title: 'ネットを交換する',
@@ -629,7 +629,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Monday', 'Thursday'],
+            daysOfWeek: [1, 4],
           },
         },
         title: 'ネットを交換する',
@@ -677,7 +677,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Saturday'],
+            daysOfWeek: [6],
           },
         },
         title: '買い出し',
@@ -689,7 +689,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Saturday'],
+            daysOfWeek: [6],
           },
         },
         title: '買い物した荷物を運ぶ',
@@ -701,7 +701,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Saturday'],
+            daysOfWeek: [6],
           },
         },
         title: '買い物した荷物を冷蔵庫へ入れる',
@@ -1047,7 +1047,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Thursday'],
+            daysOfWeek: [4],
           },
         },
         title: 'おしっこシートを替える',
@@ -1125,7 +1125,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Monday', 'Thursday'],
+            daysOfWeek: [1, 4],
           },
         },
         title: '可燃ごみ',
@@ -1137,7 +1137,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Sunday'],
+            daysOfWeek: [0],
           },
         },
         title: 'プラスチック',
@@ -1149,7 +1149,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Sunday'],
+            daysOfWeek: [0],
           },
         },
         title: '缶・ビン',
@@ -1161,7 +1161,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Friday'],
+            daysOfWeek: [5],
           },
         },
         title: 'ペットボトル',
@@ -1173,7 +1173,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Friday'],
+            daysOfWeek: [5],
           },
         },
         title: '段ボール',
@@ -1240,7 +1240,7 @@ const defaultHousework: House['housework'] = {
           key: DAYS_OF_WEEK,
           values: {
             temporary: null,
-            daysOfWeek: ['Sunday', 'Monday', 'Thursday'],
+            daysOfWeek: [0, 1, 4],
           },
         },
         title: 'ごみ袋を装着する',

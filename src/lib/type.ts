@@ -44,8 +44,7 @@ export type SpecificDateType = {
   dd: number
 } | null
 
-export type DayOfWeekType =
-  typeof DAY_OF_WEEK_ENUM[keyof typeof DAY_OF_WEEK_ENUM]
+export type DayOfWeekType = typeof DAY_OF_WEEK_ENUM[number]
 
 export type FrequencyType = {
   key: typeof FREQUENCY_ENUM[keyof typeof FREQUENCY_ENUM]

@@ -11,13 +11,14 @@ import {
 } from '../../handlers/firestoreHandler'
 import { State as UserState } from '../user/constants'
 import {
+  DayOfWeekType,
   FrequencyType,
   House,
   HouseworkDetail,
   HouseworkId,
   Task,
 } from '../../lib/type'
-import { DAY_OF_WEEK_ENUM, FREQUENCY_ENUM } from '../../lib/constant'
+import { FREQUENCY_ENUM } from '../../lib/constant'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {
@@ -155,9 +156,8 @@ const useHouseForContext = () => {
   const initTimesPerDays = () => ({ times: 1, days: 1 })
 
   const initDaysOfWeek = () => {
-    const today = dayjs()
-    const dayOfWeek = today.day() as keyof typeof DAY_OF_WEEK_ENUM
-    return [DAY_OF_WEEK_ENUM[dayOfWeek]]
+    const dayOfWeek = dayjs().day() as DayOfWeekType
+    return [dayOfWeek]
   }
 
   const initSpecificDates = () => {

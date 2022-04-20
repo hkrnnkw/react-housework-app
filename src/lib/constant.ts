@@ -3,14 +3,16 @@ export const DIRECTION_ENUM = {
   NEXT: 1,
 } as const
 
-export const DAY_OF_WEEK_ENUM = {
-  0: 'Sunday',
-  1: 'Monday',
-  2: 'Tuesday',
-  3: 'Wednesday',
-  4: 'Thursday',
-  5: 'Friday',
-  6: 'Saturday',
+export const DAY_OF_WEEK_ENUM = [0, 1, 2, 3, 4, 5, 6] as const
+
+export const JPN_LOCALIZED_DAY_OF_WEEK_ENUM = {
+  0: '日',
+  1: '月',
+  2: '火',
+  3: '水',
+  4: '木',
+  5: '金',
+  6: '土',
 } as const
 
 export const FREQUENCY_ENUM = {
