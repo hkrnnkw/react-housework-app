@@ -24,7 +24,7 @@ export const Index: FC = () => {
         </Link>
       </ListItem>
       <ListItem key="signOut">
-        <Link component={RouterLink} to={`${paths.home}`}>
+        <Link component={RouterLink} to={`${paths.root}`}>
           <ListItemButton onClick={() => signOut()}>
             <ListItemText primary="ログアウト" />
           </ListItemButton>

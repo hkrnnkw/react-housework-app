@@ -1,6 +1,6 @@
 const paths = {
   // 正常系
-  home: '/',
+  root: '/',
   settings: 'settings/',
   houseworkList: 'housework/',
 

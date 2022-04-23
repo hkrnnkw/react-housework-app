@@ -10,7 +10,7 @@ type RouteProps = {
 const PrivateRoute: FC<RouteProps> = ({ component: RouteComponent }) => {
   const { uid } = useUser()
 
-  if (!uid.length) return <Navigate to={paths.home} />
+  if (!uid.length) return <Navigate to={paths.root} />
   return <RouteComponent />
 }
 

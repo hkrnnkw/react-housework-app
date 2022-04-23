@@ -37,7 +37,7 @@ const StyledAppBar: FC = (): JSX.Element => (
   <AppBarStyle position="fixed">
     <Toolbar>
       <div id="title">
-        <Link component={RouterLink} to={paths.home} id="logo">
+        <Link component={RouterLink} to={paths.root} id="logo">
           Top
         </Link>
       </div>
@@ -75,7 +75,7 @@ const App: FC = () => (
   <BrowserRouter>
     <Auth>
       <Routes>
-        <Route path={paths.home} element={<Root />}>
+        <Route path={paths.root} element={<Root />}>
           <Route index element={<Home />} />
           <Route
             path={paths.settings}
