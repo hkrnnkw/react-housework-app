@@ -7,41 +7,38 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material'
-import StyledPaper from '../components/atoms/StyledPaper'
-import paths from '../lib/path'
 import { useHouse } from '../contexts/houses'
 
-const HouseworkList: FC = () => {
+export const Index: FC = () => {
   const { currentHouse, houses } = useHouse()
 
   if (!currentHouse || !houses) return null
   const { housework } = houses[currentHouse.id]
 
   return (
-    <StyledPaper>
-      <Outlet />
-      <List>
-        {Object.entries(housework).map(([categoryId, { taskDetails }]) => (
-          <Link
-            key={categoryId}
-            component={RouterLink}
-            to={`${paths.settings}${paths.houseworkList}/${categoryId}`}
-            state={{ id: categoryId }}
-          >
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText
-                  id={categoryId}
-                  primary={taskDetails.title}
-                  secondary={taskDetails.points}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-    </StyledPaper>
+    <List>
+      {Object.entries(housework).map(([categoryId, { taskDetails }]) =>
+        Object.entries(taskDetails).map(([taskId, detail]) => {
+          const id = `${categoryId}-${taskId}`
+          return (
+            <Link key={id} component={RouterLink} to={id} state={{ id }}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemText
+                    id={id}
+                    primary={detail.title}
+                    secondary={detail.point}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          )
+        })
+      )}
+    </List>
   )
 }
+
+const HouseworkList: FC = () => <Outlet />
 
 export default HouseworkList

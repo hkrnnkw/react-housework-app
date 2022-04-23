@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import {
   BrowserRouter,
+  Outlet,
   Route,
   Routes,
   Link as RouterLink,
@@ -12,9 +13,11 @@ import paths from './lib/path'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './routes/PrivateRoute'
-import Settings from './pages/Settings'
+import Settings, { Index as SettingIndex } from './pages/Settings'
 import HouseworkItem from './pages/HouseworkItem'
-import HouseworkList from './pages/HouseworkList'
+import HouseworkList, {
+  Index as HouseworkListIndex,
+} from './pages/HouseworkList'
 import SignIn, { Loading } from './components/SignIn'
 import DateDisplay from './components/DateDisplay'
 import { useDispatchUser, useUser } from './contexts/user'
@@ -61,31 +64,39 @@ const Auth: FC<Props> = ({ children }): JSX.Element => {
   return children
 }
 
+const Root: FC = () => (
+  <>
+    <Outlet />
+    <StyledAppBar />
+  </>
+)
+
 const App: FC = () => (
   <BrowserRouter>
-    <div>
-      <StyledAppBar />
-      <Auth>
-        <Routes>
-          <Route path={paths.home} element={<Home />} />
+    <Auth>
+      <Routes>
+        <Route path={paths.home} element={<Root />}>
+          <Route index element={<Home />} />
           <Route
             path={paths.settings}
             element={<PrivateRoute component={Settings} />}
           >
+            <Route index element={<SettingIndex />} />
             <Route
-              path={`${paths.settings}${paths.houseworkList}`}
+              path={`${paths.houseworkList}`}
               element={<PrivateRoute component={HouseworkList} />}
             >
+              <Route index element={<HouseworkListIndex />} />
               <Route
-                path={`${paths.settings}${paths.houseworkList}:id`}
+                path=":id"
                 element={<PrivateRoute component={HouseworkItem} />}
               />
             </Route>
           </Route>
-          <Route element={<NotFound />} />
-        </Routes>
-      </Auth>
-    </div>
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Auth>
   </BrowserRouter>
 )
 
