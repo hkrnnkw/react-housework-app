@@ -15,6 +15,7 @@ import StyledPaper from '../components/atoms/StyledPaper'
 import CustomDrawer from '../components/CustomDrawer/index'
 import { State as UserState } from '../contexts/user/constants'
 import { HouseworkId } from '../lib/type'
+import { sortTasks } from '../handlers/logsHandler'
 
 const Home: FC = () => {
   const [editing, setEditing] = useState<HouseworkId | null>(null)
@@ -31,7 +32,7 @@ const Home: FC = () => {
   if (!currentHouse || !houses) return null
   const { id: currentHouseId, members } = currentHouse
   const { logs, housework } = houses[currentHouseId]
-  const tasks = [...(logs[currentDate] ?? [])]
+  const tasks = sortTasks([...(logs[currentDate] ?? [])])
 
   const getMember = (memberId: string | null): UserState | null => {
     if (!memberId) return null

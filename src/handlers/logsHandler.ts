@@ -77,3 +77,18 @@ export const createLogs = (
   })
   return logs
 }
+
+export const sortTasks = (tasks: Task[]): Task[] => {
+  const res = tasks.sort((a, b) => {
+    const categoryA = a.categoryId.toLowerCase()
+    const categoryB = b.categoryId.toLowerCase()
+    if (categoryA < categoryB) return -1
+    if (categoryA > categoryB) return 1
+    const taskA = a.taskId.toLowerCase()
+    const taskB = b.taskId.toLowerCase()
+    if (taskA < taskB) return -1
+    if (taskA > taskB) return 1
+    return 0
+  })
+  return res
+}
