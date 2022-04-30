@@ -87,5 +87,4 @@ const container = css`
 
 const select = css`
   width: 25%;
-  padding: 8px 0px;
 `

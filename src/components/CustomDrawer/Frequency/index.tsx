@@ -1,11 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { FC } from 'react'
-import {
-  ListItemText,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
 import { FrequencyType, HouseworkId } from '../../../lib/type'
 import { FREQUENCY_ENUM } from '../../../lib/constant'
@@ -50,7 +45,6 @@ const Frequency: FC<Props> = ({ houseworkId, frequency }) => {
 
   return (
     <>
-      <ListItemText primary="頻度" />
       <Select
         labelId="select-x-times"
         id="select-x-times"

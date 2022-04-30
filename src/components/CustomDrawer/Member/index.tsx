@@ -1,11 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { FC } from 'react'
-import {
-  ListItemText,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
 import { HouseworkDetail, HouseworkId } from '../../../lib/type'
 import { useDispatchHouse } from '../../../contexts/houses'
@@ -27,25 +22,22 @@ const Member: FC<Props> = ({ houseworkId, memberId, members }) => {
   }
 
   return (
-    <>
-      <ListItemText primary="担当" />
-      <Select
-        labelId="select-member"
-        id="select-member"
-        value={memberId ?? NOT_SET}
-        onChange={handleChange}
-        css={select}
-      >
-        {members.map((member) => (
-          <MenuItem key={member.uid} value={member.uid}>
-            {member.displayName}
-          </MenuItem>
-        ))}
-        <MenuItem key="not_set" value={NOT_SET}>
-          {NOT_SET}
+    <Select
+      labelId="select-member"
+      id="select-member"
+      value={memberId ?? NOT_SET}
+      onChange={handleChange}
+      css={select}
+    >
+      {members.map((member) => (
+        <MenuItem key={member.uid} value={member.uid}>
+          {member.displayName}
         </MenuItem>
-      </Select>
-    </>
+      ))}
+      <MenuItem key="not_set" value={NOT_SET}>
+        {NOT_SET}
+      </MenuItem>
+    </Select>
   )
 }
 

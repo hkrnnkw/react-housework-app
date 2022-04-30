@@ -1,11 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { FC } from 'react'
-import {
-  ListItemText,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
 import { POINT_ENUM } from '../../../lib/constant'
 import { HouseworkDetail, HouseworkId } from '../../../lib/type'
@@ -27,32 +22,29 @@ const Point: FC<Props> = ({ houseworkId, point }) => {
   }
 
   return (
-    <>
-      <ListItemText primary="ポイント" />
-      <Select
-        labelId="select-point"
-        id="select-point"
-        value={point}
-        onChange={handleChange}
-        css={select}
-      >
-        <MenuItem key={ONE} value={ONE}>
-          {ONE}
-        </MenuItem>
-        <MenuItem key={TWO} value={TWO}>
-          {TWO}
-        </MenuItem>
-        <MenuItem key={THREE} value={THREE}>
-          {THREE}
-        </MenuItem>
-        <MenuItem key={FOUR} value={FOUR}>
-          {FOUR}
-        </MenuItem>
-        <MenuItem key={FIVE} value={FIVE}>
-          {FIVE}
-        </MenuItem>
-      </Select>
-    </>
+    <Select
+      labelId="select-point"
+      id="select-point"
+      value={point}
+      onChange={handleChange}
+      css={select}
+    >
+      <MenuItem key={ONE} value={ONE}>
+        {ONE}ポイント
+      </MenuItem>
+      <MenuItem key={TWO} value={TWO}>
+        {TWO}ポイント
+      </MenuItem>
+      <MenuItem key={THREE} value={THREE}>
+        {THREE}ポイント
+      </MenuItem>
+      <MenuItem key={FOUR} value={FOUR}>
+        {FOUR}ポイント
+      </MenuItem>
+      <MenuItem key={FIVE} value={FIVE}>
+        {FIVE}ポイント
+      </MenuItem>
+    </Select>
   )
 }
 

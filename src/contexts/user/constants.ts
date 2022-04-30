@@ -20,4 +20,4 @@ export type UserActionType = {
   payload: State
 }
 
-export const NOT_SET = '未設定'
+export const NOT_SET = '誰も担当していません'
