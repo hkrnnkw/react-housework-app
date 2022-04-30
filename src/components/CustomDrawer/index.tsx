@@ -1,9 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { FC } from 'react'
 import { css } from '@emotion/react'
-import { Box, List, ListItem, styled, SwipeableDrawer } from '@mui/material'
+import {
+  Box,
+  Chip,
+  List,
+  ListItem,
+  styled,
+  SwipeableDrawer,
+} from '@mui/material'
 import { grey } from '@mui/material/colors'
-import { HouseworkDetail, HouseworkId } from '../../lib/type'
+import { House, HouseworkId } from '../../lib/type'
 import { State as UserState } from '../../contexts/user/constants'
 import Frequency from './Frequency'
 import { useHouse } from '../../contexts/houses'
@@ -24,7 +31,7 @@ const Puller = styled(Box)(({ theme }) => ({
 type Props = {
   houseworkId: HouseworkId
   members: UserState[]
-  housework: HouseworkDetail
+  housework: House['housework']
   toggleDrawer: (houseworkId: HouseworkId | null) => void
 }
 
@@ -36,7 +43,9 @@ const CustomDrawer: FC<Props> = ({
 }) => {
   const { currentHouse } = useHouse()
   if (!currentHouse) return null
-  const { title, description, point, frequency, memberId } = housework
+  const { categoryId, taskId } = houseworkId
+  const { category, taskDetails } = housework[categoryId]
+  const { title, description, point, frequency, memberId } = taskDetails[taskId]
 
   return (
     <SwipeableDrawer
@@ -46,7 +55,8 @@ const CustomDrawer: FC<Props> = ({
       onOpen={() => toggleDrawer(houseworkId)}
     >
       <Puller />
-      <List>
+      <List css={list}>
+        <Chip label={category} />
         <ListItem css={listItem}>
           <Title
             houseworkId={houseworkId}
@@ -78,5 +88,9 @@ const listItem = css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 8px 32px;
+  padding: 8px 0;
+`
+
+const list = css`
+  padding: 32px;
 `
