@@ -5,7 +5,7 @@ import { css } from '@emotion/react'
 import { HouseworkDetail, HouseworkId } from '../../../lib/type'
 import { useDispatchHouse } from '../../../contexts/houses'
 import Description from './Description'
-import SaveButton from './SaveButton'
+import SaveButton from '../SaveButton'
 
 type Props = {
   houseworkId: HouseworkId
