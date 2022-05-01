@@ -16,6 +16,7 @@ import Frequency from './Frequency'
 import Point from './Point'
 import Member from './Member'
 import Title from './Title'
+import { initialHousework } from '../../lib/housework'
 
 const Puller = styled(Box)(({ theme }) => ({
   width: 40,
@@ -42,7 +43,8 @@ const CustomDrawer: FC<Props> = ({
 }) => {
   const { categoryId, taskId } = houseworkId
   const { category, taskDetails } = housework[categoryId]
-  const { title, description, point, frequency, memberId } = taskDetails[taskId]
+  const { title, description, point, frequency, memberId } =
+    taskDetails[taskId] ?? initialHousework
 
   return (
     <SwipeableDrawer

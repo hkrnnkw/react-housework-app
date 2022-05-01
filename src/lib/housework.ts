@@ -1,8 +1,19 @@
 import { FREQUENCY_ENUM } from './constant'
-import { House } from './type'
+import { House, HouseworkDetail } from './type'
 
 const { TEMPORARY, TIMES_PER_DAYS, DAYS_OF_WEEK, SPECIFIC_DATES } =
   FREQUENCY_ENUM
+
+export const initialHousework: HouseworkDetail = {
+  title: '',
+  description: undefined,
+  memberId: null,
+  point: 1,
+  frequency: {
+    key: TEMPORARY,
+    values: { temporary: null },
+  },
+}
 
 const defaultHousework: House['housework'] = {
   // その他
