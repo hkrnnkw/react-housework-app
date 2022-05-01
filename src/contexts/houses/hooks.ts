@@ -209,14 +209,14 @@ const useHouseForContext = () => {
   }
 
   const changeFrequencyValue = async (
-    categoryId: string,
-    taskId: string,
+    houseworkId: HouseworkId,
     value: FrequencyType['values'][
       | 'temporary'
       | 'timesPerDays'
       | 'daysOfWeek'
       | 'specificDates']
   ) => {
+    const { categoryId, taskId } = houseworkId
     const housework = getCurrentHouseValue('housework') as House['housework']
     const { frequency, ...others } = housework[categoryId].taskDetails[taskId]
     const { key, values } = frequency

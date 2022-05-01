@@ -49,17 +49,16 @@ const SpecificDayOfWeek: FC<Props> = ({ frequency, houseworkId }) => {
   const theme = useTheme()
   const { changeFrequencyValue, initDaysOfWeek } = useDispatchHouse()
   const daysOfWeek = frequency ?? initDaysOfWeek()
-  const { categoryId, taskId } = houseworkId
 
   const handleChange = async (event: SelectChangeEvent<typeof daysOfWeek>) => {
     const { value } = event.target
     if (typeof value === 'string') {
       const splitted = value.split(',')
       const days = splitted.map((day) => DAY_OF_WEEK_ENUM[Number(day)])
-      await changeFrequencyValue(categoryId, taskId, days)
+      await changeFrequencyValue(houseworkId, days)
       return
     }
-    await changeFrequencyValue(categoryId, taskId, value)
+    await changeFrequencyValue(houseworkId, value)
   }
 
   return (

@@ -21,18 +21,17 @@ type Props = {
 const SpecificDate: FC<Props> = ({ frequency, houseworkId }) => {
   const { changeFrequencyValue, initSpecificDates } = useDispatchHouse()
   const specificDates = frequency ?? initSpecificDates()
-  const { categoryId, taskId } = houseworkId
 
   const handleAdd = async () => {
     const newDates = [...specificDates]
-    await changeFrequencyValue(categoryId, taskId, [null, ...newDates])
+    await changeFrequencyValue(houseworkId, [null, ...newDates])
   }
 
   const handleChange = async (newValue: dayjs.Dayjs | null, index: number) => {
     const newDates = [...specificDates]
     if (newValue === null) {
       newDates.splice(index, 1)
-      await changeFrequencyValue(categoryId, taskId, newDates)
+      await changeFrequencyValue(houseworkId, newDates)
       return
     }
     const specificDate: SpecificDateType = {
@@ -40,7 +39,7 @@ const SpecificDate: FC<Props> = ({ frequency, houseworkId }) => {
       dd: newValue.date(),
     }
     newDates.splice(index, 1, specificDate)
-    await changeFrequencyValue(categoryId, taskId, newDates)
+    await changeFrequencyValue(houseworkId, newDates)
   }
 
   return (

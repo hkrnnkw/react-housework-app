@@ -16,14 +16,13 @@ type Props = {
 const TimesPerDays: FC<Props> = ({ frequency, houseworkId }) => {
   const { changeFrequencyValue, initTimesPerDays } = useDispatchHouse()
   const { times, days } = frequency ?? initTimesPerDays()
-  const { categoryId, taskId } = houseworkId
 
   const handleDaysChange = async (event: SelectChangeEvent) => {
     const value: typeof frequency = {
       times,
       days: Number(event.target.value),
     }
-    await changeFrequencyValue(categoryId, taskId, value)
+    await changeFrequencyValue(houseworkId, value)
   }
 
   const handleTimesChange = async (event: SelectChangeEvent) => {
@@ -31,7 +30,7 @@ const TimesPerDays: FC<Props> = ({ frequency, houseworkId }) => {
       times: Number(event.target.value),
       days,
     }
-    await changeFrequencyValue(categoryId, taskId, value)
+    await changeFrequencyValue(houseworkId, value)
   }
 
   return (
