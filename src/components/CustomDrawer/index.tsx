@@ -13,7 +13,6 @@ import { grey } from '@mui/material/colors'
 import { House, HouseworkId } from '../../lib/type'
 import { State as UserState } from '../../contexts/user/constants'
 import Frequency from './Frequency'
-import { useHouse } from '../../contexts/houses'
 import Point from './Point'
 import Member from './Member'
 import Title from './Title'
@@ -41,8 +40,6 @@ const CustomDrawer: FC<Props> = ({
   housework,
   toggleDrawer,
 }) => {
-  const { currentHouse } = useHouse()
-  if (!currentHouse) return null
   const { categoryId, taskId } = houseworkId
   const { category, taskDetails } = housework[categoryId]
   const { title, description, point, frequency, memberId } = taskDetails[taskId]
