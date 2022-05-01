@@ -39,14 +39,6 @@ const Home: FC = () => {
     return members[memberId] ?? null
   }
 
-  const toggleDrawer = (houseworkId: HouseworkId | null) => {
-    if (!houseworkId) {
-      setEditing(null)
-      return
-    }
-    setEditing({ ...houseworkId })
-  }
-
   const handleTaskComplete = async (
     categoryId: string,
     taskId: string,
@@ -67,7 +59,7 @@ const Home: FC = () => {
                 <IconButton
                   edge="end"
                   aria-label="more"
-                  onClick={() => toggleDrawer({ categoryId, taskId })}
+                  onClick={() => setEditing({ categoryId, taskId })}
                 >
                   <MoreHorizIcon />
                 </IconButton>
@@ -104,7 +96,7 @@ const Home: FC = () => {
           houseworkId={editing}
           members={Object.values(members)}
           housework={housework}
-          toggleDrawer={toggleDrawer}
+          toggleDrawer={setEditing}
         />
       )}
     </StyledPaper>
