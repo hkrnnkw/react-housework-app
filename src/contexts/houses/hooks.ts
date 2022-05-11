@@ -156,6 +156,14 @@ const useHouseForContext = () => {
     dispatch(actions.updateCurrentHousework(housework))
   }
 
+  const deleteHousework = (houseworkId: HouseworkId) => {
+    const { categoryId, taskId } = houseworkId
+    const housework = getCurrentHouseValue('housework') as House['housework']
+    const deleted = delete housework[categoryId].taskDetails[taskId]
+    if (!deleted) return
+    dispatch(actions.updateCurrentHousework(housework))
+  }
+
   const updateCurrentHousework = async (
     editingStatus: EditingStatus,
     housework: House['housework']
@@ -264,6 +272,7 @@ const useHouseForContext = () => {
     changeMemberId,
     changePoint,
     createNewHousework,
+    deleteHousework,
     updateCurrentHousework,
     initTimesPerDays,
     initDaysOfWeek,
