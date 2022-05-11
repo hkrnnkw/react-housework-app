@@ -13,7 +13,7 @@ export const initialHousework: HouseworkDetail = {
     key: TEMPORARY,
     values: { temporary: null },
   },
-}
+} as const
 
 const defaultHousework: House['housework'] = {
   // その他
