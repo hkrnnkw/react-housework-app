@@ -29,3 +29,8 @@ export const POINT_ENUM = {
   FOUR: 4,
   FIVE: 5,
 } as const
+
+export const EDITING_STATUS_ENUM = {
+  DRAFT: 'draft',
+  SAVE: 'save',
+} as const

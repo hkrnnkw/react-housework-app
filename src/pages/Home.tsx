@@ -16,6 +16,7 @@ import CustomDrawer from '../components/CustomDrawer/index'
 import { State as UserState } from '../contexts/user/constants'
 import { HouseworkId } from '../lib/type'
 import { sortTasks } from '../handlers/logsHandler'
+import { EDITING_STATUS_ENUM } from '../lib/constant'
 
 const Home: FC = () => {
   const [editing, setEditing] = useState<HouseworkId | null>(null)
@@ -93,6 +94,7 @@ const Home: FC = () => {
       </List>
       {editing !== null && (
         <CustomDrawer
+          editingStatus={EDITING_STATUS_ENUM.SAVE}
           houseworkId={editing}
           members={Object.values(members)}
           housework={housework}

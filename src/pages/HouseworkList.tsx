@@ -15,9 +15,10 @@ import {
 import AddIcon from '@mui/icons-material/Add'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { css } from '@emotion/react'
-import { useHouse } from '../contexts/houses'
+import { useDispatchHouse, useHouse } from '../contexts/houses'
 import CustomDrawer from '../components/CustomDrawer'
 import { HouseworkDetail, HouseworkId } from '../lib/type'
+import { EDITING_STATUS_ENUM } from '../lib/constant'
 
 type TaskProps = {
   link: string
@@ -61,8 +62,15 @@ const Accordion: FC<AccordionProps> = ({
   taskDetails,
   setAdding,
 }) => {
+  const { createNewHousework } = useDispatchHouse()
   const taskDetailEntries = Object.entries(taskDetails)
   const newTaskId = makeNewTaskId(taskDetailEntries.length)
+
+  const handleAdd = () => {
+    const id: HouseworkId = { categoryId, taskId: newTaskId }
+    createNewHousework(id)
+    setAdding(id)
+  }
 
   return (
     <MuiAccordion>
@@ -74,10 +82,7 @@ const Accordion: FC<AccordionProps> = ({
         <Typography>{category}</Typography>
       </AccordionSummary>
       <ListItem>
-        <ListItemButton
-          onClick={() => setAdding({ categoryId, taskId: newTaskId })}
-          css={addButton}
-        >
+        <ListItemButton onClick={() => handleAdd()} css={addButton}>
           <ListItemText primary="追加する" />
           <IconButton aria-label="add-a-new-task">
             <AddIcon />
@@ -117,6 +122,7 @@ export const Index: FC = () => {
       </List>
       {adding !== null && (
         <CustomDrawer
+          editingStatus={EDITING_STATUS_ENUM.DRAFT}
           houseworkId={adding}
           members={Object.values(members)}
           housework={housework}

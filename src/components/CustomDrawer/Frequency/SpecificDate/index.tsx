@@ -7,6 +7,7 @@ import DateAdapter from '@mui/lab/AdapterDayjs'
 import dayjs from 'dayjs'
 import Calendar from './Calendar'
 import {
+  EditingStatus,
   FrequencyType,
   HouseworkId,
   SpecificDateType,
@@ -14,24 +15,25 @@ import {
 import { useDispatchHouse } from '../../../../contexts/houses'
 
 type Props = {
+  editingStatus: EditingStatus
   frequency: FrequencyType['values']['specificDates']
   houseworkId: HouseworkId
 }
 
-const SpecificDate: FC<Props> = ({ frequency, houseworkId }) => {
+const SpecificDate: FC<Props> = ({ editingStatus, frequency, houseworkId }) => {
   const { changeFrequencyValue, initSpecificDates } = useDispatchHouse()
   const specificDates = frequency ?? initSpecificDates()
 
   const handleAdd = async () => {
     const newDates = [...specificDates]
-    await changeFrequencyValue(houseworkId, [null, ...newDates])
+    await changeFrequencyValue(editingStatus, houseworkId, [null, ...newDates])
   }
 
   const handleChange = async (newValue: dayjs.Dayjs | null, index: number) => {
     const newDates = [...specificDates]
     if (newValue === null) {
       newDates.splice(index, 1)
-      await changeFrequencyValue(houseworkId, newDates)
+      await changeFrequencyValue(editingStatus, houseworkId, newDates)
       return
     }
     const specificDate: SpecificDateType = {
@@ -39,7 +41,7 @@ const SpecificDate: FC<Props> = ({ frequency, houseworkId }) => {
       dd: newValue.date(),
     }
     newDates.splice(index, 1, specificDate)
-    await changeFrequencyValue(houseworkId, newDates)
+    await changeFrequencyValue(editingStatus, houseworkId, newDates)
   }
 
   return (

@@ -3,17 +3,18 @@ import { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { css } from '@emotion/react'
 import { useDispatchHouse } from '../../../contexts/houses'
-import { FrequencyType, HouseworkId } from '../../../lib/type'
+import { EditingStatus, FrequencyType, HouseworkId } from '../../../lib/type'
 
 const daysArray = new Array(90).fill(1) as number[]
 const timesArray = new Array(10).fill(1) as number[]
 
 type Props = {
+  editingStatus: EditingStatus
   frequency: FrequencyType['values']['timesPerDays']
   houseworkId: HouseworkId
 }
 
-const TimesPerDays: FC<Props> = ({ frequency, houseworkId }) => {
+const TimesPerDays: FC<Props> = ({ editingStatus, frequency, houseworkId }) => {
   const { changeFrequencyValue, initTimesPerDays } = useDispatchHouse()
   const { times, days } = frequency ?? initTimesPerDays()
 
@@ -22,7 +23,7 @@ const TimesPerDays: FC<Props> = ({ frequency, houseworkId }) => {
       times,
       days: Number(event.target.value),
     }
-    await changeFrequencyValue(houseworkId, value)
+    await changeFrequencyValue(editingStatus, houseworkId, value)
   }
 
   const handleTimesChange = async (event: SelectChangeEvent) => {
@@ -30,7 +31,7 @@ const TimesPerDays: FC<Props> = ({ frequency, houseworkId }) => {
       times: Number(event.target.value),
       days,
     }
-    await changeFrequencyValue(houseworkId, value)
+    await changeFrequencyValue(editingStatus, houseworkId, value)
   }
 
   return (

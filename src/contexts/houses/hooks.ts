@@ -12,13 +12,15 @@ import {
 import { State as UserState } from '../user/constants'
 import {
   DayOfWeekType,
+  EditingStatus,
   FrequencyType,
   House,
   HouseworkDetail,
   HouseworkId,
   Task,
 } from '../../lib/type'
-import { FREQUENCY_ENUM } from '../../lib/constant'
+import { EDITING_STATUS_ENUM, FREQUENCY_ENUM } from '../../lib/constant'
+import { initialHousework } from '../../lib/housework'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useHouseForContext = () => {
@@ -97,15 +99,20 @@ const useHouseForContext = () => {
     }
   }
 
-  const changeTitle = async (houseworkId: HouseworkId, title: string) => {
+  const changeTitle = async (
+    editingStatus: EditingStatus,
+    houseworkId: HouseworkId,
+    title: string
+  ) => {
     const { categoryId, taskId } = houseworkId
     const housework = getCurrentHouseValue('housework') as House['housework']
     const { title: old, ...others } = housework[categoryId].taskDetails[taskId]
     housework[categoryId].taskDetails[taskId] = { title, ...others }
-    await updateCurrentHousework(housework)
+    await updateCurrentHousework(editingStatus, housework)
   }
 
   const changeDescription = async (
+    editingStatus: EditingStatus,
     houseworkId: HouseworkId,
     description: string | undefined
   ) => {
@@ -114,10 +121,11 @@ const useHouseForContext = () => {
     const { description: old, ...others } =
       housework[categoryId].taskDetails[taskId]
     housework[categoryId].taskDetails[taskId] = { description, ...others }
-    await updateCurrentHousework(housework)
+    await updateCurrentHousework(editingStatus, housework)
   }
 
   const changeMemberId = async (
+    editingStatus: EditingStatus,
     houseworkId: HouseworkId,
     memberId: HouseworkDetail['memberId']
   ) => {
@@ -126,10 +134,11 @@ const useHouseForContext = () => {
     const { memberId: old, ...others } =
       housework[categoryId].taskDetails[taskId]
     housework[categoryId].taskDetails[taskId] = { memberId, ...others }
-    await updateCurrentHousework(housework)
+    await updateCurrentHousework(editingStatus, housework)
   }
 
   const changePoint = async (
+    editingStatus: EditingStatus,
     houseworkId: HouseworkId,
     point: HouseworkDetail['point']
   ) => {
@@ -137,18 +146,29 @@ const useHouseForContext = () => {
     const housework = getCurrentHouseValue('housework') as House['housework']
     const { point: old, ...others } = housework[categoryId].taskDetails[taskId]
     housework[categoryId].taskDetails[taskId] = { point, ...others }
-    await updateCurrentHousework(housework)
+    await updateCurrentHousework(editingStatus, housework)
   }
 
-  const updateCurrentHousework = async (housework: House['housework']) => {
+  const createNewHousework = (houseworkId: HouseworkId) => {
+    const { categoryId, taskId } = houseworkId
+    const housework = getCurrentHouseValue('housework') as House['housework']
+    housework[categoryId].taskDetails[taskId] = initialHousework
+    dispatch(actions.updateCurrentHousework(housework))
+  }
+
+  const updateCurrentHousework = async (
+    editingStatus: EditingStatus,
+    housework: House['housework']
+  ) => {
     const { currentHouse, houses } = state
     if (!currentHouse || !houses) throw new Error('No house')
+    const { housework: backup } = houses[currentHouse.id]
+    dispatch(actions.updateCurrentHousework(housework))
+    if (editingStatus !== EDITING_STATUS_ENUM.SAVE) return
 
     try {
-      dispatch(actions.updateCurrentHousework(housework))
       await setHouseworkToFirestore(currentHouse.id, housework)
     } catch (e) {
-      const { housework: backup } = houses[currentHouse.id]
       dispatch(actions.updateCurrentHousework(backup))
     }
   }
@@ -186,6 +206,7 @@ const useHouseForContext = () => {
   }
 
   const changeFrequencyKey = async (
+    editingStatus: EditingStatus,
     houseworkId: HouseworkId,
     key: FrequencyType['key']
   ) => {
@@ -205,10 +226,11 @@ const useHouseForContext = () => {
         ...others,
       }
     }
-    await updateCurrentHousework(housework)
+    await updateCurrentHousework(editingStatus, housework)
   }
 
   const changeFrequencyValue = async (
+    editingStatus: EditingStatus,
     houseworkId: HouseworkId,
     value: FrequencyType['values'][
       | 'temporary'
@@ -225,7 +247,7 @@ const useHouseForContext = () => {
       frequency: { key, values: newValues },
       ...others,
     }
-    await updateCurrentHousework(housework)
+    await updateCurrentHousework(editingStatus, housework)
   }
 
   const changeDate = (...args: Parameters<typeof actions.changeDate>) => {
@@ -241,6 +263,8 @@ const useHouseForContext = () => {
     changeDescription,
     changeMemberId,
     changePoint,
+    createNewHousework,
+    updateCurrentHousework,
     initTimesPerDays,
     initDaysOfWeek,
     initSpecificDates,

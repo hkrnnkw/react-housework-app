@@ -10,13 +10,15 @@ import {
   SwipeableDrawer,
 } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import { House, HouseworkId } from '../../lib/type'
+import { EditingStatus, House, HouseworkId } from '../../lib/type'
 import { State as UserState } from '../../contexts/user/constants'
 import Frequency from './Frequency'
 import Point from './Point'
 import Member from './Member'
 import Title from './Title'
-import { initialHousework } from '../../lib/housework'
+import SaveButton from './SaveButton'
+import { useDispatchHouse } from '../../contexts/houses'
+import { EDITING_STATUS_ENUM } from '../../lib/constant'
 
 const Puller = styled(Box)(({ theme }) => ({
   width: 40,
@@ -29,6 +31,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }))
 
 type Props = {
+  editingStatus: EditingStatus
   houseworkId: HouseworkId
   members: UserState[]
   housework: House['housework']
@@ -36,28 +39,47 @@ type Props = {
 }
 
 const CustomDrawer: FC<Props> = ({
+  editingStatus,
   houseworkId,
   members,
   housework,
   toggleDrawer,
 }) => {
+  const { updateCurrentHousework } = useDispatchHouse()
+  const { DRAFT, SAVE } = EDITING_STATUS_ENUM
   const { categoryId, taskId } = houseworkId
   const { category, taskDetails } = housework[categoryId]
-  const { title, description, point, frequency, memberId } =
-    taskDetails[taskId] ?? initialHousework
+  const { title, description, point, frequency, memberId } = taskDetails[taskId]
+
+  const handleSave = async () => {
+    await updateCurrentHousework(SAVE, housework)
+  }
+
+  const handleClose = () => {
+    toggleDrawer(null)
+  }
 
   return (
     <SwipeableDrawer
       anchor="bottom"
       open={houseworkId !== null}
-      onClose={() => toggleDrawer(null)}
+      onClose={() => handleClose()}
       onOpen={() => toggleDrawer(houseworkId)}
     >
       <Puller />
       <List css={list}>
-        <Chip label={category} />
+        <ListItem>
+          <Chip label={category} />
+          {editingStatus === DRAFT && (
+            <SaveButton
+              disabled={!title.length}
+              handleClick={() => handleSave()}
+            />
+          )}
+        </ListItem>
         <ListItem css={listItem}>
           <Title
+            editingStatus={editingStatus}
             houseworkId={houseworkId}
             title={title}
             description={description}
@@ -65,16 +87,25 @@ const CustomDrawer: FC<Props> = ({
         </ListItem>
         <ListItem css={listItem}>
           <Member
+            editingStatus={editingStatus}
             houseworkId={houseworkId}
             memberId={memberId}
             members={members}
           />
         </ListItem>
         <ListItem css={listItem}>
-          <Point houseworkId={houseworkId} point={point} />
+          <Point
+            editingStatus={editingStatus}
+            houseworkId={houseworkId}
+            point={point}
+          />
         </ListItem>
         <ListItem css={listItem}>
-          <Frequency houseworkId={houseworkId} frequency={frequency} />
+          <Frequency
+            editingStatus={editingStatus}
+            houseworkId={houseworkId}
+            frequency={frequency}
+          />
         </ListItem>
       </List>
     </SwipeableDrawer>

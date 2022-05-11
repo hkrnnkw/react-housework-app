@@ -16,7 +16,7 @@ import {
   JPN_LOCALIZED_DAY_OF_WEEK_ENUM,
 } from '../../../lib/constant'
 import { useDispatchHouse } from '../../../contexts/houses'
-import { FrequencyType, HouseworkId } from '../../../lib/type'
+import { EditingStatus, FrequencyType, HouseworkId } from '../../../lib/type'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -41,11 +41,16 @@ const getStyles = (
 })
 
 type Props = {
+  editingStatus: EditingStatus
   frequency: FrequencyType['values']['daysOfWeek']
   houseworkId: HouseworkId
 }
 
-const SpecificDayOfWeek: FC<Props> = ({ frequency, houseworkId }) => {
+const SpecificDayOfWeek: FC<Props> = ({
+  editingStatus,
+  frequency,
+  houseworkId,
+}) => {
   const theme = useTheme()
   const { changeFrequencyValue, initDaysOfWeek } = useDispatchHouse()
   const daysOfWeek = frequency ?? initDaysOfWeek()
@@ -55,10 +60,10 @@ const SpecificDayOfWeek: FC<Props> = ({ frequency, houseworkId }) => {
     if (typeof value === 'string') {
       const splitted = value.split(',')
       const days = splitted.map((day) => DAY_OF_WEEK_ENUM[Number(day)])
-      await changeFrequencyValue(houseworkId, days)
+      await changeFrequencyValue(editingStatus, houseworkId, days)
       return
     }
-    await changeFrequencyValue(houseworkId, value)
+    await changeFrequencyValue(editingStatus, houseworkId, value)
   }
 
   return (

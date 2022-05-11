@@ -4,11 +4,17 @@ import { Button } from '@mui/material'
 import { css } from '@emotion/react'
 
 type Props = {
+  disabled: boolean | undefined
   handleClick: () => void
 }
 
-const SaveButton: FC<Props> = ({ handleClick }) => (
-  <Button onClick={handleClick} variant="contained" css={button}>
+const SaveButton: FC<Props> = ({ disabled, handleClick }) => (
+  <Button
+    onClick={handleClick}
+    variant="contained"
+    css={button}
+    disabled={disabled}
+  >
     保存
   </Button>
 )

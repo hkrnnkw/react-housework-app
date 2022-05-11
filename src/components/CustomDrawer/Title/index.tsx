@@ -1,35 +1,42 @@
 /** @jsxImportSource @emotion/react */
-import { ChangeEvent, FC, useRef, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 import { TextField } from '@mui/material'
 import { css } from '@emotion/react'
-import { HouseworkDetail, HouseworkId } from '../../../lib/type'
+import { EditingStatus, HouseworkDetail, HouseworkId } from '../../../lib/type'
 import { useDispatchHouse } from '../../../contexts/houses'
 import Description from './Description'
 import SaveButton from '../SaveButton'
+import { EDITING_STATUS_ENUM } from '../../../lib/constant'
 
 type Props = {
+  editingStatus: EditingStatus
   houseworkId: HouseworkId
   title: HouseworkDetail['title']
   description: HouseworkDetail['description']
 }
 
-const Title: FC<Props> = ({ houseworkId, title, description }) => {
+const Title: FC<Props> = ({
+  editingStatus,
+  houseworkId,
+  title,
+  description,
+}) => {
   const { changeTitle } = useDispatchHouse()
-  const value = useRef(title)
   const [isEditing, setIsEditing] = useState(false)
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    value.current = event.currentTarget.value
+  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget
+    const { DRAFT } = EDITING_STATUS_ENUM
+    await changeTitle(DRAFT, houseworkId, value)
   }
 
   const handleClick = async () => {
-    await changeTitle(houseworkId, value.current)
+    await changeTitle(editingStatus, houseworkId, title)
   }
 
   const handleBlur = async () => {
     setIsEditing(false)
-    if (title === value.current) return
-    await changeTitle(houseworkId, value.current)
+    await changeTitle(editingStatus, houseworkId, title)
   }
 
   return (
@@ -39,15 +46,21 @@ const Title: FC<Props> = ({ houseworkId, title, description }) => {
           id="title"
           variant="standard"
           placeholder={title}
-          defaultValue={value.current}
+          defaultValue={title}
           onFocus={() => setIsEditing(true)}
           onBlur={() => handleBlur()}
-          onChange={handleChange}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
           css={textfield}
         />
-        {isEditing && <SaveButton handleClick={handleClick} />}
+        {isEditing && (
+          <SaveButton disabled={!title.length} handleClick={handleClick} />
+        )}
       </div>
-      <Description houseworkId={houseworkId} description={description} />
+      <Description
+        editingStatus={editingStatus}
+        houseworkId={houseworkId}
+        description={description}
+      />
     </>
   )
 }

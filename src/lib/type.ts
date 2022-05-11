@@ -1,6 +1,7 @@
 import {
   DAY_OF_WEEK_ENUM,
   DIRECTION_ENUM,
+  EDITING_STATUS_ENUM,
   FREQUENCY_ENUM,
   POINT_ENUM,
 } from './constant'
@@ -55,6 +56,9 @@ export type FrequencyType = {
     specificDates?: SpecificDateType[]
   }
 }
+
+export type EditingStatus =
+  typeof EDITING_STATUS_ENUM[keyof typeof EDITING_STATUS_ENUM]
 
 export type HouseworkId = {
   categoryId: string
