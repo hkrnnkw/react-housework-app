@@ -43,7 +43,7 @@ const CustomDrawer: FC<Props> = ({
   housework,
   setEditing,
 }) => {
-  const { updateCurrentHousework } = useDispatchHouse()
+  const { deleteHousework, updateCurrentHousework } = useDispatchHouse()
   if (!editing) return null
 
   const { DRAFT, SAVE } = EDITING_STATUS_ENUM
@@ -60,6 +60,8 @@ const CustomDrawer: FC<Props> = ({
 
   const handleClose = () => {
     setEditing(null)
+    if (editingStatus !== DRAFT) return
+    deleteHousework(houseworkId)
   }
 
   return (
