@@ -16,7 +16,7 @@ import {
   JPN_LOCALIZED_DAY_OF_WEEK_ENUM,
 } from '../../../lib/constant'
 import { useDispatchHouse } from '../../../contexts/houses'
-import { EditingStatus, FrequencyType, HouseworkId } from '../../../lib/type'
+import { Editing, FrequencyType } from '../../../lib/type'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -41,19 +41,15 @@ const getStyles = (
 })
 
 type Props = {
-  editingStatus: EditingStatus
+  editing: Editing
   frequency: FrequencyType['values']['daysOfWeek']
-  houseworkId: HouseworkId
 }
 
-const SpecificDayOfWeek: FC<Props> = ({
-  editingStatus,
-  frequency,
-  houseworkId,
-}) => {
+const SpecificDayOfWeek: FC<Props> = ({ editing, frequency }) => {
   const theme = useTheme()
   const { changeFrequencyValue, initDaysOfWeek } = useDispatchHouse()
   const daysOfWeek = frequency ?? initDaysOfWeek()
+  const { houseworkId, editingStatus } = editing
 
   const handleChange = async (event: SelectChangeEvent<typeof daysOfWeek>) => {
     const { value } = event.target

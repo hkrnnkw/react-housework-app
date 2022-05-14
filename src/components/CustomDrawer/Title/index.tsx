@@ -2,25 +2,20 @@
 import { ChangeEvent, FC } from 'react'
 import { TextField } from '@mui/material'
 import { css } from '@emotion/react'
-import { EditingStatus, HouseworkDetail, HouseworkId } from '../../../lib/type'
+import { Editing, HouseworkDetail } from '../../../lib/type'
 import { useDispatchHouse } from '../../../contexts/houses'
 import Description from './Description'
 import { EDITING_STATUS_ENUM } from '../../../lib/constant'
 
 type Props = {
-  editingStatus: EditingStatus
-  houseworkId: HouseworkId
+  editing: Editing
   title: HouseworkDetail['title']
   description: HouseworkDetail['description']
 }
 
-const Title: FC<Props> = ({
-  editingStatus,
-  houseworkId,
-  title,
-  description,
-}) => {
+const Title: FC<Props> = ({ editing, title, description }) => {
   const { changeTitle } = useDispatchHouse()
+  const { houseworkId, editingStatus } = editing
 
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
@@ -45,11 +40,7 @@ const Title: FC<Props> = ({
           css={textfield}
         />
       </div>
-      <Description
-        editingStatus={editingStatus}
-        houseworkId={houseworkId}
-        description={description}
-      />
+      <Description editing={editing} description={description} />
     </>
   )
 }

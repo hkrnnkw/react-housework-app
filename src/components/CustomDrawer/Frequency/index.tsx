@@ -2,7 +2,7 @@
 import { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
-import { EditingStatus, FrequencyType, HouseworkId } from '../../../lib/type'
+import { Editing, FrequencyType } from '../../../lib/type'
 import { FREQUENCY_ENUM } from '../../../lib/constant'
 import TimesPerDays from './TimesPerDays'
 import SpecificDayOfWeek from './SpecificDayOfWeek'
@@ -10,52 +10,30 @@ import SpecificDate from './SpecificDate'
 import { useDispatchHouse } from '../../../contexts/houses'
 
 type Props = {
-  editingStatus: EditingStatus
-  houseworkId: HouseworkId
+  editing: Editing
   frequency: FrequencyType
 }
 
-const FrequencyItem: FC<Props> = ({
-  editingStatus,
-  houseworkId,
-  frequency,
-}) => {
+const FrequencyItem: FC<Props> = ({ editing, frequency }) => {
   const { TIMES_PER_DAYS, DAYS_OF_WEEK, SPECIFIC_DATES } = FREQUENCY_ENUM
   const { key, values } = frequency
   const { temporary, timesPerDays, daysOfWeek, specificDates } = values
 
   if (key === TIMES_PER_DAYS) {
-    return (
-      <TimesPerDays
-        editingStatus={editingStatus}
-        frequency={timesPerDays}
-        houseworkId={houseworkId}
-      />
-    )
+    return <TimesPerDays editing={editing} frequency={timesPerDays} />
   }
   if (key === DAYS_OF_WEEK) {
-    return (
-      <SpecificDayOfWeek
-        editingStatus={editingStatus}
-        frequency={daysOfWeek}
-        houseworkId={houseworkId}
-      />
-    )
+    return <SpecificDayOfWeek editing={editing} frequency={daysOfWeek} />
   }
   if (key === SPECIFIC_DATES) {
-    return (
-      <SpecificDate
-        editingStatus={editingStatus}
-        frequency={specificDates}
-        houseworkId={houseworkId}
-      />
-    )
+    return <SpecificDate editing={editing} frequency={specificDates} />
   }
   return temporary
 }
 
-const Frequency: FC<Props> = ({ editingStatus, houseworkId, frequency }) => {
+const Frequency: FC<Props> = ({ editing, frequency }) => {
   const { changeFrequencyKey } = useDispatchHouse()
+  const { houseworkId, editingStatus } = editing
   const { TEMPORARY, TIMES_PER_DAYS, DAYS_OF_WEEK, SPECIFIC_DATES } =
     FREQUENCY_ENUM
 
@@ -86,11 +64,7 @@ const Frequency: FC<Props> = ({ editingStatus, houseworkId, frequency }) => {
           特定の日付
         </MenuItem>
       </Select>
-      <FrequencyItem
-        editingStatus={editingStatus}
-        houseworkId={houseworkId}
-        frequency={frequency}
-      />
+      <FrequencyItem editing={editing} frequency={frequency} />
     </>
   )
 }

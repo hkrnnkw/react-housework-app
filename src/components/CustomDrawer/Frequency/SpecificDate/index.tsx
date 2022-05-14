@@ -6,22 +6,17 @@ import { LocalizationProvider } from '@mui/lab'
 import DateAdapter from '@mui/lab/AdapterDayjs'
 import dayjs from 'dayjs'
 import Calendar from './Calendar'
-import {
-  EditingStatus,
-  FrequencyType,
-  HouseworkId,
-  SpecificDateType,
-} from '../../../../lib/type'
+import { Editing, FrequencyType, SpecificDateType } from '../../../../lib/type'
 import { useDispatchHouse } from '../../../../contexts/houses'
 
 type Props = {
-  editingStatus: EditingStatus
+  editing: Editing
   frequency: FrequencyType['values']['specificDates']
-  houseworkId: HouseworkId
 }
 
-const SpecificDate: FC<Props> = ({ editingStatus, frequency, houseworkId }) => {
+const SpecificDate: FC<Props> = ({ editing, frequency }) => {
   const { changeFrequencyValue, initSpecificDates } = useDispatchHouse()
+  const { houseworkId, editingStatus } = editing
   const specificDates = frequency ?? initSpecificDates()
 
   const handleAdd = async () => {

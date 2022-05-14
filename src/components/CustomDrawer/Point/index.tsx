@@ -3,17 +3,17 @@ import { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
 import { POINT_ENUM } from '../../../lib/constant'
-import { EditingStatus, HouseworkDetail, HouseworkId } from '../../../lib/type'
+import { Editing, HouseworkDetail } from '../../../lib/type'
 import { useDispatchHouse } from '../../../contexts/houses'
 
 type Props = {
-  editingStatus: EditingStatus
-  houseworkId: HouseworkId
+  editing: Editing
   point: HouseworkDetail['point']
 }
 
-const Point: FC<Props> = ({ editingStatus, houseworkId, point }) => {
+const Point: FC<Props> = ({ editing, point }) => {
   const { changePoint } = useDispatchHouse()
+  const { houseworkId, editingStatus } = editing
   const { ONE, TWO, THREE, FOUR, FIVE } = POINT_ENUM
 
   const handleChange = async (event: SelectChangeEvent<typeof point>) => {

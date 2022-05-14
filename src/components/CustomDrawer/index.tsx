@@ -83,34 +83,16 @@ const CustomDrawer: FC<Props> = ({
           )}
         </ListItem>
         <ListItem css={listItem}>
-          <Title
-            editingStatus={editingStatus}
-            houseworkId={houseworkId}
-            title={title}
-            description={description}
-          />
+          <Title editing={editing} title={title} description={description} />
         </ListItem>
         <ListItem css={listItem}>
-          <Member
-            editingStatus={editingStatus}
-            houseworkId={houseworkId}
-            memberId={memberId}
-            members={members}
-          />
+          <Member editing={editing} memberId={memberId} members={members} />
         </ListItem>
         <ListItem css={listItem}>
-          <Point
-            editingStatus={editingStatus}
-            houseworkId={houseworkId}
-            point={point}
-          />
+          <Point editing={editing} point={point} />
         </ListItem>
         <ListItem css={listItem}>
-          <Frequency
-            editingStatus={editingStatus}
-            houseworkId={houseworkId}
-            frequency={frequency}
-          />
+          <Frequency editing={editing} frequency={frequency} />
         </ListItem>
       </List>
     </SwipeableDrawer>

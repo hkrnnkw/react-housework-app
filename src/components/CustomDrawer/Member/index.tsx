@@ -2,24 +2,19 @@
 import { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
-import { EditingStatus, HouseworkDetail, HouseworkId } from '../../../lib/type'
+import { Editing, HouseworkDetail } from '../../../lib/type'
 import { useDispatchHouse } from '../../../contexts/houses'
 import { NOT_SET, State as UserState } from '../../../contexts/user/constants'
 
 type Props = {
-  editingStatus: EditingStatus
-  houseworkId: HouseworkId
+  editing: Editing
   memberId: HouseworkDetail['memberId']
   members: UserState[]
 }
 
-const Member: FC<Props> = ({
-  editingStatus,
-  houseworkId,
-  memberId,
-  members,
-}) => {
+const Member: FC<Props> = ({ editing, memberId, members }) => {
   const { changeMemberId } = useDispatchHouse()
+  const { houseworkId, editingStatus } = editing
 
   const handleChange = async (event: SelectChangeEvent<typeof memberId>) => {
     const { value } = event.target
