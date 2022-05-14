@@ -17,7 +17,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { css } from '@emotion/react'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
 import CustomDrawer from '../components/CustomDrawer'
-import { HouseworkDetail, HouseworkId } from '../lib/type'
+import { Editing, HouseworkDetail, HouseworkId } from '../lib/type'
 import { EDITING_STATUS_ENUM } from '../lib/constant'
 
 type TaskProps = {
@@ -53,23 +53,23 @@ type AccordionProps = {
   taskDetails: {
     [taskId: string]: HouseworkDetail
   }
-  setAdding: (houseworkId: HouseworkId | null) => void
+  setDraft: (editing: Editing | null) => void
 }
 
 const Accordion: FC<AccordionProps> = ({
   categoryId,
   category,
   taskDetails,
-  setAdding,
+  setDraft,
 }) => {
   const { createNewHousework } = useDispatchHouse()
   const taskDetailEntries = Object.entries(taskDetails)
   const newTaskId = makeNewTaskId(taskDetailEntries.length)
 
   const handleAdd = () => {
-    const id: HouseworkId = { categoryId, taskId: newTaskId }
-    createNewHousework(id)
-    setAdding(id)
+    const houseworkId: HouseworkId = { categoryId, taskId: newTaskId }
+    createNewHousework(houseworkId)
+    setDraft({ houseworkId, editingStatus: EDITING_STATUS_ENUM.DRAFT })
   }
 
   return (
@@ -98,7 +98,7 @@ const Accordion: FC<AccordionProps> = ({
 }
 
 export const Index: FC = () => {
-  const [adding, setAdding] = useState<HouseworkId | null>(null)
+  const [draft, setDraft] = useState<Editing | null>(null)
   const { currentHouse, houses } = useHouse()
 
   if (!currentHouse || !houses) return null
@@ -115,20 +115,17 @@ export const Index: FC = () => {
               categoryId={categoryId}
               category={category}
               taskDetails={taskDetails}
-              setAdding={setAdding}
+              setDraft={setDraft}
             />
           )
         )}
       </List>
-      {adding !== null && (
-        <CustomDrawer
-          editingStatus={EDITING_STATUS_ENUM.DRAFT}
-          houseworkId={adding}
-          members={Object.values(members)}
-          housework={housework}
-          toggleDrawer={setAdding}
-        />
-      )}
+      <CustomDrawer
+        editing={draft}
+        members={Object.values(members)}
+        housework={housework}
+        setEditing={setDraft}
+      />
     </>
   )
 }

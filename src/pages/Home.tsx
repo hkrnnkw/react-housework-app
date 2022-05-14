@@ -14,12 +14,12 @@ import { useUser } from '../contexts/user'
 import StyledPaper from '../components/atoms/StyledPaper'
 import CustomDrawer from '../components/CustomDrawer/index'
 import { State as UserState } from '../contexts/user/constants'
-import { HouseworkId } from '../lib/type'
+import { Editing, HouseworkId } from '../lib/type'
 import { sortTasks } from '../handlers/logsHandler'
 import { EDITING_STATUS_ENUM } from '../lib/constant'
 
 const Home: FC = () => {
-  const [editing, setEditing] = useState<HouseworkId | null>(null)
+  const [editing, setEditing] = useState<Editing | null>(null)
   const { uid } = useUser()
   const { initHouses, switchTaskStatus } = useDispatchHouse()
   const { currentDate, currentHouse, houses } = useHouse()
@@ -48,6 +48,10 @@ const Home: FC = () => {
     await switchTaskStatus(uid, categoryId, taskId, prevStatus)
   }
 
+  const handleEdit = (houseworkId: HouseworkId) => {
+    setEditing({ houseworkId, editingStatus: EDITING_STATUS_ENUM.SAVE })
+  }
+
   return (
     <StyledPaper>
       <List>
@@ -60,7 +64,7 @@ const Home: FC = () => {
                 <IconButton
                   edge="end"
                   aria-label="more"
-                  onClick={() => setEditing({ categoryId, taskId })}
+                  onClick={() => handleEdit({ categoryId, taskId })}
                 >
                   <MoreHorizIcon />
                 </IconButton>
@@ -92,15 +96,12 @@ const Home: FC = () => {
           )
         })}
       </List>
-      {editing !== null && (
-        <CustomDrawer
-          editingStatus={EDITING_STATUS_ENUM.SAVE}
-          houseworkId={editing}
-          members={Object.values(members)}
-          housework={housework}
-          toggleDrawer={setEditing}
-        />
-      )}
+      <CustomDrawer
+        editing={editing}
+        members={Object.values(members)}
+        housework={housework}
+        setEditing={setEditing}
+      />
     </StyledPaper>
   )
 }

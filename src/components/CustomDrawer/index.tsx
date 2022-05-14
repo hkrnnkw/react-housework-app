@@ -10,7 +10,7 @@ import {
   SwipeableDrawer,
 } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import { EditingStatus, House, HouseworkId } from '../../lib/type'
+import { Editing, House } from '../../lib/type'
 import { State as UserState } from '../../contexts/user/constants'
 import Frequency from './Frequency'
 import Point from './Point'
@@ -31,40 +31,43 @@ const Puller = styled(Box)(({ theme }) => ({
 }))
 
 type Props = {
-  editingStatus: EditingStatus
-  houseworkId: HouseworkId
+  editing: Editing | null
   members: UserState[]
   housework: House['housework']
-  toggleDrawer: (houseworkId: HouseworkId | null) => void
+  setEditing: (editing: Editing | null) => void
 }
 
 const CustomDrawer: FC<Props> = ({
-  editingStatus,
-  houseworkId,
+  editing,
   members,
   housework,
-  toggleDrawer,
+  setEditing,
 }) => {
   const { updateCurrentHousework } = useDispatchHouse()
+  if (!editing) return null
+
   const { DRAFT, SAVE } = EDITING_STATUS_ENUM
+  const { houseworkId, editingStatus } = editing
   const { categoryId, taskId } = houseworkId
   const { category, taskDetails } = housework[categoryId]
   const { title, description, point, frequency, memberId } = taskDetails[taskId]
 
   const handleSave = async () => {
+    // @todo fix: cannot save after inputing title
     await updateCurrentHousework(SAVE, housework)
+    setEditing({ houseworkId, editingStatus: SAVE })
   }
 
   const handleClose = () => {
-    toggleDrawer(null)
+    setEditing(null)
   }
 
   return (
     <SwipeableDrawer
       anchor="bottom"
-      open={houseworkId !== null}
+      open={editing !== null}
       onClose={() => handleClose()}
-      onOpen={() => toggleDrawer(houseworkId)}
+      onOpen={() => setEditing(editing)}
     >
       <Puller />
       <List css={list}>

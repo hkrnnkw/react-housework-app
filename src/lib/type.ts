@@ -57,6 +57,11 @@ export type FrequencyType = {
   }
 }
 
+export type Editing = {
+  houseworkId: HouseworkId
+  editingStatus: EditingStatus
+}
+
 export type EditingStatus =
   typeof EDITING_STATUS_ENUM[keyof typeof EDITING_STATUS_ENUM]
 
