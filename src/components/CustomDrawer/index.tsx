@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { css } from '@emotion/react'
 import {
   Box,
+  Button,
   Chip,
   List,
   ListItem,
@@ -16,7 +17,6 @@ import Frequency from './Frequency'
 import Point from './Point'
 import Member from './Member'
 import Title from './Title'
-import SaveButton from './SaveButton'
 import { useDispatchHouse } from '../../contexts/houses'
 import { EDITING_STATUS_ENUM } from '../../lib/constant'
 
@@ -76,10 +76,14 @@ const CustomDrawer: FC<Props> = ({
         <ListItem>
           <Chip label={category} />
           {editingStatus === DRAFT && (
-            <SaveButton
+            <Button
+              onClick={() => handleSave()}
+              variant="contained"
+              css={button}
               disabled={!title.length}
-              handleClick={() => handleSave()}
-            />
+            >
+              作成
+            </Button>
           )}
         </ListItem>
         <ListItem css={listItem}>
@@ -110,4 +114,9 @@ const listItem = css`
 
 const list = css`
   padding: 32px;
+`
+
+const button = css`
+  width: 64px;
+  height: 32px;
 `
