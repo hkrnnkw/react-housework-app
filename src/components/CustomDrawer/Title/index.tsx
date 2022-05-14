@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC } from 'react'
 import { TextField } from '@mui/material'
 import { css } from '@emotion/react'
 import { EditingStatus, HouseworkDetail, HouseworkId } from '../../../lib/type'
 import { useDispatchHouse } from '../../../contexts/houses'
 import Description from './Description'
-import SaveButton from '../SaveButton'
 import { EDITING_STATUS_ENUM } from '../../../lib/constant'
 
 type Props = {
@@ -22,7 +21,6 @@ const Title: FC<Props> = ({
   description,
 }) => {
   const { changeTitle } = useDispatchHouse()
-  const [isEditing, setIsEditing] = useState(false)
 
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
@@ -30,12 +28,7 @@ const Title: FC<Props> = ({
     await changeTitle(DRAFT, houseworkId, value)
   }
 
-  const handleClick = async () => {
-    await changeTitle(editingStatus, houseworkId, title)
-  }
-
   const handleBlur = async () => {
-    setIsEditing(false)
     await changeTitle(editingStatus, houseworkId, title)
   }
 
@@ -47,14 +40,10 @@ const Title: FC<Props> = ({
           variant="standard"
           placeholder={title}
           defaultValue={title}
-          onFocus={() => setIsEditing(true)}
           onBlur={() => handleBlur()}
           onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
           css={textfield}
         />
-        {isEditing && (
-          <SaveButton disabled={!title.length} handleClick={handleClick} />
-        )}
       </div>
       <Description
         editingStatus={editingStatus}
