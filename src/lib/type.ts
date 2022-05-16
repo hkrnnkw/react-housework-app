@@ -35,7 +35,7 @@ export type House = {
 }
 export type DirectionType = typeof DIRECTION_ENUM[keyof typeof DIRECTION_ENUM]
 
-type TimesPerDaysType = {
+export type TimesPerDaysType = {
   times: number
   days: number
 }
@@ -46,6 +46,12 @@ export type SpecificDateType = {
 } | null
 
 export type DayOfWeekType = typeof DAY_OF_WEEK_ENUM[number]
+
+export type FrequencyValue =
+  | null
+  | TimesPerDaysType
+  | DayOfWeekType[]
+  | SpecificDateType[]
 
 export type FrequencyType = {
   key: typeof FREQUENCY_ENUM[keyof typeof FREQUENCY_ENUM]

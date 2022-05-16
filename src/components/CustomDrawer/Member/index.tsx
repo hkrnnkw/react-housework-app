@@ -13,13 +13,12 @@ type Props = {
 }
 
 const Member: FC<Props> = ({ editing, memberId, members }) => {
-  const { changeMemberId } = useDispatchHouse()
-  const { houseworkId, editingStatus } = editing
+  const { updateHouseworkDetail } = useDispatchHouse()
 
   const handleChange = async (event: SelectChangeEvent<typeof memberId>) => {
     const { value } = event.target
     const update = value === NOT_SET ? null : value
-    await changeMemberId(editingStatus, houseworkId, update)
+    await updateHouseworkDetail(editing, 'memberId', update)
   }
 
   return (

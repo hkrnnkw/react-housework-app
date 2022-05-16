@@ -14,17 +14,18 @@ type Props = {
 }
 
 const Title: FC<Props> = ({ editing, title, description }) => {
-  const { changeTitle } = useDispatchHouse()
-  const { houseworkId, editingStatus } = editing
+  const { updateHouseworkDetail } = useDispatchHouse()
+  const { houseworkId } = editing
 
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
     const { DRAFT } = EDITING_STATUS_ENUM
-    await changeTitle(DRAFT, houseworkId, value)
+    const drafting: Editing = { editingStatus: DRAFT, houseworkId }
+    await updateHouseworkDetail(drafting, 'title', value)
   }
 
   const handleBlur = async () => {
-    await changeTitle(editingStatus, houseworkId, title)
+    await updateHouseworkDetail(editing, 'title', title)
   }
 
   return (

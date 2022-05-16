@@ -8,9 +8,10 @@ import {
   getFirestore,
   query,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore'
-import { House } from '../lib/type'
+import { House, HouseworkDetail, HouseworkId } from '../lib/type'
 import defaultHousework from '../lib/housework'
 import { State as UserState } from '../contexts/user/constants'
 
@@ -62,11 +63,15 @@ export const setLogToFirestore = async (
   await setDoc(houseRef, { logs }, { merge: true })
 }
 
-export const setHouseworkToFirestore = async (
+export const updateHouseworkOnFirestore = async (
   houseId: string,
-  housework: House['housework']
+  houseworkId: HouseworkId,
+  key: keyof HouseworkDetail,
+  value: HouseworkDetail[keyof HouseworkDetail]
 ): Promise<void> => {
   const db = getFirestore()
   const houseRef = doc(db, 'houses', houseId)
-  await setDoc(houseRef, { housework }, { merge: true })
+  const { categoryId, taskId } = houseworkId
+  const path = `housework.${categoryId}.taskDetails.${taskId}.${key}`
+  await updateDoc(houseRef, { [path]: value })
 }

@@ -2,36 +2,34 @@
 import { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { css } from '@emotion/react'
-import { useDispatchHouse } from '../../../contexts/houses'
-import { Editing, FrequencyType } from '../../../lib/type'
+import { TimesPerDaysType } from '../../../lib/type'
 
 const daysArray = new Array(90).fill(1) as number[]
 const timesArray = new Array(10).fill(1) as number[]
 
 type Props = {
-  editing: Editing
-  frequency: FrequencyType['values']['timesPerDays']
+  value: TimesPerDaysType
+  handleChangeValue: (value: TimesPerDaysType) => Promise<void>
 }
 
-const TimesPerDays: FC<Props> = ({ editing, frequency }) => {
-  const { changeFrequencyValue, initTimesPerDays } = useDispatchHouse()
-  const { houseworkId, editingStatus } = editing
-  const { times, days } = frequency ?? initTimesPerDays()
-
-  const handleDaysChange = async (event: SelectChangeEvent) => {
-    const value: typeof frequency = {
+const TimesPerDays: FC<Props> = ({
+  value: { times, days },
+  handleChangeValue,
+}) => {
+  const handleChangeDays = async (event: SelectChangeEvent) => {
+    const newValue: TimesPerDaysType = {
       times,
       days: Number(event.target.value),
     }
-    await changeFrequencyValue(editingStatus, houseworkId, value)
+    await handleChangeValue(newValue)
   }
 
-  const handleTimesChange = async (event: SelectChangeEvent) => {
-    const value: typeof frequency = {
+  const handleChangeTimes = async (event: SelectChangeEvent) => {
+    const newValue: TimesPerDaysType = {
       times: Number(event.target.value),
       days,
     }
-    await changeFrequencyValue(editingStatus, houseworkId, value)
+    await handleChangeValue(newValue)
   }
 
   return (
@@ -40,7 +38,7 @@ const TimesPerDays: FC<Props> = ({ editing, frequency }) => {
         labelId="select-x-days"
         id="select-x-days"
         value={days.toString()}
-        onChange={handleDaysChange}
+        onChange={handleChangeDays}
         css={select}
       >
         {daysArray.map((num, i) => {
@@ -57,7 +55,7 @@ const TimesPerDays: FC<Props> = ({ editing, frequency }) => {
         labelId="select-x-times"
         id="select-x-times"
         value={times.toString()}
-        onChange={handleTimesChange}
+        onChange={handleChangeTimes}
         css={select}
       >
         {timesArray.map((num, i) => {

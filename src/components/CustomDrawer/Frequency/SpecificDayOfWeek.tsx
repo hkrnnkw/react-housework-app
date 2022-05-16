@@ -15,8 +15,7 @@ import {
   DAY_OF_WEEK_ENUM,
   JPN_LOCALIZED_DAY_OF_WEEK_ENUM,
 } from '../../../lib/constant'
-import { useDispatchHouse } from '../../../contexts/houses'
-import { Editing, FrequencyType } from '../../../lib/type'
+import { DayOfWeekType } from '../../../lib/type'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -41,25 +40,22 @@ const getStyles = (
 })
 
 type Props = {
-  editing: Editing
-  frequency: FrequencyType['values']['daysOfWeek']
+  value: DayOfWeekType[]
+  handleChangeValue: (value: DayOfWeekType[]) => Promise<void>
 }
 
-const SpecificDayOfWeek: FC<Props> = ({ editing, frequency }) => {
+const SpecificDayOfWeek: FC<Props> = ({ value, handleChangeValue }) => {
   const theme = useTheme()
-  const { changeFrequencyValue, initDaysOfWeek } = useDispatchHouse()
-  const daysOfWeek = frequency ?? initDaysOfWeek()
-  const { houseworkId, editingStatus } = editing
 
-  const handleChange = async (event: SelectChangeEvent<typeof daysOfWeek>) => {
-    const { value } = event.target
-    if (typeof value === 'string') {
-      const splitted = value.split(',')
+  const handleChange = async (event: SelectChangeEvent<typeof value>) => {
+    const { value: newValue } = event.target
+    if (typeof newValue === 'string') {
+      const splitted = newValue.split(',')
       const days = splitted.map((day) => DAY_OF_WEEK_ENUM[Number(day)])
-      await changeFrequencyValue(editingStatus, houseworkId, days)
+      await handleChangeValue(days)
       return
     }
-    await changeFrequencyValue(editingStatus, houseworkId, value)
+    await handleChangeValue(newValue)
   }
 
   return (
@@ -67,13 +63,13 @@ const SpecificDayOfWeek: FC<Props> = ({ editing, frequency }) => {
       labelId="multiple-day-label"
       id="multiple-day"
       multiple
-      value={daysOfWeek}
+      value={value}
       onChange={handleChange}
       input={<OutlinedInput id="select-multiple-day" label="dayOfWeek" />}
       renderValue={(selected) => (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-          {selected.map((value) => (
-            <Chip key={value} label={JPN_LOCALIZED_DAY_OF_WEEK_ENUM[value]} />
+          {selected.map((v) => (
+            <Chip key={v} label={JPN_LOCALIZED_DAY_OF_WEEK_ENUM[v]} />
           ))}
         </Box>
       )}
@@ -81,11 +77,7 @@ const SpecificDayOfWeek: FC<Props> = ({ editing, frequency }) => {
       css={select}
     >
       {DAY_OF_WEEK_ENUM.map((day) => (
-        <MenuItem
-          key={day}
-          value={day}
-          style={getStyles(day, daysOfWeek, theme)}
-        >
+        <MenuItem key={day} value={day} style={getStyles(day, value, theme)}>
           {JPN_LOCALIZED_DAY_OF_WEEK_ENUM[day]}
         </MenuItem>
       ))}

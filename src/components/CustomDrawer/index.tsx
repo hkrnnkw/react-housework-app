@@ -43,7 +43,7 @@ const CustomDrawer: FC<Props> = ({
   housework,
   setEditing,
 }) => {
-  const { deleteHousework, updateCurrentHousework } = useDispatchHouse()
+  const { deleteHousework, updateHouseworkDetail } = useDispatchHouse()
   if (!editing) return null
 
   const { DRAFT, SAVE } = EDITING_STATUS_ENUM
@@ -53,8 +53,15 @@ const CustomDrawer: FC<Props> = ({
   const { title, description, point, frequency, memberId } = taskDetails[taskId]
 
   const handleSave = async () => {
-    // @todo fix: cannot save after inputing title
-    await updateCurrentHousework(SAVE, housework)
+    const saving: Editing = { editingStatus: SAVE, houseworkId }
+    const tasks: Promise<void>[] = [
+      updateHouseworkDetail(saving, 'title', title),
+      updateHouseworkDetail(saving, 'description', description),
+      updateHouseworkDetail(saving, 'point', point),
+      updateHouseworkDetail(saving, 'frequency', frequency),
+      updateHouseworkDetail(saving, 'memberId', memberId),
+    ]
+    await Promise.all(tasks)
     setEditing({ houseworkId, editingStatus: SAVE })
   }
 

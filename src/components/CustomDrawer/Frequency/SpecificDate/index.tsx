@@ -6,29 +6,23 @@ import { LocalizationProvider } from '@mui/lab'
 import DateAdapter from '@mui/lab/AdapterDayjs'
 import dayjs from 'dayjs'
 import Calendar from './Calendar'
-import { Editing, FrequencyType, SpecificDateType } from '../../../../lib/type'
-import { useDispatchHouse } from '../../../../contexts/houses'
+import { SpecificDateType } from '../../../../lib/type'
 
 type Props = {
-  editing: Editing
-  frequency: FrequencyType['values']['specificDates']
+  value: SpecificDateType[]
+  handleChangeValue: (value: SpecificDateType[]) => Promise<void>
 }
 
-const SpecificDate: FC<Props> = ({ editing, frequency }) => {
-  const { changeFrequencyValue, initSpecificDates } = useDispatchHouse()
-  const { houseworkId, editingStatus } = editing
-  const specificDates = frequency ?? initSpecificDates()
-
+const SpecificDate: FC<Props> = ({ value, handleChangeValue }) => {
   const handleAdd = async () => {
-    const newDates = [...specificDates]
-    await changeFrequencyValue(editingStatus, houseworkId, [null, ...newDates])
+    await handleChangeValue([null, ...value])
   }
 
   const handleChange = async (newValue: dayjs.Dayjs | null, index: number) => {
-    const newDates = [...specificDates]
+    const newDates = [...value]
     if (newValue === null) {
       newDates.splice(index, 1)
-      await changeFrequencyValue(editingStatus, houseworkId, newDates)
+      await handleChangeValue(newDates)
       return
     }
     const specificDate: SpecificDateType = {
@@ -36,7 +30,7 @@ const SpecificDate: FC<Props> = ({ editing, frequency }) => {
       dd: newValue.date(),
     }
     newDates.splice(index, 1, specificDate)
-    await changeFrequencyValue(editingStatus, houseworkId, newDates)
+    await handleChangeValue(newDates)
   }
 
   return (
@@ -44,16 +38,16 @@ const SpecificDate: FC<Props> = ({ editing, frequency }) => {
       <Stack spacing={2} css={container}>
         <Button
           onClick={() => handleAdd()}
-          disabled={specificDates.includes(null)}
+          disabled={value.includes(null)}
           css={button}
         >
           追加する
         </Button>
-        {specificDates.map((sd, i) => (
+        {value.map((sd, i) => (
           <Calendar
             key={sd ? `${sd.mm}/${sd.dd}` : 'empty'}
             index={i}
-            specificDates={specificDates}
+            specificDates={value}
             onChange={handleChange}
           />
         ))}

@@ -2,7 +2,12 @@ import dayjs from 'dayjs'
 import { State, HouseActionType, HOUSE_ACTIONS } from './constants'
 import { State as UserState } from '../user/constants'
 import { createLogs } from '../../handlers/logsHandler'
-import { DirectionType, House } from '../../lib/type'
+import {
+  DirectionType,
+  House,
+  HouseworkDetail,
+  HouseworkId,
+} from '../../lib/type'
 
 export const actions = {
   setHouses: (houses: House[]): HouseActionType => ({
@@ -24,6 +29,14 @@ export const actions = {
   updateCurrentHousework: (housework: House['housework']): HouseActionType => ({
     type: HOUSE_ACTIONS.UPDATE_CURRENT_HOUSEWORK,
     payload: housework,
+  }),
+  updateHouseworkDetail: (
+    houseworkId: HouseworkId,
+    key: keyof HouseworkDetail,
+    value: HouseworkDetail[keyof HouseworkDetail]
+  ): HouseActionType => ({
+    type: HOUSE_ACTIONS.UPDATE_HOUSEWORK_DETAIL,
+    payload: { houseworkId, key, value },
   }),
 } as const
 
@@ -81,6 +94,24 @@ export const reducer = (state: State, action: HouseActionType): State => {
 
       const updates: House = { ...houses[currentHouse.id] }
       updates.housework = action.payload
+      const updatedHouses: State['houses'] = {
+        ...houses,
+        [currentHouse.id]: updates,
+      }
+      return { ...state, houses: updatedHouses }
+    }
+    case HOUSE_ACTIONS.UPDATE_HOUSEWORK_DETAIL: {
+      const { houses, currentHouse } = state
+      if (!houses || !currentHouse) return state
+
+      const updates: House = { ...houses[currentHouse.id] }
+      const { houseworkId, key, value } = action.payload
+      const { categoryId, taskId } = houseworkId
+      const detail = updates.housework[categoryId].taskDetails[taskId]
+      updates.housework[categoryId].taskDetails[taskId] = {
+        ...detail,
+        [key]: value,
+      }
       const updatedHouses: State['houses'] = {
         ...houses,
         [currentHouse.id]: updates,

@@ -12,14 +12,13 @@ type Props = {
 }
 
 const Point: FC<Props> = ({ editing, point }) => {
-  const { changePoint } = useDispatchHouse()
-  const { houseworkId, editingStatus } = editing
+  const { updateHouseworkDetail } = useDispatchHouse()
   const { ONE, TWO, THREE, FOUR, FIVE } = POINT_ENUM
 
   const handleChange = async (event: SelectChangeEvent<typeof point>) => {
     const { value } = event.target
     const update = value as typeof point
-    await changePoint(editingStatus, houseworkId, update)
+    await updateHouseworkDetail(editing, 'point', update)
   }
 
   return (

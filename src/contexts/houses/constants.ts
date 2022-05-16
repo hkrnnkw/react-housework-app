@@ -1,5 +1,10 @@
 import dayjs from 'dayjs'
-import { DirectionType, House } from '../../lib/type'
+import {
+  DirectionType,
+  House,
+  HouseworkDetail,
+  HouseworkId,
+} from '../../lib/type'
 import { State as UserState } from '../user/constants'
 
 export type State = {
@@ -27,6 +32,7 @@ export const HOUSE_ACTIONS = {
   CHANGE_DATE: 'HouseActions:changeDate',
   UPDATE_CURRENT_LOGS: 'HouseActions:updateCurrentLogs',
   UPDATE_CURRENT_HOUSEWORK: 'updateCurrentHousework',
+  UPDATE_HOUSEWORK_DETAIL: 'updateHouseworkDetail',
 } as const
 
 export type HouseActionType =
@@ -49,4 +55,12 @@ export type HouseActionType =
   | {
       type: typeof HOUSE_ACTIONS.UPDATE_CURRENT_HOUSEWORK
       payload: House['housework']
+    }
+  | {
+      type: typeof HOUSE_ACTIONS.UPDATE_HOUSEWORK_DETAIL
+      payload: {
+        houseworkId: HouseworkId
+        key: keyof HouseworkDetail
+        value: HouseworkDetail[keyof HouseworkDetail]
+      }
     }
