@@ -51,7 +51,7 @@ const FrequencyItem: FC<Props> = ({ editing, frequency }) => {
   const { key, values } = frequency
   const { temporary, timesPerDays, daysOfWeek, specificDates } = values
 
-  const handleChangeValue = async (value: Omit<FrequencyValue, 'null'>) => {
+  const handleChangeValue = async (value: FrequencyValue) => {
     const newValues: FrequencyType['values'] = { ...values, [key]: value }
     const update: FrequencyType = { key, values: newValues }
     await updateHouseworkDetail(editing, 'frequency', update)
@@ -87,7 +87,7 @@ const FrequencyItem: FC<Props> = ({ editing, frequency }) => {
 const getValue = (
   key: FrequencyType['key'],
   values: FrequencyType['values']
-): FrequencyValue => {
+): FrequencyValue | null => {
   const { TEMPORARY, TIMES_PER_DAYS, DAYS_OF_WEEK } = FREQUENCY_ENUM
   if (key === TEMPORARY) return null
   if (key === TIMES_PER_DAYS) return getTimesPerDays(values[key])

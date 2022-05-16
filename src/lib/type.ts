@@ -47,21 +47,20 @@ export type SpecificDateType = {
 
 export type DayOfWeekType = typeof DAY_OF_WEEK_ENUM[number]
 
-export type FrequencyValue =
-  | null
-  | TimesPerDaysType
-  | DayOfWeekType[]
-  | SpecificDateType[]
+type Specified = Partial<{
+  timesPerDays: TimesPerDaysType
+  daysOfWeek: DayOfWeekType[]
+  specificDates: SpecificDateType[]
+}>
+
+type Unspecified = { readonly temporary: null }
 
 export type FrequencyType = {
   key: typeof FREQUENCY_ENUM[keyof typeof FREQUENCY_ENUM]
-  values: {
-    readonly temporary: null
-    timesPerDays?: TimesPerDaysType
-    daysOfWeek?: DayOfWeekType[]
-    specificDates?: SpecificDateType[]
-  }
+  values: Specified & Unspecified
 }
+
+export type FrequencyValue = NonNullable<Specified[keyof Specified]>
 
 export type Editing = {
   houseworkId: HouseworkId
