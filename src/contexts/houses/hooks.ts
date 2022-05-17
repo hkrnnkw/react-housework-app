@@ -86,13 +86,11 @@ const useHouseForContext = () => {
 
     try {
       tasks[i] = prevStatus ? undo : done
-      logs[currentDate] = [...tasks]
-      dispatch(actions.updateCurrentLogs(logs))
-      await setLogToFirestore(currentHouse.id, logs)
+      dispatch(actions.updateCurrentLogs([...tasks]))
+      await setLogToFirestore(currentHouse.id, currentDate, [...tasks])
     } catch (e) {
       tasks[i] = prevStatus ? done : undo
-      logs[currentDate] = [...tasks]
-      dispatch(actions.updateCurrentLogs(logs))
+      dispatch(actions.updateCurrentLogs([...tasks]))
     }
   }
 

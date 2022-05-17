@@ -7,6 +7,7 @@ import {
   House,
   HouseworkDetail,
   HouseworkId,
+  Task,
 } from '../../lib/type'
 import { DATE_FORMAT } from '../../lib/constant'
 
@@ -23,9 +24,9 @@ export const actions = {
     type: HOUSE_ACTIONS.CHANGE_DATE,
     payload: direction,
   }),
-  updateCurrentLogs: (logs: House['logs']): HouseActionType => ({
+  updateCurrentLogs: (tasks: Task[]): HouseActionType => ({
     type: HOUSE_ACTIONS.UPDATE_CURRENT_LOGS,
-    payload: logs,
+    payload: tasks,
   }),
   updateCurrentHousework: (housework: House['housework']): HouseActionType => ({
     type: HOUSE_ACTIONS.UPDATE_CURRENT_HOUSEWORK,
@@ -78,11 +79,11 @@ export const reducer = (state: State, action: HouseActionType): State => {
       return { ...state, houses, currentDate: dt }
     }
     case HOUSE_ACTIONS.UPDATE_CURRENT_LOGS: {
-      const { houses, currentHouse } = state
+      const { houses, currentHouse, currentDate } = state
       if (!houses || !currentHouse) return state
 
       const updates: House = { ...houses[currentHouse.id] }
-      updates.logs = action.payload
+      updates.logs[currentDate] = action.payload
       const updatedHouses: State['houses'] = {
         ...houses,
         [currentHouse.id]: updates,

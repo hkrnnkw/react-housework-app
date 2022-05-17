@@ -5,6 +5,7 @@ import {
   House,
   HouseworkDetail,
   HouseworkId,
+  Task,
 } from '../../lib/type'
 import { State as UserState } from '../user/constants'
 
@@ -51,7 +52,7 @@ export type HouseActionType =
     }
   | {
       type: typeof HOUSE_ACTIONS.UPDATE_CURRENT_LOGS
-      payload: House['logs']
+      payload: Task[]
     }
   | {
       type: typeof HOUSE_ACTIONS.UPDATE_CURRENT_HOUSEWORK
