@@ -1,12 +1,12 @@
 import dayjs from 'dayjs'
 import { State, HouseActionType, HOUSE_ACTIONS } from './constants'
-import { CurrentUser } from '../../lib/states/currentUser'
 import { createLogs } from '../../handlers/logsHandler'
 import {
   DirectionType,
   House,
   HouseworkDetail,
   HouseworkId,
+  Member,
   Task,
 } from '../../lib/type'
 import { DATE_FORMAT } from '../../lib/constant'
@@ -16,10 +16,7 @@ export const actions = {
     type: HOUSE_ACTIONS.SET_HOUSES,
     payload: houses,
   }),
-  changeCurrentHouse: (
-    id: string,
-    members: CurrentUser[]
-  ): HouseActionType => ({
+  changeCurrentHouse: (id: string, members: Member[]): HouseActionType => ({
     type: HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE,
     payload: { id, members },
   }),

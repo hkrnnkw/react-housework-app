@@ -11,8 +11,7 @@ import {
   SwipeableDrawer,
 } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import { Editing, House } from '../../lib/type'
-import { CurrentUser } from '../../lib/states/currentUser'
+import { Editing, House, Member as MemberType } from '../../lib/type'
 import Frequency from './Frequency'
 import Point from './Point'
 import Member from './Member'
@@ -32,7 +31,7 @@ const Puller = styled(Box)(({ theme }) => ({
 
 type Props = {
   editing: Editing | null
-  members: CurrentUser[]
+  members: MemberType[]
   housework: House['housework']
   setEditing: (editing: Editing | null) => void
 }

@@ -8,12 +8,12 @@ import {
   updateHouseworkOnFirestore,
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
-import { CurrentUser } from '../../lib/states/currentUser'
 import {
   Editing,
   House,
   HouseworkDetail,
   HouseworkId,
+  Member,
   Task,
 } from '../../lib/type'
 import { EDITING_STATUS_ENUM } from '../../lib/constant'
@@ -40,7 +40,7 @@ const useHouseForContext = () => {
 
   const changeCurrentHouse = async (houseId: string, memberIds: string[]) => {
     const tasks = memberIds.map((uid) => getUserFromFirestore(uid))
-    const members: CurrentUser[] = await Promise.all(tasks)
+    const members: Member[] = await Promise.all(tasks)
     dispatch(actions.changeCurrentHouse(houseId, members))
   }
 

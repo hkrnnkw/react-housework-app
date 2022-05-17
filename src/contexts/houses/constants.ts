@@ -5,9 +5,9 @@ import {
   House,
   HouseworkDetail,
   HouseworkId,
+  Member,
   Task,
 } from '../../lib/type'
-import { CurrentUser } from '../../lib/states/currentUser'
 
 export type State = {
   houses: {
@@ -16,7 +16,7 @@ export type State = {
   currentHouse: {
     id: string
     members: {
-      [uid: string]: CurrentUser
+      [uid: string]: Member
     }
   } | null
   currentDate: string
@@ -44,7 +44,7 @@ export type HouseActionType =
     }
   | {
       type: typeof HOUSE_ACTIONS.CHANGE_CURRENT_HOUSE
-      payload: { id: string; members: CurrentUser[] }
+      payload: { id: string; members: Member[] }
     }
   | {
       type: typeof HOUSE_ACTIONS.CHANGE_DATE
