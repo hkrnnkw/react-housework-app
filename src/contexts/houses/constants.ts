@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { DATE_FORMAT } from '../../lib/constant'
 import {
   DirectionType,
   House,
@@ -23,7 +24,7 @@ export type State = {
 export const initialState: State = {
   houses: null,
   currentHouse: null,
-  currentDate: dayjs().format('YYYY/MM/DD'),
+  currentDate: dayjs().format(DATE_FORMAT),
 } as const
 
 export const HOUSE_ACTIONS = {

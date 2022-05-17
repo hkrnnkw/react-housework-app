@@ -8,6 +8,7 @@ import {
   HouseworkDetail,
   HouseworkId,
 } from '../../lib/type'
+import { DATE_FORMAT } from '../../lib/constant'
 
 export const actions = {
   setHouses: (houses: House[]): HouseActionType => ({
@@ -68,7 +69,7 @@ export const reducer = (state: State, action: HouseActionType): State => {
       const { currentHouse, currentDate, houses } = state
       const dt = dayjs(currentDate)
         .add(action.payload, 'day')
-        .format('YYYY/MM/DD')
+        .format(DATE_FORMAT)
       if (currentHouse && houses) {
         const { housework, logs, ...other } = houses[currentHouse.id]
         const updatedLogs = createLogs(housework, { ...logs }, dt)

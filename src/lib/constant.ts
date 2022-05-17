@@ -3,6 +3,8 @@ export const DIRECTION_ENUM = {
   NEXT: 1,
 } as const
 
+export const DATE_FORMAT = 'YYYYMMDD'
+
 export const DAY_OF_WEEK_ENUM = [0, 1, 2, 3, 4, 5, 6] as const
 
 export const JPN_LOCALIZED_DAY_OF_WEEK_ENUM = {

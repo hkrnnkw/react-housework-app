@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs'
-import { FREQUENCY_ENUM } from '../lib/constant'
+import { DATE_FORMAT, FREQUENCY_ENUM } from '../lib/constant'
 import { House, Task } from '../lib/type'
 
 export const createLogs = (
@@ -51,7 +51,7 @@ export const createLogs = (
         const max = span * 2
         const maxDate = currentDate.add(span, 'day')
         for (let i = 0; i <= max; i += 1) {
-          const dt = maxDate.subtract(i, 'day').format('YYYY/MM/DD')
+          const dt = maxDate.subtract(i, 'day').format(DATE_FORMAT)
           if (logs[dt]) {
             const alreadyAdded = logs[dt].find(
               (t) => t.categoryId === categoryId && t.taskId === taskId
