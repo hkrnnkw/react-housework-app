@@ -84,15 +84,13 @@ const FrequencyItem: FC<Props> = ({ editing, frequency }) => {
   return temporary
 }
 
-const getValue = (
-  key: FrequencyType['key'],
-  values: FrequencyType['values']
-): FrequencyValue | null => {
-  const { TEMPORARY, TIMES_PER_DAYS, DAYS_OF_WEEK } = FREQUENCY_ENUM
-  if (key === TEMPORARY) return null
+const getValue = (frequency: FrequencyType): FrequencyValue | null => {
+  const { key, values } = frequency
+  const { TIMES_PER_DAYS, DAYS_OF_WEEK, SPECIFIC_DATES } = FREQUENCY_ENUM
   if (key === TIMES_PER_DAYS) return getTimesPerDays(values[key])
   if (key === DAYS_OF_WEEK) return getDaysOfWeek(values[key])
-  return getSpecificDates(values[key])
+  if (key === SPECIFIC_DATES) return getSpecificDates(values[key])
+  return null
 }
 
 const Frequency: FC<Props> = ({ editing, frequency }) => {
@@ -103,7 +101,7 @@ const Frequency: FC<Props> = ({ editing, frequency }) => {
 
   const handleChangeKey = async (event: SelectChangeEvent) => {
     const newKey = event.target.value as FrequencyType['key']
-    const newValues = { ...values, [newKey]: getValue(newKey, values) }
+    const newValues = { ...values, [newKey]: getValue({ key: newKey, values }) }
     const update: FrequencyType = { key: newKey, values: newValues }
     await updateHouseworkDetail(editing, 'frequency', update)
   }
