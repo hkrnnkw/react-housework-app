@@ -1,7 +1,8 @@
 import { FC } from 'react'
 import { Button, Typography } from '@mui/material'
+import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth'
+import { auth } from '../firebase'
 import StyledPaper from './atoms/StyledPaper'
-import { useDispatchUser } from '../contexts/user'
 
 export const Loading: FC = () => (
   <StyledPaper>
@@ -10,7 +11,10 @@ export const Loading: FC = () => (
 )
 
 const SignIn: FC = () => {
-  const { signIn } = useDispatchUser()
+  const signIn = async () => {
+    const provider = new GoogleAuthProvider()
+    await signInWithRedirect(auth, provider)
+  }
 
   return (
     <StyledPaper>

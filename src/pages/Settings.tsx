@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import StyledPaper from '../components/atoms/StyledPaper'
 import paths from '../lib/path'
-import { useDispatchUser } from '../contexts/user'
+import { useDispatchUser } from '../lib/hooks/store/currentUser'
 
 export const Index: FC = () => {
   const { signOut } = useDispatchUser()

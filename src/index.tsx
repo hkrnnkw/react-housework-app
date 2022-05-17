@@ -1,19 +1,19 @@
 import { StrictMode } from 'react'
+import { RecoilRoot } from 'recoil'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { UserProvider } from './contexts/user'
 import { HouseProvider } from './contexts/houses'
 
 ReactDOM.render(
-  <UserProvider>
+  <RecoilRoot>
     <HouseProvider>
       <StrictMode>
         <App />
       </StrictMode>
     </HouseProvider>
-  </UserProvider>,
+  </RecoilRoot>,
   document.getElementById('root')
 )
 

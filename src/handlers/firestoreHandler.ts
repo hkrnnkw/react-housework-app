@@ -13,20 +13,22 @@ import {
 } from 'firebase/firestore'
 import { House, HouseworkDetail, HouseworkId, Task } from '../lib/type'
 import defaultHousework from '../lib/housework'
-import { State as UserState } from '../contexts/user/constants'
+import { CurrentUser } from '../lib/states/currentUser'
 
-export const setUserToFirestore = async (user: UserState): Promise<void> => {
+export const setUserToFirestore = async (user: CurrentUser): Promise<void> => {
   const db = getFirestore()
   const { uid } = user
   const newUserRef: DocumentReference<DocumentData> = doc(db, 'users', uid)
   await setDoc(newUserRef, user, { merge: true })
 }
 
-export const getUserFromFirestore = async (uid: string): Promise<UserState> => {
+export const getUserFromFirestore = async (
+  uid: string
+): Promise<CurrentUser> => {
   const db = getFirestore()
   const docRef: DocumentReference<DocumentData> = doc(db, 'users', uid)
   const docSnap = await getDoc(docRef)
-  return docSnap.data() as UserState
+  return docSnap.data() as CurrentUser
 }
 
 export const createHouseToFirestore = async (uid: string): Promise<House> => {

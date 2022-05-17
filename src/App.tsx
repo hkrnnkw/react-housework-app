@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   BrowserRouter,
   Outlet,
@@ -9,6 +9,8 @@ import {
 import { AppBar, IconButton, Link, Toolbar } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import SettingsIcon from '@mui/icons-material/Settings'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './firebase'
 import paths from './lib/path'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
@@ -20,7 +22,7 @@ import HouseworkList, {
 } from './pages/HouseworkList'
 import SignIn, { Loading } from './components/SignIn'
 import DateDisplay from './components/DateDisplay'
-import { useDispatchUser, useUser } from './contexts/user'
+import { useUser, useDispatchUser } from './lib/hooks/store/currentUser'
 
 const AppBarStyle = styled(AppBar)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -52,13 +54,12 @@ const StyledAppBar: FC = (): JSX.Element => (
 )
 
 type Props = {
+  isLoading: boolean
   children: JSX.Element
 }
 
-const Auth: FC<Props> = ({ children }): JSX.Element => {
+const Auth: FC<Props> = ({ isLoading, children }): JSX.Element => {
   const { uid } = useUser()
-  const { useAuth } = useDispatchUser()
-  const isLoading = useAuth()
   if (!uid.length) return <SignIn />
   if (isLoading) return <Loading />
   return children
@@ -71,33 +72,48 @@ const Root: FC = () => (
   </>
 )
 
-const App: FC = () => (
-  <BrowserRouter>
-    <Auth>
-      <Routes>
-        <Route path={paths.root} element={<Root />}>
-          <Route index element={<Home />} />
-          <Route
-            path={paths.settings}
-            element={<PrivateRoute component={Settings} />}
-          >
-            <Route index element={<SettingIndex />} />
+const App: FC = () => {
+  const { setCurrentUser } = useDispatchUser()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setCurrentUser(firebaseUser)
+        .then(() => setIsLoading(false))
+        // eslint-disable-next-line no-console
+        .catch((e) => console.error(e))
+    })
+    return () => unsubscribe()
+  }, [setCurrentUser])
+
+  return (
+    <BrowserRouter>
+      <Auth isLoading={isLoading}>
+        <Routes>
+          <Route path={paths.root} element={<Root />}>
+            <Route index element={<Home />} />
             <Route
-              path={`${paths.houseworkList}`}
-              element={<PrivateRoute component={HouseworkList} />}
+              path={paths.settings}
+              element={<PrivateRoute component={Settings} />}
             >
-              <Route index element={<HouseworkListIndex />} />
+              <Route index element={<SettingIndex />} />
               <Route
-                path=":id"
-                element={<PrivateRoute component={HouseworkItem} />}
-              />
+                path={`${paths.houseworkList}`}
+                element={<PrivateRoute component={HouseworkList} />}
+              >
+                <Route index element={<HouseworkListIndex />} />
+                <Route
+                  path=":id"
+                  element={<PrivateRoute component={HouseworkItem} />}
+                />
+              </Route>
             </Route>
+            <Route path="*" element={<NotFound />} />
           </Route>
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </Auth>
-  </BrowserRouter>
-)
+        </Routes>
+      </Auth>
+    </BrowserRouter>
+  )
+}
 
 export default App

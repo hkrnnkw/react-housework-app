@@ -10,10 +10,10 @@ import {
 } from '@mui/material'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
-import { useUser } from '../contexts/user'
+import { useUser } from '../lib/hooks/store/currentUser'
 import StyledPaper from '../components/atoms/StyledPaper'
 import CustomDrawer from '../components/CustomDrawer/index'
-import { State as UserState } from '../contexts/user/constants'
+import { CurrentUser } from '../lib/states/currentUser'
 import { Editing, HouseworkId } from '../lib/type'
 import { sortTasks } from '../handlers/logsHandler'
 import { EDITING_STATUS_ENUM } from '../lib/constant'
@@ -35,7 +35,7 @@ const Home: FC = () => {
   const { logs, housework } = houses[currentHouseId]
   const tasks = sortTasks([...(logs[currentDate] ?? [])])
 
-  const getMember = (memberId: string | null): UserState | null => {
+  const getMember = (memberId: string | null): CurrentUser | null => {
     if (!memberId) return null
     return members[memberId] ?? null
   }

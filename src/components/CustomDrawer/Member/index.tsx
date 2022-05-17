@@ -4,13 +4,13 @@ import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
 import { Editing, HouseworkDetail } from '../../../lib/type'
 import { useDispatchHouse } from '../../../contexts/houses'
-import { State as UserState } from '../../../contexts/user/constants'
+import { CurrentUser } from '../../../lib/states/currentUser'
 import { NOT_SET } from '../../../lib/constant'
 
 type Props = {
   editing: Editing
   memberId: HouseworkDetail['memberId']
-  members: UserState[]
+  members: CurrentUser[]
 }
 
 const Member: FC<Props> = ({ editing, memberId, members }) => {

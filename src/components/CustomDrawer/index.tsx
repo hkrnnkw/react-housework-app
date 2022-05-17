@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { Editing, House } from '../../lib/type'
-import { State as UserState } from '../../contexts/user/constants'
+import { CurrentUser } from '../../lib/states/currentUser'
 import Frequency from './Frequency'
 import Point from './Point'
 import Member from './Member'
@@ -32,7 +32,7 @@ const Puller = styled(Box)(({ theme }) => ({
 
 type Props = {
   editing: Editing | null
-  members: UserState[]
+  members: CurrentUser[]
   housework: House['housework']
   setEditing: (editing: Editing | null) => void
 }

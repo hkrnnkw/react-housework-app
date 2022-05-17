@@ -1,6 +1,6 @@
 import { ComponentType, FC } from 'react'
 import { Navigate } from 'react-router-dom'
-import { useUser } from '../contexts/user'
+import { useUser } from '../lib/hooks/store/currentUser'
 import paths from '../lib/path'
 
 type RouteProps = {
