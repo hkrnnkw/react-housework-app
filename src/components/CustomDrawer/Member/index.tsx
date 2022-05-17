@@ -4,7 +4,8 @@ import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
 import { Editing, HouseworkDetail } from '../../../lib/type'
 import { useDispatchHouse } from '../../../contexts/houses'
-import { NOT_SET, State as UserState } from '../../../contexts/user/constants'
+import { State as UserState } from '../../../contexts/user/constants'
+import { NOT_SET } from '../../../lib/constant'
 
 type Props = {
   editing: Editing

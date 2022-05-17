@@ -36,3 +36,5 @@ export const EDITING_STATUS_ENUM = {
   DRAFT: 'draft',
   SAVE: 'save',
 } as const
+
+export const NOT_SET = '誰も担当していません'

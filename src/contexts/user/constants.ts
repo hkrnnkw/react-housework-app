@@ -20,4 +20,3 @@ export type UserActionType = {
   payload: State
 }
 
-export const NOT_SET = '誰も担当していません'
