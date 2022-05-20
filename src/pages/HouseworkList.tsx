@@ -17,7 +17,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { css } from '@emotion/react'
 import { useDispatchHouse, useHouse } from '../contexts/houses'
 import CustomDrawer from '../components/CustomDrawer'
-import { Editing, HouseworkDetail, HouseworkId } from '../lib/type'
+import {
+  CategoryId,
+  Editing,
+  HouseworkDetail,
+  HouseworkId,
+  Digit,
+  TaskId,
+} from '../lib/type'
 import { EDITING_STATUS_ENUM } from '../lib/constant'
 
 type TaskProps = {
@@ -39,19 +46,24 @@ const Task: FC<TaskProps> = ({ link, houseworkDetail }) => (
   </Link>
 )
 
-const makeNewTaskId = (num: number): string => {
+const makeNewTaskId = (num: number): TaskId => {
   if (num >= 1000) throw new Error('これ以上タスクを追加できません')
-  const str = num.toString()
-  if (str.length === 1) return `hw00${str}`
-  if (str.length === 2) return `hw0${str}`
-  return `hw${str}`
+  const strArray = num.toString().split('')
+  const len = strArray.length
+  for (let i = 0; i < 3 - len; i += 1) {
+    strArray.unshift('0')
+  }
+  const hundredsPlace = Number(strArray[0]) as Digit
+  const tensPlace = Number(strArray[1]) as Digit
+  const onesPlace = Number(strArray[2]) as Digit
+  return `t${hundredsPlace}${tensPlace}${onesPlace}`
 }
 
 type AccordionProps = {
-  categoryId: string
+  categoryId: CategoryId
   category: string
   taskDetails: {
-    [taskId: string]: HouseworkDetail
+    [taskId in TaskId]?: HouseworkDetail
   }
   setDraft: (editing: Editing | null) => void
 }
@@ -112,7 +124,7 @@ export const Index: FC = () => {
           ([categoryId, { category, taskDetails }]) => (
             <Accordion
               key={categoryId}
-              categoryId={categoryId}
+              categoryId={categoryId as CategoryId}
               category={category}
               taskDetails={taskDetails}
               setDraft={setDraft}

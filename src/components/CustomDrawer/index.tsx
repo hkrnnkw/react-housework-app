@@ -49,7 +49,9 @@ const CustomDrawer: FC<Props> = ({
   const { houseworkId, editingStatus } = editing
   const { categoryId, taskId } = houseworkId
   const { category, taskDetails } = housework[categoryId]
-  const { title, description, point, frequency, memberId } = taskDetails[taskId]
+  const detail = taskDetails[taskId]
+  if (!detail) return null
+  const { title, description, point, frequency, memberId } = detail
 
   const handleSave = async () => {
     const saving: Editing = { editingStatus: SAVE, houseworkId }

@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs'
 import { DATE_FORMAT, FREQUENCY_ENUM } from '../lib/constant'
-import { House, Task } from '../lib/type'
+import { CategoryId, House, Task, TaskId } from '../lib/type'
 
 export const createLogs = (
   housework: House['housework'],
@@ -20,8 +20,8 @@ export const createLogs = (
   if (!logs[currentDateStr]) Object.assign(logs, { [currentDateStr]: [] })
 
   const addTasks = (
-    categoryId: string,
-    taskId: string,
+    categoryId: CategoryId,
+    taskId: TaskId,
     memberId: string | null,
     times = 1
   ) => {
@@ -39,8 +39,10 @@ export const createLogs = (
     }
   }
 
-  Object.entries(housework).forEach(([categoryId, { taskDetails }]) => {
-    Object.entries(taskDetails).forEach(([taskId, detail]) => {
+  Object.entries(housework).forEach(([categoryKey, { taskDetails }]) => {
+    const categoryId = categoryKey as CategoryId
+    Object.entries(taskDetails).forEach(([taskKey, detail]) => {
+      const taskId = taskKey as TaskId
       const { memberId, frequency } = detail
       const { key, values } = frequency
       const { timesPerDays, daysOfWeek, specificDates } = values

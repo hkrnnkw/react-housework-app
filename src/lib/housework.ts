@@ -20,7 +20,7 @@ const defaultHousework: House['housework'] = {
   c000: {
     category: 'その他',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 3,
         frequency: {
           key: TEMPORARY,
@@ -31,7 +31,7 @@ const defaultHousework: House['housework'] = {
         title: 'その他',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -42,7 +42,7 @@ const defaultHousework: House['housework'] = {
         title: '郵便物を取りに行く',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -53,7 +53,7 @@ const defaultHousework: House['housework'] = {
         title: '郵便物を分けて捨てる',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -68,7 +68,7 @@ const defaultHousework: House['housework'] = {
         title: '植物への水やり',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -83,7 +83,7 @@ const defaultHousework: House['housework'] = {
         title: '除／加湿器のタンク替え',
         memberId: null,
       },
-      hw005: {
+      t005: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -94,7 +94,7 @@ const defaultHousework: House['housework'] = {
         title: 'ティッシュペーパーの補充',
         memberId: null,
       },
-      hw006: {
+      t006: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -105,7 +105,7 @@ const defaultHousework: House['housework'] = {
         title: 'ウェットティッシュの補充',
         memberId: null,
       },
-      hw007: {
+      t007: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -122,7 +122,7 @@ const defaultHousework: House['housework'] = {
   c001: {
     category: '洗濯',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -137,7 +137,7 @@ const defaultHousework: House['housework'] = {
         title: '洗濯機を回す',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -152,7 +152,7 @@ const defaultHousework: House['housework'] = {
         title: '洗濯物を干す',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -167,7 +167,7 @@ const defaultHousework: House['housework'] = {
         title: '洗濯物を取り込む',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -182,7 +182,7 @@ const defaultHousework: House['housework'] = {
         title: '洗濯物を畳む',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -197,7 +197,7 @@ const defaultHousework: House['housework'] = {
         title: '洗濯物をしまう',
         memberId: null,
       },
-      hw005: {
+      t005: {
         point: 3,
         frequency: {
           key: SPECIFIC_DATES,
@@ -209,7 +209,7 @@ const defaultHousework: House['housework'] = {
         title: '洗濯機のフィルタのホコリを取る',
         memberId: null,
       },
-      hw006: {
+      t006: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -220,7 +220,7 @@ const defaultHousework: House['housework'] = {
         title: '洗濯洗剤を詰め替える',
         memberId: null,
       },
-      hw007: {
+      t007: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -237,7 +237,7 @@ const defaultHousework: House['housework'] = {
   c002: {
     category: '洗面所',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -252,7 +252,7 @@ const defaultHousework: House['housework'] = {
         title: '鏡を拭く',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -267,7 +267,7 @@ const defaultHousework: House['housework'] = {
         title: 'タオルを替える',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 3,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -282,7 +282,7 @@ const defaultHousework: House['housework'] = {
         title: '洗面台の掃除',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -294,7 +294,7 @@ const defaultHousework: House['housework'] = {
         title: '排水溝の掃除',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -315,7 +315,7 @@ const defaultHousework: House['housework'] = {
   c003: {
     category: 'お風呂場',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 3,
         frequency: {
           key: TEMPORARY,
@@ -326,7 +326,7 @@ const defaultHousework: House['housework'] = {
         title: '浴槽を洗う',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 2,
         frequency: {
           key: TEMPORARY,
@@ -337,7 +337,7 @@ const defaultHousework: House['housework'] = {
         title: 'フタを洗う',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 3,
         frequency: {
           key: TEMPORARY,
@@ -348,7 +348,7 @@ const defaultHousework: House['housework'] = {
         title: 'お風呂場の床を洗う',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 4,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -363,7 +363,7 @@ const defaultHousework: House['housework'] = {
         title: '排水溝のパーツを洗う',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -375,7 +375,7 @@ const defaultHousework: House['housework'] = {
         title: '髪の毛を取る',
         memberId: null,
       },
-      hw005: {
+      t005: {
         point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -387,7 +387,7 @@ const defaultHousework: House['housework'] = {
         title: 'ネットを交換する',
         memberId: null,
       },
-      hw006: {
+      t006: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -404,7 +404,7 @@ const defaultHousework: House['housework'] = {
   c004: {
     category: 'トイレ',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 5,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -419,7 +419,7 @@ const defaultHousework: House['housework'] = {
         title: 'トイレを拭く',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -434,7 +434,7 @@ const defaultHousework: House['housework'] = {
         title: 'トイレの床掃除',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -445,7 +445,7 @@ const defaultHousework: House['housework'] = {
         title: 'トイレットペーパーの交換',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -456,7 +456,7 @@ const defaultHousework: House['housework'] = {
         title: 'トイレスタンプする',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -477,7 +477,7 @@ const defaultHousework: House['housework'] = {
   c005: {
     category: 'キッチン',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 3,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -492,7 +492,7 @@ const defaultHousework: House['housework'] = {
         title: '洗い物',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -503,7 +503,7 @@ const defaultHousework: House['housework'] = {
         title: '食器を拭く',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -518,7 +518,7 @@ const defaultHousework: House['housework'] = {
         title: 'シンクの水気を拭く',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -533,7 +533,7 @@ const defaultHousework: House['housework'] = {
         title: '食器をしまう',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -544,7 +544,7 @@ const defaultHousework: House['housework'] = {
         title: '調味料の補充',
         memberId: null,
       },
-      hw005: {
+      t005: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -559,7 +559,7 @@ const defaultHousework: House['housework'] = {
         title: 'キッチン壁の掃除',
         memberId: null,
       },
-      hw006: {
+      t006: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -574,7 +574,7 @@ const defaultHousework: House['housework'] = {
         title: 'フライパン・調理器具などをしまう',
         memberId: null,
       },
-      hw007: {
+      t007: {
         point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -589,7 +589,7 @@ const defaultHousework: House['housework'] = {
         title: 'IHの拭き掃除',
         memberId: null,
       },
-      hw008: {
+      t008: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -604,7 +604,7 @@ const defaultHousework: House['housework'] = {
         title: '炊飯器の洗浄・掃除',
         memberId: null,
       },
-      hw009: {
+      t009: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -619,7 +619,7 @@ const defaultHousework: House['housework'] = {
         title: '電子レンジの洗浄・掃除',
         memberId: null,
       },
-      hw010: {
+      t010: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -634,7 +634,7 @@ const defaultHousework: House['housework'] = {
         title: 'コーヒーメーカーの掃除',
         memberId: null,
       },
-      hw011: {
+      t011: {
         point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -646,7 +646,7 @@ const defaultHousework: House['housework'] = {
         title: 'ネットを交換する',
         memberId: null,
       },
-      hw012: {
+      t012: {
         point: 2,
         frequency: {
           key: SPECIFIC_DATES,
@@ -661,7 +661,7 @@ const defaultHousework: House['housework'] = {
         title: 'レンジフードのフィルタを交換する',
         memberId: null,
       },
-      hw013: {
+      t013: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -682,7 +682,7 @@ const defaultHousework: House['housework'] = {
   c006: {
     category: '料理',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 3,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -694,7 +694,7 @@ const defaultHousework: House['housework'] = {
         title: '買い出し',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -706,7 +706,7 @@ const defaultHousework: House['housework'] = {
         title: '買い物した荷物を運ぶ',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -718,7 +718,7 @@ const defaultHousework: House['housework'] = {
         title: '買い物した荷物を冷蔵庫へ入れる',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 3,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -733,7 +733,7 @@ const defaultHousework: House['housework'] = {
         title: '料理する',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -748,7 +748,7 @@ const defaultHousework: House['housework'] = {
         title: '配膳する',
         memberId: null,
       },
-      hw005: {
+      t005: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -763,7 +763,7 @@ const defaultHousework: House['housework'] = {
         title: 'テーブルを拭く',
         memberId: null,
       },
-      hw006: {
+      t006: {
         point: 3,
         frequency: {
           key: SPECIFIC_DATES,
@@ -780,7 +780,7 @@ const defaultHousework: House['housework'] = {
         title: '浄水器のフィルター交換',
         memberId: null,
       },
-      hw007: {
+      t007: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -795,7 +795,7 @@ const defaultHousework: House['housework'] = {
         title: '食器用洗剤の補充',
         memberId: null,
       },
-      hw008: {
+      t008: {
         point: 2,
         frequency: {
           key: TEMPORARY,
@@ -806,7 +806,7 @@ const defaultHousework: House['housework'] = {
         title: '包丁を研ぐ',
         memberId: null,
       },
-      hw009: {
+      t009: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -827,7 +827,7 @@ const defaultHousework: House['housework'] = {
   c007: {
     category: '掃除',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -842,7 +842,7 @@ const defaultHousework: House['housework'] = {
         title: 'リビングの床掃除',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -857,7 +857,7 @@ const defaultHousework: House['housework'] = {
         title: 'ベッドルームの床掃除',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -872,7 +872,7 @@ const defaultHousework: House['housework'] = {
         title: 'カーペットのコロコロ',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -887,7 +887,7 @@ const defaultHousework: House['housework'] = {
         title: 'カーペットの洗濯・乾燥',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -908,7 +908,7 @@ const defaultHousework: House['housework'] = {
   c008: {
     category: '季節ごと',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 3,
         frequency: {
           key: TEMPORARY,
@@ -919,7 +919,7 @@ const defaultHousework: House['housework'] = {
         title: '除／加湿器の洗浄',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 5,
         frequency: {
           key: TEMPORARY,
@@ -930,7 +930,7 @@ const defaultHousework: House['housework'] = {
         title: 'エアコンの掃除',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 5,
         frequency: {
           key: SPECIFIC_DATES,
@@ -951,7 +951,7 @@ const defaultHousework: House['housework'] = {
   c009: {
     category: '猫ちゃん',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -966,7 +966,7 @@ const defaultHousework: House['housework'] = {
         title: 'えさやり',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -981,7 +981,7 @@ const defaultHousework: House['housework'] = {
         title: 'えさ皿を洗う',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -992,7 +992,7 @@ const defaultHousework: House['housework'] = {
         title: 'えさ補充',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 3,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -1007,7 +1007,7 @@ const defaultHousework: House['housework'] = {
         title: '水替え',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -1022,7 +1022,7 @@ const defaultHousework: House['housework'] = {
         title: 'ブラッシング',
         memberId: null,
       },
-      hw005: {
+      t005: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -1037,7 +1037,7 @@ const defaultHousework: House['housework'] = {
         title: 'うんち取る',
         memberId: null,
       },
-      hw006: {
+      t006: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -1052,7 +1052,7 @@ const defaultHousework: House['housework'] = {
         title: '猫砂の補充',
         memberId: null,
       },
-      hw007: {
+      t007: {
         point: 2,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -1064,7 +1064,7 @@ const defaultHousework: House['housework'] = {
         title: 'おしっこシートを替える',
         memberId: null,
       },
-      hw008: {
+      t008: {
         point: 1,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -1079,7 +1079,7 @@ const defaultHousework: House['housework'] = {
         title: '涙拭く',
         memberId: null,
       },
-      hw009: {
+      t009: {
         point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -1094,7 +1094,7 @@ const defaultHousework: House['housework'] = {
         title: '手の爪切り',
         memberId: null,
       },
-      hw010: {
+      t010: {
         point: 2,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -1109,7 +1109,7 @@ const defaultHousework: House['housework'] = {
         title: '足の爪切り',
         memberId: null,
       },
-      hw011: {
+      t011: {
         point: 4,
         frequency: {
           key: TIMES_PER_DAYS,
@@ -1130,7 +1130,7 @@ const defaultHousework: House['housework'] = {
   c010: {
     category: 'ごみ',
     taskDetails: {
-      hw000: {
+      t000: {
         point: 2,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -1142,7 +1142,7 @@ const defaultHousework: House['housework'] = {
         title: '可燃ごみ',
         memberId: null,
       },
-      hw001: {
+      t001: {
         point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -1154,7 +1154,7 @@ const defaultHousework: House['housework'] = {
         title: 'プラスチック',
         memberId: null,
       },
-      hw002: {
+      t002: {
         point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -1166,7 +1166,7 @@ const defaultHousework: House['housework'] = {
         title: '缶・ビン',
         memberId: null,
       },
-      hw003: {
+      t003: {
         point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -1178,7 +1178,7 @@ const defaultHousework: House['housework'] = {
         title: 'ペットボトル',
         memberId: null,
       },
-      hw004: {
+      t004: {
         point: 1,
         frequency: {
           key: DAYS_OF_WEEK,
@@ -1190,7 +1190,7 @@ const defaultHousework: House['housework'] = {
         title: '段ボール',
         memberId: null,
       },
-      hw005: {
+      t005: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -1201,7 +1201,7 @@ const defaultHousework: House['housework'] = {
         title: '不燃ごみ',
         memberId: null,
       },
-      hw006: {
+      t006: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -1212,7 +1212,7 @@ const defaultHousework: House['housework'] = {
         title: '粗大ごみ',
         memberId: null,
       },
-      hw007: {
+      t007: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -1223,7 +1223,7 @@ const defaultHousework: House['housework'] = {
         title: '粗大ごみを申し込む',
         memberId: null,
       },
-      hw008: {
+      t008: {
         point: 1,
         frequency: {
           key: TEMPORARY,
@@ -1234,7 +1234,7 @@ const defaultHousework: House['housework'] = {
         title: '粗大ごみ券を買う',
         memberId: null,
       },
-      hw009: {
+      t009: {
         point: 2,
         frequency: {
           key: TEMPORARY,
@@ -1245,7 +1245,7 @@ const defaultHousework: House['housework'] = {
         title: 'ごみ箱を洗う',
         memberId: null,
       },
-      hw010: {
+      t010: {
         point: 1,
         frequency: {
           key: DAYS_OF_WEEK,

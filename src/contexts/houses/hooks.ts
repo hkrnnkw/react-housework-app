@@ -9,12 +9,14 @@ import {
   setLogToFirestore,
 } from '../../handlers/firestoreHandler'
 import {
+  CategoryId,
   Editing,
   House,
   HouseworkDetail,
   HouseworkId,
   Member,
   Task,
+  TaskId,
 } from '../../lib/type'
 import { EDITING_STATUS_ENUM } from '../../lib/constant'
 import { initialHousework } from '../../lib/housework'
@@ -55,8 +57,8 @@ const useHouseForContext = () => {
 
   const switchTaskStatus = async (
     uid: string,
-    categoryId: string,
-    taskId: string,
+    categoryId: CategoryId,
+    taskId: TaskId,
     prevStatus: boolean
   ) => {
     const { currentHouse, currentDate } = state
@@ -120,7 +122,9 @@ const useHouseForContext = () => {
     const { editingStatus, houseworkId } = editing
     const { categoryId, taskId } = houseworkId
     const housework = getCurrentHouseValue('housework') as House['housework']
-    const backup: typeof value = housework[categoryId].taskDetails[taskId][key]
+    const detail = housework[categoryId].taskDetails[taskId]
+    if (!detail) throw new Error('No taskId')
+    const backup: typeof value = detail[key]
 
     dispatch(actions.updateHouseworkDetail(houseworkId, key, value))
     if (editingStatus !== EDITING_STATUS_ENUM.SAVE) return

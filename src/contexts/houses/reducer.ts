@@ -110,6 +110,7 @@ export const reducer = (state: State, action: HouseActionType): State => {
       const { houseworkId, key, value } = action.payload
       const { categoryId, taskId } = houseworkId
       const detail = updates.housework[categoryId].taskDetails[taskId]
+      if (!detail) return state
       updates.housework[categoryId].taskDetails[taskId] = {
         ...detail,
         [key]: value,

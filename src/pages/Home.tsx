@@ -13,7 +13,7 @@ import { useDispatchHouse, useHouse } from '../contexts/houses'
 import { useUser } from '../lib/hooks/store/currentUser'
 import StyledPaper from '../components/atoms/StyledPaper'
 import CustomDrawer from '../components/CustomDrawer/index'
-import { Editing, HouseworkId, Member } from '../lib/type'
+import { CategoryId, Editing, HouseworkId, Member, TaskId } from '../lib/type'
 import { sortTasks } from '../handlers/logsHandler'
 import { EDITING_STATUS_ENUM } from '../lib/constant'
 
@@ -40,8 +40,8 @@ const Home: FC = () => {
   }
 
   const handleTaskComplete = async (
-    categoryId: string,
-    taskId: string,
+    categoryId: CategoryId,
+    taskId: TaskId,
     prevStatus: boolean
   ) => {
     await switchTaskStatus(uid, categoryId, taskId, prevStatus)
@@ -87,7 +87,7 @@ const Home: FC = () => {
                 </ListItemIcon>
                 <ListItemText
                   id={key}
-                  primary={housework[categoryId].taskDetails[taskId].title}
+                  primary={housework[categoryId].taskDetails[taskId]?.title}
                   secondary={getMember(memberId)?.displayName ?? ''}
                 />
               </ListItemButton>

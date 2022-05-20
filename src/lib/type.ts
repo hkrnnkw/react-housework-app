@@ -18,6 +18,12 @@ export type Member = {
   uid: string
 }
 
+export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+export type CategoryId = `c00${Digit}` | 'c010'
+
+export type TaskId = `t${Digit}${Digit}${Digit}`
+
 export type House = {
   id: string
   logs: {
@@ -25,10 +31,10 @@ export type House = {
   }
   memberIds: string[]
   housework: {
-    [categoryId: string]: {
+    [categoryId in CategoryId]: {
       category: string
       taskDetails: {
-        [taskId: string]: HouseworkDetail
+        [taskId in TaskId]?: HouseworkDetail
       }
     }
   }
@@ -71,8 +77,8 @@ export type EditingStatus =
   typeof EDITING_STATUS_ENUM[keyof typeof EDITING_STATUS_ENUM]
 
 export type HouseworkId = {
-  categoryId: string
-  taskId: string
+  categoryId: CategoryId
+  taskId: TaskId
 }
 
 export type Task = HouseworkId & {
