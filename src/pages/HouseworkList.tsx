@@ -61,7 +61,7 @@ const makeNewTaskId = (num: number): TaskId => {
 
 type AccordionProps = {
   categoryId: CategoryId
-  category: string
+  categoryName: string
   taskDetails: {
     [taskId in TaskId]?: HouseworkDetail
   }
@@ -70,7 +70,7 @@ type AccordionProps = {
 
 const Accordion: FC<AccordionProps> = ({
   categoryId,
-  category,
+  categoryName,
   taskDetails,
   setDraft,
 }) => {
@@ -91,7 +91,7 @@ const Accordion: FC<AccordionProps> = ({
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>{category}</Typography>
+        <Typography>{categoryName}</Typography>
       </AccordionSummary>
       <ListItem>
         <ListItemButton onClick={() => handleAdd()} css={addButton}>
@@ -121,11 +121,11 @@ export const Index: FC = () => {
     <>
       <List>
         {Object.entries(housework).map(
-          ([categoryId, { category, taskDetails }]) => (
+          ([categoryId, { categoryName, taskDetails }]) => (
             <Accordion
               key={categoryId}
               categoryId={categoryId as CategoryId}
-              category={category}
+              categoryName={categoryName}
               taskDetails={taskDetails}
               setDraft={setDraft}
             />

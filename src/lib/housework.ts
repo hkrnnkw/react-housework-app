@@ -18,7 +18,7 @@ export const initialHousework: HouseworkDetail = {
 const defaultHousework: House['housework'] = {
   // その他
   c000: {
-    category: 'その他',
+    categoryName: 'その他',
     taskDetails: {
       t000: {
         point: 3,
@@ -120,7 +120,7 @@ const defaultHousework: House['housework'] = {
   },
   // 洗濯
   c001: {
-    category: '洗濯',
+    categoryName: '洗濯',
     taskDetails: {
       t000: {
         point: 1,
@@ -235,7 +235,7 @@ const defaultHousework: House['housework'] = {
   },
   // 洗面所
   c002: {
-    category: '洗面所',
+    categoryName: '洗面所',
     taskDetails: {
       t000: {
         point: 1,
@@ -313,7 +313,7 @@ const defaultHousework: House['housework'] = {
   },
   // お風呂場
   c003: {
-    category: 'お風呂場',
+    categoryName: 'お風呂場',
     taskDetails: {
       t000: {
         point: 3,
@@ -402,7 +402,7 @@ const defaultHousework: House['housework'] = {
   },
   // トイレ
   c004: {
-    category: 'トイレ',
+    categoryName: 'トイレ',
     taskDetails: {
       t000: {
         point: 5,
@@ -475,7 +475,7 @@ const defaultHousework: House['housework'] = {
   },
   // キッチン
   c005: {
-    category: 'キッチン',
+    categoryName: 'キッチン',
     taskDetails: {
       t000: {
         point: 3,
@@ -680,7 +680,7 @@ const defaultHousework: House['housework'] = {
   },
   // 料理
   c006: {
-    category: '料理',
+    categoryName: '料理',
     taskDetails: {
       t000: {
         point: 3,
@@ -825,7 +825,7 @@ const defaultHousework: House['housework'] = {
   },
   // 掃除
   c007: {
-    category: '掃除',
+    categoryName: '掃除',
     taskDetails: {
       t000: {
         point: 2,
@@ -906,7 +906,7 @@ const defaultHousework: House['housework'] = {
   },
   // 季節ごと
   c008: {
-    category: '季節ごと',
+    categoryName: '季節ごと',
     taskDetails: {
       t000: {
         point: 3,
@@ -949,7 +949,7 @@ const defaultHousework: House['housework'] = {
   },
   // 猫ちゃん
   c009: {
-    category: '猫ちゃん',
+    categoryName: '猫ちゃん',
     taskDetails: {
       t000: {
         point: 1,
@@ -1128,7 +1128,7 @@ const defaultHousework: House['housework'] = {
   },
   // ごみ
   c010: {
-    category: 'ごみ',
+    categoryName: 'ごみ',
     taskDetails: {
       t000: {
         point: 2,

@@ -32,7 +32,7 @@ export type House = {
   memberIds: string[]
   housework: {
     [categoryId in CategoryId]: {
-      category: string
+      categoryName: string
       taskDetails: {
         [taskId in TaskId]?: HouseworkDetail
       }

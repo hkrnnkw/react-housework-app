@@ -48,7 +48,8 @@ const CustomDrawer: FC<Props> = ({
   const { DRAFT, SAVE } = EDITING_STATUS_ENUM
   const { houseworkId, editingStatus } = editing
   const { categoryId, taskId } = houseworkId
-  const { category, taskDetails } = housework[categoryId]
+  const category = housework[categoryId]
+  const { categoryName, taskDetails } = category
   const detail = taskDetails[taskId]
   if (!detail) return null
   const { title, description, point, frequency, memberId } = detail
@@ -82,7 +83,7 @@ const CustomDrawer: FC<Props> = ({
       <Puller />
       <List css={list}>
         <ListItem>
-          <Chip label={category} />
+          <Chip label={categoryName} />
           {editingStatus === DRAFT && (
             <Button
               onClick={() => handleSave()}
