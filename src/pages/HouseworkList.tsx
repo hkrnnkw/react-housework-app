@@ -123,9 +123,7 @@ export const Index: FC = () => {
   const [draft, setDraft] = useState<Editing | null>(null)
   const { currentHouse, allHouses } = useHouses()
   if (!allHouses || !currentHouse) return null
-
-  const { id: currentHouseId, members } = currentHouse
-  const { housework } = allHouses[currentHouseId]
+  const { housework } = allHouses[currentHouse.id]
 
   return (
     <>
@@ -142,11 +140,7 @@ export const Index: FC = () => {
           )
         )}
       </List>
-      <CustomDrawer
-        editing={draft}
-        members={Object.values(members)}
-        setEditing={setDraft}
-      />
+      <CustomDrawer editing={draft} setEditing={setDraft} />
     </>
   )
 }

@@ -119,11 +119,7 @@ const Home: FC = () => {
           )
         })}
       </List>
-      <CustomDrawer
-        editing={editing}
-        members={Object.values(members)}
-        setEditing={setEditing}
-      />
+      <CustomDrawer editing={editing} setEditing={setEditing} />
     </StyledPaper>
   )
 }

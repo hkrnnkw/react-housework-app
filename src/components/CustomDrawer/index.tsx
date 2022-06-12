@@ -11,12 +11,7 @@ import {
   SwipeableDrawer,
 } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import {
-  Editing,
-  EditingStatus,
-  HouseworkDetail,
-  Member as MemberType,
-} from '../../lib/type'
+import { Editing, EditingStatus, HouseworkDetail } from '../../lib/type'
 import Frequency from './Frequency'
 import Point from './Point'
 import Member from './Member'
@@ -38,11 +33,10 @@ const Puller = styled(Box)(({ theme }) => ({
 
 type Props = {
   editing: Editing | null
-  members: MemberType[]
   setEditing: (editing: Editing | null) => void
 }
 
-const CustomDrawer: FC<Props> = ({ editing, members, setEditing }) => {
+const CustomDrawer: FC<Props> = ({ editing, setEditing }) => {
   const { updateHouseOnAll } = useDispatchHouses()
   const { allHouses, currentHouse } = useHouses()
   if (!editing || !allHouses || !currentHouse) return null
@@ -51,7 +45,8 @@ const CustomDrawer: FC<Props> = ({ editing, members, setEditing }) => {
   const { houseworkId, editingStatus } = editing
   const { categoryId, taskId } = houseworkId
 
-  const { housework, ...other } = { ...allHouses[currentHouse.id] }
+  const { id: currentHouseId, members } = currentHouse
+  const { housework, ...other } = { ...allHouses[currentHouseId] }
   const category = housework[categoryId]
   const { categoryName, taskDetails } = category
   const detail = taskDetails[taskId]
@@ -142,7 +137,7 @@ const CustomDrawer: FC<Props> = ({ editing, members, setEditing }) => {
           <Member
             editingStatus={editingStatus}
             memberId={memberId}
-            members={members}
+            members={Object.values(members)}
             updateValue={updateHouseworkDetail}
           />
         </ListItem>
