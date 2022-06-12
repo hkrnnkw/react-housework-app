@@ -11,13 +11,20 @@ import {
   SwipeableDrawer,
 } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import { Editing, House, Member as MemberType } from '../../lib/type'
+import {
+  Editing,
+  EditingStatus,
+  HouseworkDetail,
+  Member as MemberType,
+} from '../../lib/type'
 import Frequency from './Frequency'
 import Point from './Point'
 import Member from './Member'
 import Title from './Title'
-import { useDispatchHouse } from '../../contexts/houses'
-import { EDITING_STATUS_ENUM } from '../../lib/constant'
+import { EDITING_STATUS_ENUM, HOUSEWORK_DETAIL_ENUM } from '../../lib/constant'
+import { useDispatchHouses, useHouses } from '../../lib/hooks/store/houses'
+import { updateHouseworkOnFirestore } from '../../handlers/firestoreHandler'
+import Description from './Title/Description'
 
 const Puller = styled(Box)(({ theme }) => ({
   width: 40,
@@ -32,36 +39,53 @@ const Puller = styled(Box)(({ theme }) => ({
 type Props = {
   editing: Editing | null
   members: MemberType[]
-  housework: House['housework']
   setEditing: (editing: Editing | null) => void
 }
 
-const CustomDrawer: FC<Props> = ({
-  editing,
-  members,
-  housework,
-  setEditing,
-}) => {
-  const { deleteHousework, updateHouseworkDetail } = useDispatchHouse()
-  if (!editing) return null
+const CustomDrawer: FC<Props> = ({ editing, members, setEditing }) => {
+  const { updateHouseOnAll } = useDispatchHouses()
+  const { allHouses, currentHouse } = useHouses()
+  if (!editing || !allHouses || !currentHouse) return null
 
   const { DRAFT, SAVE } = EDITING_STATUS_ENUM
   const { houseworkId, editingStatus } = editing
   const { categoryId, taskId } = houseworkId
+
+  const { housework, ...other } = { ...allHouses[currentHouse.id] }
   const category = housework[categoryId]
   const { categoryName, taskDetails } = category
   const detail = taskDetails[taskId]
   if (!detail) return null
   const { title, description, point, frequency, memberId } = detail
 
+  const updateHouseworkDetail = async (
+    status: EditingStatus,
+    key: keyof HouseworkDetail,
+    value: HouseworkDetail[typeof key]
+  ) => {
+    const newDetail = { ...detail, [key]: value }
+    const newTaskDetails = { ...taskDetails, [taskId]: newDetail }
+    const newCategory = { ...category, taskDetails: newTaskDetails }
+    const newHousework = { ...housework, [categoryId]: newCategory }
+    updateHouseOnAll({ ...other, housework: newHousework })
+    if (status !== EDITING_STATUS_ENUM.SAVE) return
+
+    try {
+      await updateHouseworkOnFirestore(currentHouse.id, houseworkId, key, value)
+    } catch (e) {
+      updateHouseOnAll({ ...other, housework })
+    }
+  }
+
   const handleSave = async () => {
-    const saving: Editing = { editingStatus: SAVE, houseworkId }
+    const { TITLE, DESCRIPTION, MEMBER_ID, POINT, FREQUENCY } =
+      HOUSEWORK_DETAIL_ENUM
     const tasks: Promise<void>[] = [
-      updateHouseworkDetail(saving, 'title', title),
-      updateHouseworkDetail(saving, 'description', description),
-      updateHouseworkDetail(saving, 'point', point),
-      updateHouseworkDetail(saving, 'frequency', frequency),
-      updateHouseworkDetail(saving, 'memberId', memberId),
+      updateHouseworkDetail(SAVE, TITLE, title),
+      updateHouseworkDetail(SAVE, DESCRIPTION, description),
+      updateHouseworkDetail(SAVE, MEMBER_ID, memberId),
+      updateHouseworkDetail(SAVE, POINT, point),
+      updateHouseworkDetail(SAVE, FREQUENCY, frequency),
     ]
     await Promise.all(tasks)
     setEditing({ houseworkId, editingStatus: SAVE })
@@ -70,7 +94,14 @@ const CustomDrawer: FC<Props> = ({
   const handleClose = () => {
     setEditing(null)
     if (editingStatus !== DRAFT) return
-    deleteHousework(houseworkId)
+
+    const newTaskDetails = { ...taskDetails }
+    const isDeleted = delete newTaskDetails[taskId]
+    if (!isDeleted) return
+
+    const newCategory = { ...category, taskDetails: newTaskDetails }
+    const newHousework = { ...housework, [categoryId]: newCategory }
+    updateHouseOnAll({ ...other, housework: newHousework })
   }
 
   return (
@@ -96,16 +127,38 @@ const CustomDrawer: FC<Props> = ({
           )}
         </ListItem>
         <ListItem css={listItem}>
-          <Title editing={editing} title={title} description={description} />
+          <Title
+            editingStatus={editingStatus}
+            title={title}
+            updateValue={updateHouseworkDetail}
+          />
+          <Description
+            editingStatus={editingStatus}
+            description={description}
+            updateValue={updateHouseworkDetail}
+          />
         </ListItem>
         <ListItem css={listItem}>
-          <Member editing={editing} memberId={memberId} members={members} />
+          <Member
+            editingStatus={editingStatus}
+            memberId={memberId}
+            members={members}
+            updateValue={updateHouseworkDetail}
+          />
         </ListItem>
         <ListItem css={listItem}>
-          <Point editing={editing} point={point} />
+          <Point
+            editingStatus={editingStatus}
+            point={point}
+            updateValue={updateHouseworkDetail}
+          />
         </ListItem>
         <ListItem css={listItem}>
-          <Frequency editing={editing} frequency={frequency} />
+          <Frequency
+            editingStatus={editingStatus}
+            frequency={frequency}
+            updateValue={updateHouseworkDetail}
+          />
         </ListItem>
       </List>
     </SwipeableDrawer>

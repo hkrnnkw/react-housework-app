@@ -3,26 +3,35 @@ import { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
 import {
-  Editing,
+  EditingStatus,
   HouseworkDetail,
   Member as MemberType,
 } from '../../../lib/type'
-import { useDispatchHouse } from '../../../contexts/houses'
-import { NOT_SET } from '../../../lib/constant'
+import { HOUSEWORK_DETAIL_ENUM, NOT_SET } from '../../../lib/constant'
+
+const KEY = HOUSEWORK_DETAIL_ENUM.MEMBER_ID
 
 type Props = {
-  editing: Editing
-  memberId: HouseworkDetail['memberId']
+  editingStatus: EditingStatus
+  memberId: HouseworkDetail[typeof KEY]
   members: MemberType[]
+  updateValue: (
+    editingStatus: EditingStatus,
+    key: typeof KEY,
+    value: HouseworkDetail[typeof KEY]
+  ) => Promise<void>
 }
 
-const Member: FC<Props> = ({ editing, memberId, members }) => {
-  const { updateHouseworkDetail } = useDispatchHouse()
-
+const Member: FC<Props> = ({
+  editingStatus,
+  memberId,
+  members,
+  updateValue,
+}) => {
   const handleChange = async (event: SelectChangeEvent<typeof memberId>) => {
     const { value } = event.target
     const update = value === NOT_SET ? null : value
-    await updateHouseworkDetail(editing, 'memberId', update)
+    await updateValue(editingStatus, KEY, update)
   }
 
   return (

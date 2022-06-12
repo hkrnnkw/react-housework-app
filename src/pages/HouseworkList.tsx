@@ -15,7 +15,7 @@ import {
 import AddIcon from '@mui/icons-material/Add'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { css } from '@emotion/react'
-import { useDispatchHouse, useHouse } from '../contexts/houses'
+import { useDispatchHouses, useHouses } from '../lib/hooks/store/houses'
 import CustomDrawer from '../components/CustomDrawer'
 import {
   CategoryId,
@@ -26,6 +26,7 @@ import {
   TaskId,
 } from '../lib/type'
 import { EDITING_STATUS_ENUM } from '../lib/constant'
+import { initialHousework } from '../lib/housework'
 
 type TaskProps = {
   link: string
@@ -74,13 +75,22 @@ const Accordion: FC<AccordionProps> = ({
   taskDetails,
   setDraft,
 }) => {
-  const { createNewHousework } = useDispatchHouse()
+  const { updateHouseOnAll } = useDispatchHouses()
+  const { allHouses, currentHouse } = useHouses()
+  if (!allHouses || !currentHouse) return null
+
   const taskDetailEntries = Object.entries(taskDetails)
   const newTaskId = makeNewTaskId(taskDetailEntries.length)
 
   const handleAdd = () => {
+    const { housework, ...other } = { ...allHouses[currentHouse.id] }
+    const newTaskDetails = { ...taskDetails, [newTaskId]: initialHousework }
+    const category = housework[categoryId]
+    const newCategory = { ...category, taskDetails: newTaskDetails }
+    const newHousework = { ...housework, [categoryId]: newCategory }
+    updateHouseOnAll({ ...other, housework: newHousework })
+
     const houseworkId: HouseworkId = { categoryId, taskId: newTaskId }
-    createNewHousework(houseworkId)
     setDraft({ houseworkId, editingStatus: EDITING_STATUS_ENUM.DRAFT })
   }
 
@@ -111,11 +121,11 @@ const Accordion: FC<AccordionProps> = ({
 
 export const Index: FC = () => {
   const [draft, setDraft] = useState<Editing | null>(null)
-  const { currentHouse, houses } = useHouse()
+  const { currentHouse, allHouses } = useHouses()
+  if (!allHouses || !currentHouse) return null
 
-  if (!currentHouse || !houses) return null
   const { id: currentHouseId, members } = currentHouse
-  const { housework } = houses[currentHouseId]
+  const { housework } = allHouses[currentHouseId]
 
   return (
     <>
@@ -135,7 +145,6 @@ export const Index: FC = () => {
       <CustomDrawer
         editing={draft}
         members={Object.values(members)}
-        housework={housework}
         setEditing={setDraft}
       />
     </>

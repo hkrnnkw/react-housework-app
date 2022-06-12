@@ -2,23 +2,28 @@
 import { FC } from 'react'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { css } from '@emotion/react'
-import { POINT_ENUM } from '../../../lib/constant'
-import { Editing, HouseworkDetail } from '../../../lib/type'
-import { useDispatchHouse } from '../../../contexts/houses'
+import { HOUSEWORK_DETAIL_ENUM, POINT_ENUM } from '../../../lib/constant'
+import { EditingStatus, HouseworkDetail } from '../../../lib/type'
+
+const KEY = HOUSEWORK_DETAIL_ENUM.POINT
 
 type Props = {
-  editing: Editing
-  point: HouseworkDetail['point']
+  editingStatus: EditingStatus
+  point: HouseworkDetail[typeof KEY]
+  updateValue: (
+    editingStatus: EditingStatus,
+    key: typeof KEY,
+    value: HouseworkDetail[typeof KEY]
+  ) => Promise<void>
 }
 
-const Point: FC<Props> = ({ editing, point }) => {
-  const { updateHouseworkDetail } = useDispatchHouse()
+const Point: FC<Props> = ({ editingStatus, point, updateValue }) => {
   const { ONE, TWO, THREE, FOUR, FIVE } = POINT_ENUM
 
   const handleChange = async (event: SelectChangeEvent<typeof point>) => {
     const { value } = event.target
     const update = value as typeof point
-    await updateHouseworkDetail(editing, 'point', update)
+    await updateValue(editingStatus, KEY, update)
   }
 
   return (

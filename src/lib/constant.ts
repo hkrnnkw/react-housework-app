@@ -5,6 +5,14 @@ export const DIRECTION_ENUM = {
 
 export const DATE_FORMAT = 'YYYYMMDD'
 
+export const HOUSEWORK_DETAIL_ENUM = {
+  TITLE: 'title',
+  DESCRIPTION: 'description',
+  MEMBER_ID: 'memberId',
+  POINT: 'point',
+  FREQUENCY: 'frequency',
+} as const
+
 export const DAY_OF_WEEK_ENUM = [0, 1, 2, 3, 4, 5, 6] as const
 
 export const JPN_LOCALIZED_DAY_OF_WEEK_ENUM = {

@@ -9,29 +9,40 @@ import {
   ListItemText,
 } from '@mui/material'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import { useDispatchHouse, useHouse } from '../contexts/houses'
+import { useDispatchHouses, useHouses } from '../lib/hooks/store/houses'
 import { useUser } from '../lib/hooks/store/currentUser'
 import StyledPaper from '../components/atoms/StyledPaper'
 import CustomDrawer from '../components/CustomDrawer/index'
-import { CategoryId, Editing, HouseworkId, Member, TaskId } from '../lib/type'
+import {
+  CategoryId,
+  Editing,
+  House,
+  HouseworkId,
+  Member,
+  TaskId,
+} from '../lib/type'
 import { sortTasks } from '../handlers/logsHandler'
 import { EDITING_STATUS_ENUM } from '../lib/constant'
+import { useDate } from '../lib/hooks/store/currentDate'
+import { setLogToFirestore } from '../handlers/firestoreHandler'
 
 const Home: FC = () => {
   const [editing, setEditing] = useState<Editing | null>(null)
   const { uid } = useUser()
-  const { initHouses, switchTaskStatus } = useDispatchHouse()
-  const { currentDate, currentHouse, houses } = useHouse()
+  const { initHouses, updateHouseOnAll } = useDispatchHouses()
+  const { allHouses, currentHouse } = useHouses()
+  const { currentDate } = useDate()
 
   useEffect(() => {
     if (!uid.length) return
+    if (allHouses !== null || currentHouse !== null) return
     // eslint-disable-next-line no-console
     initHouses(uid).catch((e) => console.error(e))
-  }, [initHouses, uid])
+  }, [allHouses, currentHouse, initHouses, uid])
 
-  if (!currentHouse || !houses) return null
+  if (!allHouses || !currentHouse) return null
   const { id: currentHouseId, members } = currentHouse
-  const { logs, housework } = houses[currentHouseId]
+  const { logs, ...other } = allHouses[currentHouseId]
   const tasks = sortTasks([...(logs[currentDate] ?? [])])
 
   const getMember = (memberId: string | null): Member | null => {
@@ -42,9 +53,21 @@ const Home: FC = () => {
   const handleTaskComplete = async (
     categoryId: CategoryId,
     taskId: TaskId,
-    prevStatus: boolean
+    prevStatus: boolean,
+    index: number
   ) => {
-    await switchTaskStatus(uid, categoryId, taskId, prevStatus)
+    const updatedTasks = [...tasks]
+    const memberId = prevStatus ? null : uid
+    const isCompleted = !prevStatus
+    updatedTasks.splice(index, 1, { categoryId, taskId, memberId, isCompleted })
+    const newLogs: House['logs'] = { ...logs, [currentDate]: updatedTasks }
+    updateHouseOnAll({ ...other, logs: newLogs })
+    try {
+      await setLogToFirestore(currentHouse.id, currentDate, updatedTasks)
+    } catch (e) {
+      const backUpLogs: House['logs'] = { ...logs, [currentDate]: [...tasks] }
+      updateHouseOnAll({ ...other, logs: backUpLogs })
+    }
   }
 
   const handleEdit = (houseworkId: HouseworkId) => {
@@ -56,6 +79,7 @@ const Home: FC = () => {
       <List>
         {tasks.map(({ categoryId, taskId, memberId, isCompleted }, i) => {
           const key = `${categoryId}-${taskId}-${i}`
+          const title = other.housework[categoryId].taskDetails[taskId]?.title
           return (
             <ListItem
               key={key}
@@ -75,7 +99,7 @@ const Home: FC = () => {
             >
               <ListItemButton
                 onClick={() =>
-                  handleTaskComplete(categoryId, taskId, isCompleted)
+                  handleTaskComplete(categoryId, taskId, isCompleted, i)
                 }
               >
                 <ListItemIcon>
@@ -87,7 +111,7 @@ const Home: FC = () => {
                 </ListItemIcon>
                 <ListItemText
                   id={key}
-                  primary={housework[categoryId].taskDetails[taskId]?.title}
+                  primary={title}
                   secondary={getMember(memberId)?.displayName ?? ''}
                 />
               </ListItemButton>
@@ -98,7 +122,6 @@ const Home: FC = () => {
       <CustomDrawer
         editing={editing}
         members={Object.values(members)}
-        housework={housework}
         setEditing={setEditing}
       />
     </StyledPaper>

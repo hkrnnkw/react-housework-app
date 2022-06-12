@@ -2,28 +2,37 @@
 import { ChangeEvent, FC } from 'react'
 import { TextField } from '@mui/material'
 import { css } from '@emotion/react'
-import { Editing, HouseworkDetail } from '../../../lib/type'
-import { useDispatchHouse } from '../../../contexts/houses'
-import { EDITING_STATUS_ENUM } from '../../../lib/constant'
+import { EditingStatus, HouseworkDetail } from '../../../lib/type'
+import {
+  EDITING_STATUS_ENUM,
+  HOUSEWORK_DETAIL_ENUM,
+} from '../../../lib/constant'
+
+const KEY = HOUSEWORK_DETAIL_ENUM.DESCRIPTION
 
 type Props = {
-  editing: Editing
-  description: HouseworkDetail['description']
+  editingStatus: EditingStatus
+  description: HouseworkDetail[typeof KEY]
+  updateValue: (
+    editingStatus: EditingStatus,
+    key: typeof KEY,
+    value: HouseworkDetail[typeof KEY]
+  ) => Promise<void>
 }
 
-const Description: FC<Props> = ({ editing, description }) => {
-  const { updateHouseworkDetail } = useDispatchHouse()
-  const { houseworkId } = editing
-
+const Description: FC<Props> = ({
+  editingStatus,
+  description,
+  updateValue,
+}) => {
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
     const { DRAFT } = EDITING_STATUS_ENUM
-    const drafting: Editing = { editingStatus: DRAFT, houseworkId }
-    await updateHouseworkDetail(drafting, 'description', value)
+    await updateValue(DRAFT, KEY, value)
   }
 
   const handleBlur = async () => {
-    await updateHouseworkDetail(editing, 'description', description)
+    await updateValue(editingStatus, KEY, description)
   }
 
   return (

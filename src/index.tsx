@@ -4,15 +4,12 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { HouseProvider } from './contexts/houses'
 
 ReactDOM.render(
   <RecoilRoot>
-    <HouseProvider>
-      <StrictMode>
-        <App />
-      </StrictMode>
-    </HouseProvider>
+    <StrictMode>
+      <App />
+    </StrictMode>
   </RecoilRoot>,
   document.getElementById('root')
 )
