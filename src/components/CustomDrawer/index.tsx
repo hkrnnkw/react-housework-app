@@ -16,10 +16,10 @@ import Frequency from './Frequency'
 import Point from './Point'
 import Member from './Member'
 import Title from './Title'
+import Description from './Description'
 import { EDITING_STATUS_ENUM, HOUSEWORK_DETAIL_ENUM } from '../../lib/constant'
 import { useDispatchHouses, useHouses } from '../../lib/hooks/store/houses'
 import { updateHouseworkOnFirestore } from '../../handlers/firestoreHandler'
-import Description from './Title/Description'
 
 const Puller = styled(Box)(({ theme }) => ({
   width: 40,
