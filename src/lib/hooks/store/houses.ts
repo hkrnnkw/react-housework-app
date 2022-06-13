@@ -3,7 +3,7 @@ import { useRecoilCallback, useRecoilValue } from 'recoil'
 import {
   createHouseToFirestore,
   getHousesFromFirestore,
-  getUserFromFirestore,
+  getMemberFromFirestore,
 } from '../../../handlers/firestoreHandler'
 import { createLogs } from '../../../handlers/logsHandler'
 import { stateCurrentDate } from '../../states/currentDate'
@@ -27,7 +27,7 @@ export const useHouses = () => {
 
 export const useDispatchHouses = () => {
   const getMembers = useRecoilCallback(() => async (memberIds: string[]) => {
-    const tasks = memberIds.map((uid) => getUserFromFirestore(uid))
+    const tasks = memberIds.map((uid) => getMemberFromFirestore(uid))
     const memberArray: Member[] = await Promise.all(tasks)
     const members: CurrentHouse['members'] = {}
     memberArray.forEach((member) => {
