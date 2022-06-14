@@ -1,7 +1,7 @@
 import { atom } from 'recoil'
 import { Auth, Member } from '../type'
 
-export type CurrentUser = Auth & Member
+export type CurrentUser = Omit<Auth & Member, 'monthlyPoints'>
 
 export const INIT_CURRENT_USER: CurrentUser = {
   displayName: null,
