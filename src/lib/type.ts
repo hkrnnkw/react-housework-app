@@ -11,32 +11,12 @@ export type Auth = {
   refreshToken: string
 }
 
-export type Month =
-  | '01'
-  | '02'
-  | '03'
-  | '04'
-  | '05'
-  | '06'
-  | '07'
-  | '08'
-  | '09'
-  | '10'
-  | '11'
-  | '12'
-
-export type MonthlyPoints = {
-  [yyyy: number]: {
-    [mm in Month]?: number
-  }
-}
-
 export type Member = {
   displayName: string | null
   email: string | null
   photoURL: string | null
   uid: string
-  monthlyPoints: MonthlyPoints
+  monthlyPoints: number
 }
 
 export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9

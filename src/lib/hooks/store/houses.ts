@@ -14,7 +14,7 @@ import {
   stateAllHouses,
   stateCurrentHouse,
 } from '../../states/houses'
-import { House, Member, Month } from '../../type'
+import { House, Member } from '../../type'
 
 export const useHouses = () => {
   const allHouses = useRecoilValue(stateAllHouses)
@@ -51,7 +51,6 @@ export const useDispatchHouses = () => {
     const theDate = dayjs(currentDate)
     const yyyy = theDate.year()
     const mm = theDate.month() + 1
-    const mmAsMonth = mm.toString() as Month
     const days = theDate.daysInMonth()
 
     const logs: House['logs'] = { ...argLogs }
@@ -65,15 +64,8 @@ export const useDispatchHouses = () => {
         const detail = housework[categoryId].taskDetails[taskId]
         if (!memberId || !isCompleted || !detail) return
 
-        const prev = members[memberId].monthlyPoints || { [yyyy]: {} }
-        const yyyymmTotal = prev[yyyy][mmAsMonth] ?? 0
-        const monthlyPoints = {
-          ...prev,
-          [yyyy]: {
-            ...prev[yyyy],
-            [mmAsMonth]: yyyymmTotal + detail.point,
-          },
-        }
+        const prev: number = members[memberId].monthlyPoints ?? 0
+        const monthlyPoints = prev + detail.point
         members[memberId] = { ...members[memberId], monthlyPoints }
       })
     }
