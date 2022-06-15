@@ -22,9 +22,7 @@ export const setUserToFirestore = async (user: CurrentUser): Promise<void> => {
   await setDoc(newUserRef, user, { merge: true })
 }
 
-export const getMemberFromFirestore = async (
-  uid: string
-): Promise<Member> => {
+export const getMemberFromFirestore = async (uid: string): Promise<Member> => {
   const db = getFirestore()
   const docRef: DocumentReference<DocumentData> = doc(db, 'users', uid)
   const docSnap = await getDoc(docRef)
