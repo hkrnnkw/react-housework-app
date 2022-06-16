@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import {
   Checkbox,
   IconButton,
@@ -27,6 +27,9 @@ import { useDate } from '../lib/hooks/store/currentDate'
 import { setLogToFirestore } from '../handlers/firestoreHandler'
 
 const Home: FC = () => {
+  /** todo: remove below for production */
+  const didLogRef = useRef(false)
+
   const [editing, setEditing] = useState<Editing | null>(null)
   const { uid } = useUser()
   const { initHouses, updateHouseOnAll } = useDispatchHouses()
@@ -34,6 +37,10 @@ const Home: FC = () => {
   const { currentDate } = useDate()
 
   useEffect(() => {
+    /** todo: remove below for production */
+    if (didLogRef.current) return
+    didLogRef.current = true
+
     if (!uid.length) return
     if (allHouses !== null || currentHouse !== null) return
 
