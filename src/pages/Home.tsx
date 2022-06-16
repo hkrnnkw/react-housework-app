@@ -36,13 +36,17 @@ const Home: FC = () => {
   useEffect(() => {
     if (!uid.length) return
     if (allHouses !== null || currentHouse !== null) return
-    // eslint-disable-next-line no-console
-    initHouses(uid).catch((e) => console.error(e))
+
+    initHouses(uid).catch((e) => {
+      throw new Error(e)
+    })
   }, [allHouses, currentHouse, initHouses, uid])
 
   if (!allHouses || !currentHouse) return null
   const { id: currentHouseId, members } = currentHouse
-  const { logs, ...other } = allHouses[currentHouseId]
+  const house = { ...allHouses[currentHouseId] }
+  if (!house.logs) return null
+  const { logs, ...other } = house
   const tasks = sortTasks([...(logs[currentDate] ?? [])])
 
   const getMember = (memberId: string | null): Member | null => {
