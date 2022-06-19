@@ -33,7 +33,7 @@ const Home: FC = () => {
   const [editing, setEditing] = useState<Editing | null>(null)
   const { uid } = useUser()
   const { initHouses, updateHouseOnAll } = useDispatchHouses()
-  const { allHouses, currentHouse } = useHouses()
+  const { allHouses, houseId, members } = useHouses()
   const { currentDate } = useDate()
 
   useEffect(() => {
@@ -42,18 +42,17 @@ const Home: FC = () => {
     didLogRef.current = true
 
     if (!uid.length) return
-    if (allHouses !== null || currentHouse !== null) return
+    if (allHouses || houseId || members) return
 
     initHouses(uid).catch((e) => {
       throw new Error(e)
     })
-  }, [allHouses, currentHouse, initHouses, uid])
+  }, [allHouses, houseId, members, initHouses, uid])
 
-  if (!allHouses || !currentHouse) return null
-  const { id: currentHouseId, members } = currentHouse
-  const house = { ...allHouses[currentHouseId] }
-  if (!house.logs) return null
-  const { logs, ...other } = house
+  if (!allHouses || !houseId || !members) return null
+  const currentHouse = { ...allHouses[houseId] }
+  if (!currentHouse.logs) return null
+  const { logs, ...other } = currentHouse
   const tasks = sortTasks([...(logs[currentDate] ?? [])])
 
   const getMember = (memberId: string | null): Member | null => {
@@ -74,7 +73,7 @@ const Home: FC = () => {
     const newLogs: House['logs'] = { ...logs, [currentDate]: updatedTasks }
     updateHouseOnAll({ ...other, logs: newLogs })
     try {
-      await setLogToFirestore(currentHouse.id, currentDate, updatedTasks)
+      await setLogToFirestore(houseId, currentDate, updatedTasks)
     } catch (e) {
       const backUpLogs: House['logs'] = { ...logs, [currentDate]: [...tasks] }
       updateHouseOnAll({ ...other, logs: backUpLogs })

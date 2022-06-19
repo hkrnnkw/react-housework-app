@@ -76,14 +76,14 @@ const Accordion: FC<AccordionProps> = ({
   setDraft,
 }) => {
   const { updateHouseOnAll } = useDispatchHouses()
-  const { allHouses, currentHouse } = useHouses()
-  if (!allHouses || !currentHouse) return null
+  const { allHouses, houseId } = useHouses()
+  if (!allHouses || !houseId) return null
 
   const taskDetailEntries = Object.entries(taskDetails)
   const newTaskId = makeNewTaskId(taskDetailEntries.length)
 
   const handleAdd = () => {
-    const { housework, ...other } = { ...allHouses[currentHouse.id] }
+    const { housework, ...other } = { ...allHouses[houseId] }
     const newTaskDetails = { ...taskDetails, [newTaskId]: initialHousework }
     const category = housework[categoryId]
     const newCategory = { ...category, taskDetails: newTaskDetails }
@@ -121,9 +121,9 @@ const Accordion: FC<AccordionProps> = ({
 
 export const Index: FC = () => {
   const [draft, setDraft] = useState<Editing | null>(null)
-  const { currentHouse, allHouses } = useHouses()
-  if (!allHouses || !currentHouse) return null
-  const { housework } = allHouses[currentHouse.id]
+  const { allHouses, houseId } = useHouses()
+  if (!allHouses || !houseId) return null
+  const { housework } = allHouses[houseId]
 
   return (
     <>

@@ -10,19 +10,22 @@ import { createLogs } from '../../../handlers/logsHandler'
 import { stateCurrentDate } from '../../states/currentDate'
 import {
   AllHouses,
-  CurrentHouse,
+  Members,
   stateAllHouses,
-  stateCurrentHouse,
+  stateHouseId,
+  stateMembers,
 } from '../../states/houses'
 import { House, Member } from '../../type'
 
 export const useHouses = () => {
   const allHouses = useRecoilValue(stateAllHouses)
-  const currentHouse = useRecoilValue(stateCurrentHouse)
+  const houseId = useRecoilValue(stateHouseId)
+  const members = useRecoilValue(stateMembers)
 
   return {
     allHouses,
-    currentHouse,
+    houseId,
+    members,
   }
 }
 
@@ -30,7 +33,7 @@ export const useDispatchHouses = () => {
   const getMembers = useRecoilCallback(() => async (memberIds: string[]) => {
     const tasks = memberIds.map((uid) => getMemberFromFirestore(uid))
     const memberArray: Member[] = await Promise.all(tasks)
-    const members: CurrentHouse['members'] = {}
+    const members: Members = {}
     memberArray.forEach((member) => {
       members[member.uid] = member
     })
@@ -46,7 +49,7 @@ export const useDispatchHouses = () => {
     currentDate: string,
     argLogs: House['logs'],
     housework: House['housework'],
-    argMembers: CurrentHouse['members']
+    argMembers: Members
   ) => {
     const theDate = dayjs(currentDate)
     const yyyy = theDate.year()
@@ -54,7 +57,7 @@ export const useDispatchHouses = () => {
     const days = theDate.daysInMonth()
 
     const logs: House['logs'] = { ...argLogs }
-    const members: CurrentHouse['members'] = { ...argMembers }
+    const members: Members = { ...argMembers }
     for (let i = 1; i <= days; i += 1) {
       const date = `${yyyy}${getTwoDigits(mm)}${getTwoDigits(i)}`
       if (!logs[date]) Object.assign(logs, { [date]: [] })
@@ -78,6 +81,7 @@ export const useDispatchHouses = () => {
         const res = await getHousesFromFirestore(uid)
         const house = res.shift() ?? (await createHouseToFirestore(uid))
         const { id, logs: prevLogs, memberIds, housework } = { ...house }
+        set(stateHouseId, id)
 
         const currentDate = snapshot.getLoadable(stateCurrentDate).getValue()
         const logs = createLogs(housework, { ...prevLogs }, currentDate)
@@ -94,7 +98,7 @@ export const useDispatchHouses = () => {
           housework,
           members
         )
-        set(stateCurrentHouse, { id, members: withPoints })
+        set(stateMembers, withPoints)
       }
   )
 

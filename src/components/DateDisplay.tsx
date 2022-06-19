@@ -12,15 +12,15 @@ const DateDisplay: FC = () => {
   const { currentDate } = useDate()
   const { changeDate } = useDispatchDate()
   const { updateHouseOnAll } = useDispatchHouses()
-  const { allHouses, currentHouse } = useHouses()
-  if (!allHouses || !currentHouse) return null
+  const { allHouses, houseId } = useHouses()
+  if (!allHouses || !houseId) return null
 
   const { PREV, NEXT } = DIRECTION_ENUM
 
   const handleChangeDate = (direction: DirectionType) => {
     const newDate = changeDate(direction)
 
-    const { housework, logs: prevLogs, ...other } = allHouses[currentHouse.id]
+    const { housework, logs: prevLogs, ...other } = allHouses[houseId]
     const logs = createLogs(housework, { ...prevLogs }, newDate)
     updateHouseOnAll({ ...other, housework, logs })
   }

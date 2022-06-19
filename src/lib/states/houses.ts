@@ -5,11 +5,8 @@ export type AllHouses = {
   [id: string]: House
 }
 
-export type CurrentHouse = {
-  id: string
-  members: {
-    [uid: string]: Member
-  }
+export type Members = {
+  [uid: string]: Member
 }
 
 export const stateAllHouses = atom<AllHouses | null>({
@@ -17,7 +14,12 @@ export const stateAllHouses = atom<AllHouses | null>({
   default: null,
 })
 
-export const stateCurrentHouse = atom<CurrentHouse | null>({
-  key: 'stateCurrentHouse',
+export const stateHouseId = atom<string | null>({
+  key: 'stateHouseId',
+  default: null,
+})
+
+export const stateMembers = atom<Members | null>({
+  key: 'stateMembers',
   default: null,
 })

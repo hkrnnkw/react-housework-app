@@ -38,15 +38,14 @@ type Props = {
 
 const CustomDrawer: FC<Props> = ({ editing, setEditing }) => {
   const { updateHouseOnAll } = useDispatchHouses()
-  const { allHouses, currentHouse } = useHouses()
-  if (!editing || !allHouses || !currentHouse) return null
+  const { allHouses, houseId, members } = useHouses()
+  if (!editing || !allHouses || !houseId || !members) return null
 
   const { DRAFT, SAVE } = EDITING_STATUS_ENUM
   const { houseworkId, editingStatus } = editing
   const { categoryId, taskId } = houseworkId
 
-  const { id: currentHouseId, members } = currentHouse
-  const { housework, ...other } = { ...allHouses[currentHouseId] }
+  const { housework, ...other } = { ...allHouses[houseId] }
   const category = housework[categoryId]
   const { categoryName, taskDetails } = category
   const detail = taskDetails[taskId]
@@ -66,7 +65,7 @@ const CustomDrawer: FC<Props> = ({ editing, setEditing }) => {
     if (status !== EDITING_STATUS_ENUM.SAVE) return
 
     try {
-      await updateHouseworkOnFirestore(currentHouse.id, houseworkId, key, value)
+      await updateHouseworkOnFirestore(houseId, houseworkId, key, value)
     } catch (e) {
       updateHouseOnAll({ ...other, housework })
     }
