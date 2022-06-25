@@ -9,10 +9,10 @@ import {
   ListItemText,
 } from '@mui/material'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import { useDispatchHouses, useHouses } from '../lib/hooks/store/houses'
-import { useUser } from '../lib/hooks/store/currentUser'
-import StyledPaper from '../components/atoms/StyledPaper'
-import CustomDrawer from '../components/CustomDrawer/index'
+import { useDispatchHouses, useHouses } from '../../lib/hooks/store/houses'
+import { useUser } from '../../lib/hooks/store/currentUser'
+import StyledPaper from '../../components/atoms/StyledPaper'
+import CustomDrawer from '../../components/CustomDrawer/index'
 import {
   CategoryId,
   Editing,
@@ -20,11 +20,11 @@ import {
   HouseworkId,
   Member,
   TaskId,
-} from '../lib/type'
-import { sortTasks } from '../handlers/logsHandler'
-import { EDITING_STATUS_ENUM } from '../lib/constant'
-import { useDate } from '../lib/hooks/store/currentDate'
-import { setLogToFirestore } from '../handlers/firestoreHandler'
+} from '../../lib/type'
+import { sortTasks } from '../../handlers/logsHandler'
+import { EDITING_STATUS_ENUM } from '../../lib/constant'
+import { useDate } from '../../lib/hooks/store/currentDate'
+import { setLogToFirestore } from '../../handlers/firestoreHandler'
 
 const Home: FC = () => {
   /** todo: remove below for production */
