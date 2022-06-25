@@ -114,8 +114,19 @@ export const useDispatchHouses = () => {
       }
   )
 
+  const updateMemberOnAll = useRecoilCallback(
+    ({ set, snapshot }) =>
+      (uid: Member['uid'], key: keyof Member, value: Member[typeof key]) => {
+        const allMembers = snapshot.getLoadable(stateMembers).getValue()
+        if (!allMembers) return
+        const member: Member = { ...allMembers[uid], [key]: value }
+        set(stateMembers, { ...allMembers, [uid]: member })
+      }
+  )
+
   return {
     initHouses,
     updateHouseOnAll,
+    updateMemberOnAll,
   }
 }

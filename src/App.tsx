@@ -23,6 +23,7 @@ import HouseworkList, {
 import SignIn, { Loading } from './components/SignIn'
 import DateDisplay from './components/DateDisplay'
 import { useUser, useDispatchUser } from './lib/hooks/store/currentUser'
+import PointDisplay from './components/PointDisplay'
 
 const AppBarStyle = styled(AppBar)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -38,11 +39,7 @@ const AppBarStyle = styled(AppBar)(({ theme }) => ({
 const StyledAppBar: FC = (): JSX.Element => (
   <AppBarStyle position="fixed">
     <Toolbar>
-      <div id="title">
-        <Link component={RouterLink} to={paths.root} id="logo">
-          Top
-        </Link>
-      </div>
+      <PointDisplay />
       <DateDisplay />
       <IconButton aria-label="settings">
         <Link component={RouterLink} to={paths.settings}>

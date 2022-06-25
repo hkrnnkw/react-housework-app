@@ -32,7 +32,8 @@ const Home: FC = () => {
 
   const [editing, setEditing] = useState<Editing | null>(null)
   const { uid } = useUser()
-  const { initHouses, updateHouseOnAll } = useDispatchHouses()
+  const { initHouses, updateHouseOnAll, updateMemberOnAll } =
+    useDispatchHouses()
   const { allHouses, houseId, members } = useHouses()
   const { currentDate } = useDate()
 
@@ -60,7 +61,7 @@ const Home: FC = () => {
     return members[memberId] ?? null
   }
 
-  const handleTaskComplete = async (
+  const updateTaskStatus = async (
     categoryId: CategoryId,
     taskId: TaskId,
     prevStatus: boolean,
@@ -72,10 +73,20 @@ const Home: FC = () => {
     updatedTasks.splice(index, 1, { categoryId, taskId, memberId, isCompleted })
     const newLogs: House['logs'] = { ...logs, [currentDate]: updatedTasks }
     updateHouseOnAll({ ...other, logs: newLogs })
+    await setLogToFirestore(houseId, currentDate, updatedTasks)
+  }
+
+  const switchTask = async (...args: Parameters<typeof updateTaskStatus>) => {
+    const backUpLogs: House['logs'] = { ...logs, [currentDate]: [...tasks] }
+    const [categoryId, taskId, prevStatus] = args
+    const detail = other.housework[categoryId].taskDetails[taskId]
+    if (!detail) return
     try {
-      await setLogToFirestore(houseId, currentDate, updatedTasks)
+      await updateTaskStatus(...args)
+      const calc = detail.point * (prevStatus ? -1 : 1)
+      const newPoints = members[uid].monthlyPoints + calc
+      updateMemberOnAll(uid, 'monthlyPoints', newPoints)
     } catch (e) {
-      const backUpLogs: House['logs'] = { ...logs, [currentDate]: [...tasks] }
       updateHouseOnAll({ ...other, logs: backUpLogs })
     }
   }
@@ -108,9 +119,7 @@ const Home: FC = () => {
               }}
             >
               <ListItemButton
-                onClick={() =>
-                  handleTaskComplete(categoryId, taskId, isCompleted, i)
-                }
+                onClick={() => switchTask(categoryId, taskId, isCompleted, i)}
               >
                 <ListItemIcon>
                   <Checkbox
