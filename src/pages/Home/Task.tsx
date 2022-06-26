@@ -11,6 +11,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { HouseworkDetail, HouseworkId, Task as TaskType } from '../../lib/type'
 import { useDispatchHouses, useHouses } from '../../lib/hooks/store/houses'
 import { useUser } from '../../lib/hooks/store/currentUser'
+import { useDispatchSnackbar } from '../../lib/hooks/store/snackbar'
 
 type Props = {
   point: HouseworkDetail['point']
@@ -32,6 +33,7 @@ const Task: FC<Props> = ({
   const { uid } = useUser()
   const { updateMemberOnAll } = useDispatchHouses()
   const { houseId, members } = useHouses()
+  const { openSnackbar } = useDispatchSnackbar()
   if (!houseId || !members) return null
 
   const { categoryId, taskId, memberId, isCompleted: prevStatus } = task
@@ -50,8 +52,8 @@ const Task: FC<Props> = ({
       const calc = point * (prevStatus ? -1 : 1)
       const newPoints = members[uid].monthlyPoints + calc
       updateMemberOnAll(uid, 'monthlyPoints', newPoints)
-    } catch (e) {
-      // todo: display error message on snackbar
+    } catch (e: unknown) {
+      if (e instanceof Error) openSnackbar(e.message)
     }
   }
 
