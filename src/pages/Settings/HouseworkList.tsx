@@ -15,8 +15,8 @@ import {
 import AddIcon from '@mui/icons-material/Add'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { css } from '@emotion/react'
-import { useDispatchHouses, useHouses } from '../lib/hooks/store/houses'
-import CustomDrawer from '../components/CustomDrawer'
+import { useDispatchHouses, useHouses } from '../../lib/hooks/store/houses'
+import CustomDrawer from '../../components/CustomDrawer'
 import {
   CategoryId,
   Editing,
@@ -24,9 +24,9 @@ import {
   HouseworkId,
   Digit,
   TaskId,
-} from '../lib/type'
-import { EDITING_STATUS_ENUM } from '../lib/constant'
-import { initialHousework } from '../lib/housework'
+} from '../../lib/type'
+import { EDITING_STATUS_ENUM } from '../../lib/constant'
+import { initialHousework } from '../../lib/housework'
 
 type TaskProps = {
   link: string

@@ -16,10 +16,10 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './routes/PrivateRoute'
 import Settings, { Index as SettingIndex } from './pages/Settings'
-import HouseworkItem from './pages/HouseworkItem'
+import HouseworkItem from './pages/Settings/HouseworkItem'
 import HouseworkList, {
   Index as HouseworkListIndex,
-} from './pages/HouseworkList'
+} from './pages/Settings/HouseworkList'
 import SignIn, { Loading } from './components/SignIn'
 import DateDisplay from './components/DateDisplay'
 import { useUser, useDispatchUser } from './lib/hooks/store/currentUser'
