@@ -25,6 +25,11 @@ export type CategoryId = `c00${Digit}` | 'c010'
 
 export type TaskId = `t${Digit}${Digit}${Digit}`
 
+export type Invitation = {
+  inviteeEmail: Member['email']
+  inviterId: Member['uid']
+}
+
 export type House = {
   id: string
   logs: {
@@ -39,6 +44,7 @@ export type House = {
       }
     }
   }
+  invitations: Invitation[]
 }
 export type DirectionType = typeof DIRECTION_ENUM[keyof typeof DIRECTION_ENUM]
 

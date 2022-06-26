@@ -39,6 +39,7 @@ export const createHouseToFirestore = async (uid: string): Promise<House> => {
     logs: {},
     housework: defaultHousework,
     memberIds: [uid],
+    invitations: [],
   }
   await setDoc(newHouseRef, newHouse, { merge: true })
   return newHouse
