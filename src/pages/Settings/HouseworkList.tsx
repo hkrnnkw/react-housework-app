@@ -62,31 +62,22 @@ const makeNewTaskId = (num: number): TaskId => {
 
 type AccordionProps = {
   categoryId: CategoryId
-  categoryName: string
-  taskDetails: {
-    [taskId in TaskId]?: HouseworkDetail
-  }
   setDraft: (editing: Editing | null) => void
 }
 
-const Accordion: FC<AccordionProps> = ({
-  categoryId,
-  categoryName,
-  taskDetails,
-  setDraft,
-}) => {
+const Accordion: FC<AccordionProps> = ({ categoryId, setDraft }) => {
   const { updateHouseOnAll } = useDispatchHouses()
   const { allHouses, houseId } = useHouses()
   if (!allHouses || !houseId) return null
 
+  const { housework, ...other } = { ...allHouses[houseId] }
+  const { categoryName, taskDetails } = housework[categoryId]
   const taskDetailEntries = Object.entries(taskDetails)
-  const newTaskId = makeNewTaskId(taskDetailEntries.length)
 
   const handleAdd = () => {
-    const { housework, ...other } = { ...allHouses[houseId] }
+    const newTaskId = makeNewTaskId(taskDetailEntries.length)
     const newTaskDetails = { ...taskDetails, [newTaskId]: initialHousework }
-    const category = housework[categoryId]
-    const newCategory = { ...category, taskDetails: newTaskDetails }
+    const newCategory = { categoryName, taskDetails: newTaskDetails }
     const newHousework = { ...housework, [categoryId]: newCategory }
     updateHouseOnAll({ ...other, housework: newHousework })
 
@@ -121,24 +112,21 @@ const Accordion: FC<AccordionProps> = ({
 
 export const Index: FC = () => {
   const [draft, setDraft] = useState<Editing | null>(null)
-  const { allHouses, houseId } = useHouses()
-  if (!allHouses || !houseId) return null
-  const { housework } = allHouses[houseId]
 
   return (
     <>
       <List>
-        {Object.entries(housework).map(
-          ([categoryId, { categoryName, taskDetails }]) => (
-            <Accordion
-              key={categoryId}
-              categoryId={categoryId as CategoryId}
-              categoryName={categoryName}
-              taskDetails={taskDetails}
-              setDraft={setDraft}
-            />
-          )
-        )}
+        <Accordion categoryId={'c001' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c002' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c003' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c004' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c005' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c006' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c007' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c008' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c009' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c010' as CategoryId} setDraft={setDraft} />
+        <Accordion categoryId={'c000' as CategoryId} setDraft={setDraft} />
       </List>
       <CustomDrawer editing={draft} setEditing={setDraft} />
     </>
