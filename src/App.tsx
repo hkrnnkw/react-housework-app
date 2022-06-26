@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, forwardRef, SyntheticEvent, useEffect, useState } from 'react'
 import {
   BrowserRouter,
   Outlet,
@@ -6,7 +6,8 @@ import {
   Routes,
   Link as RouterLink,
 } from 'react-router-dom'
-import { AppBar, IconButton, Link, Toolbar } from '@mui/material'
+import { AppBar, IconButton, Link, Snackbar, Toolbar } from '@mui/material'
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -24,6 +25,7 @@ import SignIn, { Loading } from './components/SignIn'
 import DateDisplay from './components/DateDisplay'
 import { useUser, useDispatchUser } from './lib/hooks/store/currentUser'
 import PointDisplay from './components/PointDisplay'
+import { useDispatchSnackbar, useSnackbar } from './lib/hooks/store/snackbar'
 
 const AppBarStyle = styled(AppBar)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -62,26 +64,51 @@ const Auth: FC<Props> = ({ isLoading, children }): JSX.Element => {
   return children
 }
 
-const Root: FC = () => (
-  <>
-    <Outlet />
-    <StyledAppBar />
-  </>
-)
+const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+))
+
+const Root: FC = () => {
+  const { closeSnackbar } = useDispatchSnackbar()
+  const { snackbar } = useSnackbar()
+  const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') return
+    closeSnackbar()
+  }
+
+  return (
+    <>
+      <Outlet />
+      <StyledAppBar />
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
+  )
+}
 
 const App: FC = () => {
   const { setCurrentUser } = useDispatchUser()
+  const { openSnackbar } = useDispatchSnackbar()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setCurrentUser(firebaseUser)
         .then(() => setIsLoading(false))
-        // eslint-disable-next-line no-console
-        .catch((e) => console.error(e))
+        .catch((e: unknown) => {
+          if (e instanceof Error) openSnackbar(e.message)
+        })
     })
     return () => unsubscribe()
-  }, [setCurrentUser])
+  }, [openSnackbar, setCurrentUser])
 
   return (
     <BrowserRouter>
