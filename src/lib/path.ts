@@ -3,6 +3,7 @@ const paths = {
   root: '/',
   settings: 'settings/',
   houseworkList: 'housework/',
+  invite: 'invite/',
 
   // 異常系
   errorOccurred: 'erroroccurred/',

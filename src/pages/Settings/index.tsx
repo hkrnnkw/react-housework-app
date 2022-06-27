@@ -23,6 +23,13 @@ export const Index: FC = () => {
           </ListItemButton>
         </Link>
       </ListItem>
+      <ListItem key="invite">
+        <Link component={RouterLink} to={`${paths.invite}`}>
+          <ListItemButton>
+            <ListItemText primary="メンバーを追加する" />
+          </ListItemButton>
+        </Link>
+      </ListItem>
       <ListItem key="signOut">
         <Link component={RouterLink} to={`${paths.root}`}>
           <ListItemButton onClick={() => signOut()}>

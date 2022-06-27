@@ -26,6 +26,7 @@ import DateDisplay from './components/DateDisplay'
 import { useUser, useDispatchUser } from './lib/hooks/store/currentUser'
 import PointDisplay from './components/PointDisplay'
 import { useDispatchSnackbar, useSnackbar } from './lib/hooks/store/snackbar'
+import Invite from './pages/Settings/Invite'
 
 const AppBarStyle = styled(AppBar)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -131,6 +132,7 @@ const App: FC = () => {
                   element={<PrivateRoute component={HouseworkItem} />}
                 />
               </Route>
+              <Route path={paths.invite} element={<Invite />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Route>
