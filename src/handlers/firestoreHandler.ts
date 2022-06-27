@@ -1,4 +1,5 @@
 import {
+  arrayUnion,
   collection,
   doc,
   DocumentData,
@@ -11,7 +12,14 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore'
-import { House, HouseworkDetail, HouseworkId, Member, Task } from '../lib/type'
+import {
+  House,
+  HouseworkDetail,
+  HouseworkId,
+  Invitation,
+  Member,
+  Task,
+} from '../lib/type'
 import defaultHousework from '../lib/housework'
 import { CurrentUser } from '../lib/states/currentUser'
 
@@ -77,4 +85,15 @@ export const updateHouseworkOnFirestore = async (
   const { categoryId, taskId } = houseworkId
   const path = `housework.${categoryId}.taskDetails.${taskId}.${key}`
   await updateDoc(houseRef, { [path]: value })
+}
+
+export const addInvitationToFirestore = async (
+  houseId: string,
+  invitation: Invitation
+): Promise<void> => {
+  const db = getFirestore()
+  const houseRef = doc(db, 'houses', houseId)
+  await updateDoc(houseRef, {
+    invitations: arrayUnion(invitation),
+  })
 }
