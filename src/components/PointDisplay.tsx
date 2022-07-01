@@ -13,7 +13,7 @@ const PointDisplay: FC = () => {
 
   const { monthlyPoints } = members[uid]
   const { root } = paths
-  const label = pathname === root ? `${monthlyPoints} pt` : 'Top'
+  const label = pathname === root ? `${monthlyPoints ?? 0} pt` : 'Top'
   // todo
   const path = pathname === root ? root : root
 
