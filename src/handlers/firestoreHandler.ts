@@ -47,7 +47,7 @@ export const createHouseToFirestore = async (uid: string): Promise<House> => {
     logs: {},
     housework: defaultHousework,
     memberIds: [uid],
-    invitations: [],
+    invitations: {},
   }
   await setDoc(newHouseRef, newHouse, { merge: true })
   return newHouse
@@ -93,7 +93,7 @@ export const addInvitationToFirestore = async (
 ): Promise<void> => {
   const db = getFirestore()
   const houseRef = doc(db, 'houses', houseId)
-  await updateDoc(houseRef, {
-    invitations: arrayUnion(invitation),
-  })
+  const email = invitation.inviteeEmail.replace(/\./g, '_')
+  const path = `invitations.${email}`
+  await updateDoc(houseRef, { [path] : invitation })
 }

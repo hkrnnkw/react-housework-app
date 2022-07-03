@@ -18,6 +18,7 @@ const Invite: FC = () => {
     const invitation: Invitation = {
       inviteeEmail: value as string,
       inviterId: uid,
+      status: 'invited',
     }
     await addInvitationToFirestore(houseId, invitation)
   }
