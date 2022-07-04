@@ -1,15 +1,29 @@
 import { Button, TextField, TextFieldProps } from '@mui/material'
-import { FC, useRef } from 'react'
+import { FocusEvent, FC, useRef, useState } from 'react'
 import { addInvitationToFirestore } from '../../handlers/firestoreHandler'
 import { useUser } from '../../lib/hooks/store/currentUser'
 import { useHouses } from '../../lib/hooks/store/houses'
+import { useDispatchSnackbar } from '../../lib/hooks/store/snackbar'
 import { Invitation } from '../../lib/type'
 
 const Invite: FC = () => {
   const { houseId } = useHouses()
   const { uid } = useUser()
+  const { openSnackbar } = useDispatchSnackbar()
   const emailRef = useRef<TextFieldProps>(null)
+  const [invited, setInvited] = useState(false)
   if (!houseId) return null
+
+  const { protocol, host } = window.location
+  const url = `${protocol}//${host}/?houseId=${houseId}`
+
+  const copyUrlToClipboard = async () => {
+    await navigator.clipboard.writeText(url)
+  }
+
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    event.target.select()
+  }
 
   const handleClick = async () => {
     if (!emailRef.current) return
@@ -21,6 +35,9 @@ const Invite: FC = () => {
       status: 'invited',
     }
     await addInvitationToFirestore(houseId, invitation)
+    await copyUrlToClipboard()
+    openSnackbar('招待用URLをコピーしました')
+    setInvited(true)
   }
 
   return (
@@ -29,7 +46,11 @@ const Invite: FC = () => {
         inputRef={emailRef}
         placeholder="追加したい人のメールアドレスを入力"
       />
-      <Button onClick={() => handleClick()}>招待を送る</Button>
+      <Button onClick={() => handleClick()}>招待する</Button>
+      {invited && <TextField value={url} onFocus={handleFocus} />}
+      {invited && (
+        <Button onClick={() => copyUrlToClipboard()}>URLをコピーする</Button>
+      )}
     </>
   )
 }
