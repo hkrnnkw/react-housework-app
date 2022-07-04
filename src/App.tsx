@@ -72,7 +72,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
 
 const Root: FC = () => {
   const { closeSnackbar } = useDispatchSnackbar()
-  const { snackbar } = useSnackbar()
+  const { open, message, severity } = useSnackbar()
   const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') return
     closeSnackbar()
@@ -82,13 +82,9 @@ const Root: FC = () => {
     <>
       <Outlet />
       <StyledAppBar />
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {snackbar.message}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
         </Alert>
       </Snackbar>
     </>
@@ -105,7 +101,7 @@ const App: FC = () => {
       setCurrentUser(firebaseUser)
         .then(() => setIsLoading(false))
         .catch((e: unknown) => {
-          if (e instanceof Error) openSnackbar(e.message)
+          if (e instanceof Error) openSnackbar(e.message, 'error')
         })
     })
     return () => unsubscribe()

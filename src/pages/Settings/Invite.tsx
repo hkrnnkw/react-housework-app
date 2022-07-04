@@ -19,6 +19,7 @@ const Invite: FC = () => {
 
   const copyUrlToClipboard = async () => {
     await navigator.clipboard.writeText(url)
+    openSnackbar('招待用URLをコピーしました')
   }
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -36,7 +37,6 @@ const Invite: FC = () => {
     }
     await addInvitationToFirestore(houseId, invitation)
     await copyUrlToClipboard()
-    openSnackbar('招待用URLをコピーしました')
     setInvited(true)
   }
 

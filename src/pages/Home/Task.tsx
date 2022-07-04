@@ -53,7 +53,7 @@ const Task: FC<Props> = ({
       const prevPoints = members[uid].monthlyPoints ?? 0
       updateMemberOnAll(uid, 'monthlyPoints', prevPoints + calc)
     } catch (e: unknown) {
-      if (e instanceof Error) openSnackbar(e.message)
+      if (e instanceof Error) openSnackbar(e.message, 'error')
     }
   }
 

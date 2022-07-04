@@ -44,7 +44,7 @@ const Home: FC = () => {
     }
 
     init().catch((e: unknown) => {
-      if (e instanceof Error) openSnackbar(e.message)
+      if (e instanceof Error) openSnackbar(e.message, 'error')
     })
   }, [
     allHouses,
