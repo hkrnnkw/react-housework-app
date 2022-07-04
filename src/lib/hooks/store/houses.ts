@@ -68,7 +68,7 @@ export const useDispatchHouses = () => {
         const detail = housework[categoryId].taskDetails[taskId]
         if (!memberId || !isCompleted || !detail) return
 
-        const prev: number = members[memberId].monthlyPoints ?? 0
+        const prev: number = members[memberId]?.monthlyPoints ?? 0
         const monthlyPoints = prev + detail.point
         members[memberId] = { ...members[memberId], monthlyPoints }
       })

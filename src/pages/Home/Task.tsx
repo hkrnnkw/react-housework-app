@@ -50,7 +50,7 @@ const Task: FC<Props> = ({
     try {
       await updateLogs(index, newTask)
       const calc = point * (prevStatus ? -1 : 1)
-      const prevPoints = members[uid].monthlyPoints ?? 0
+      const prevPoints = members[uid]?.monthlyPoints ?? 0
       updateMemberOnAll(uid, 'monthlyPoints', prevPoints + calc)
     } catch (e: unknown) {
       if (e instanceof Error) openSnackbar(e.message, 'error')

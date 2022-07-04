@@ -11,7 +11,7 @@ const PointDisplay: FC = () => {
   const { pathname } = useLocation()
   if (!members) return null
 
-  const monthlyPoints = members[uid].monthlyPoints ?? 0
+  const monthlyPoints = members[uid]?.monthlyPoints ?? 0
   const { root } = paths
   const label = pathname === root ? `${monthlyPoints} pt` : 'Top'
   // todo
