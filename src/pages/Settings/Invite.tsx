@@ -1,4 +1,11 @@
-import { Button, TextField, TextFieldProps } from '@mui/material'
+import {
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
+  TextFieldProps,
+} from '@mui/material'
 import { FocusEvent, FC, useRef, useState } from 'react'
 import { addInvitationToFirestore } from '../../handlers/firestoreHandler'
 import { useUser } from '../../lib/hooks/store/currentUser'
@@ -15,6 +22,8 @@ const Invite: FC = () => {
   const [invited, setInvited] = useState(false)
   if (!allHouses || !houseId || !members) return null
 
+  const currentHouse = { ...allHouses[houseId] }
+  const { memberIds, invitations } = { ...currentHouse }
   const { protocol, host } = window.location
   const url = `${protocol}//${host}/?houseId=${houseId}`
 
@@ -32,8 +41,6 @@ const Invite: FC = () => {
     const inviteeEmail = emailRef.current.value
     if (!inviteeEmail || typeof inviteeEmail !== 'string') return
 
-    const currentHouse = { ...allHouses[houseId] }
-    const { memberIds, invitations } = { ...currentHouse }
     const i = memberIds.findIndex((id) => members[id].email === inviteeEmail)
     if (i > -1) {
       openSnackbar('すでにメンバーになっています')
@@ -75,6 +82,13 @@ const Invite: FC = () => {
       {invited && (
         <Button onClick={() => copyUrlToClipboard()}>URLをコピーする</Button>
       )}
+      <List>
+        {Object.values(invitations).map(({ inviteeEmail, status }) => (
+          <ListItem key={inviteeEmail}>
+            <ListItemText primary={inviteeEmail} secondary={status} />
+          </ListItem>
+        ))}
+      </List>
     </>
   )
 }
