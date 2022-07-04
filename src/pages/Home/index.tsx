@@ -1,5 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { List } from '@mui/material'
+import { useLocation } from 'react-router-dom'
 import { useDispatchHouses, useHouses } from '../../lib/hooks/store/houses'
 import { useUser } from '../../lib/hooks/store/currentUser'
 import StyledPaper from '../../components/atoms/StyledPaper'
@@ -10,16 +11,19 @@ import { EDITING_STATUS_ENUM } from '../../lib/constant'
 import { useDate } from '../../lib/hooks/store/currentDate'
 import Task from './Task'
 import { setLogToFirestore } from '../../handlers/firestoreHandler'
+import { useDispatchSnackbar } from '../../lib/hooks/store/snackbar'
 
 const Home: FC = () => {
   /** todo: remove below for production */
   const didLogRef = useRef(false)
 
   const [editing, setEditing] = useState<Editing | null>(null)
-  const { uid } = useUser()
-  const { initHouses, updateHouseOnAll } = useDispatchHouses()
+  const { uid, email } = useUser()
+  const { initHouses, initHouseWithId, updateHouseOnAll } = useDispatchHouses()
   const { allHouses, houseId, members } = useHouses()
   const { currentDate } = useDate()
+  const { openSnackbar } = useDispatchSnackbar()
+  const { search } = useLocation()
 
   useEffect(() => {
     /** todo: remove below for production */
@@ -29,10 +33,30 @@ const Home: FC = () => {
     if (!uid.length) return
     if (allHouses || houseId || members) return
 
-    initHouses(uid).catch((e) => {
-      throw new Error(e)
+    const init = async () => {
+      const query = new URLSearchParams(search)
+      const houseIdFromQuery = query.get('houseId')
+      if (houseIdFromQuery && email) {
+        await initHouseWithId(houseIdFromQuery, uid, email)
+        return
+      }
+      await initHouses(uid)
+    }
+
+    init().catch((e: unknown) => {
+      if (e instanceof Error) openSnackbar(e.message)
     })
-  }, [allHouses, houseId, members, initHouses, uid])
+  }, [
+    allHouses,
+    houseId,
+    members,
+    initHouses,
+    uid,
+    search,
+    email,
+    initHouseWithId,
+    openSnackbar,
+  ])
 
   if (!allHouses || !houseId || !members) return null
   const currentHouse = { ...allHouses[houseId] }

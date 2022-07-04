@@ -95,5 +95,28 @@ export const addInvitationToFirestore = async (
   const houseRef = doc(db, 'houses', houseId)
   const email = invitation.inviteeEmail.replace(/\./g, '_')
   const path = `invitations.${email}`
-  await updateDoc(houseRef, { [path] : invitation })
+  await updateDoc(houseRef, { [path]: invitation })
+}
+
+export const joinToHouseOnFirestore = async (
+  houseId: string,
+  uid: string,
+  email: string
+): Promise<House | null> => {
+  const db = getFirestore()
+  const houseRef = doc(db, 'houses', houseId)
+  const docSnap = await getDoc(houseRef)
+  if (!docSnap.exists()) return null
+  const house = docSnap.data() as House
+  const isMember = house.memberIds.includes(uid)
+  if (isMember) return house
+  const key = email.replace(/\./g, '_')
+  const invitation = house.invitations[key]
+  if (!invitation) return null
+  if (invitation.status !== 'invited') return house
+  await updateDoc(houseRef, {
+    memberIds: arrayUnion(uid),
+    invitations: { ...invitation, status: 'accepted' },
+  })
+  return house
 }

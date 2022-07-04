@@ -5,6 +5,7 @@ import {
   createHouseToFirestore,
   getHousesFromFirestore,
   getMemberFromFirestore,
+  joinToHouseOnFirestore,
 } from '../../../handlers/firestoreHandler'
 import { createLogs } from '../../../handlers/logsHandler'
 import { stateCurrentDate } from '../../states/currentDate'
@@ -75,6 +76,30 @@ export const useDispatchHouses = () => {
     return members
   }
 
+  const initHouseWithId = useRecoilCallback(
+    ({ set, snapshot }) =>
+      async (houseId: string, uid: string, email: string) => {
+        const house = await joinToHouseOnFirestore(houseId, uid, email)
+        if (!house) throw new Error('No house')
+        const { logs: prevLogs, memberIds, housework } = { ...house }
+        set(stateHouseId, houseId)
+
+        const currentDate = snapshot.getLoadable(stateCurrentDate).getValue()
+        const logs = createLogs(housework, { ...prevLogs }, currentDate)
+        const allHouses: AllHouses = { [houseId]: { ...house, logs } }
+        set(stateAllHouses, allHouses)
+
+        const members = await getMembers(memberIds)
+        const withPoints = setMonthlyPointsToEachMembers(
+          currentDate,
+          logs,
+          housework,
+          members
+        )
+        set(stateMembers, withPoints)
+      }
+  )
+
   const initHouses = useRecoilCallback(
     ({ set, snapshot }) =>
       async (uid: string) => {
@@ -125,6 +150,7 @@ export const useDispatchHouses = () => {
   )
 
   return {
+    initHouseWithId,
     initHouses,
     updateHouseOnAll,
     updateMemberOnAll,
