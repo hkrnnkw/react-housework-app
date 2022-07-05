@@ -114,9 +114,10 @@ export const joinToHouseOnFirestore = async (
   const invitation = house.invitations[key]
   if (!invitation) return null
   if (invitation.status !== 'invited') return house
+  const updated = { ...invitation, status: 'accepted' }
   await updateDoc(houseRef, {
     memberIds: arrayUnion(uid),
-    invitations: { ...invitation, status: 'accepted' },
+    invitations: { ...house.invitations, [key]: updated },
   })
   return house
 }
